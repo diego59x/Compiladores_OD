@@ -8,14 +8,14 @@ feature:
 formal: ID ':' TYPE;
 
 expr: 
-        ID '<-' expr
+        (ID '<-' expr)+
         | expr('@' TYPE)'.'ID( ( expr(','expr)* ))?
         | ID '(' ( expr (','expr)* )? ')'
         | IF expr THEN expr ELSE expr FI
         | WHILE expr LOOP expr POOL
         | '{' (expr';')+ '}'
         | LET ID ':' TYPE ( '<-' expr )? (',' ID ':' TYPE ('<-' expr)?)* IN expr
-        | NEW TYPE
+        | (NEW TYPE)+
         | ISVOID expr
         | expr '+' expr
         | expr '-' expr
@@ -31,7 +31,6 @@ expr:
         | INTEGER
         | STRING
         | TRUE
-        | WS
         | FALSE;
 
 CLASS: 'class' | 'CLASS';
@@ -60,6 +59,5 @@ FALSE: 'false';
 
 ID : [a-z][a-zA-Z0-9_]* ;
 TYPE : [A-Z][a-zA-Z0-9_]* ;
-WS : [ \t\r\n]+ -> skip ;
-
+WS: [ \n\t\r] -> skip;
 r  : program ;
