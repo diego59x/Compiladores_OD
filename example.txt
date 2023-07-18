@@ -1,1 +1,6 @@
-22
+class Oli inherits Sip {
+kilo(): String {
+    a <- a+b*c;
+    a <- a + b * c;
+};
+};
