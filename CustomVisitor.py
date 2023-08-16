@@ -6,6 +6,9 @@ class CustomVisitor(HelloVisitor):
         self.errores = []
 
     def visitProgram(self, ctx:HelloVisitor.ProgramContext):
+        #Creacion nodo
+        #variable o una clase tabla de simbolos
+        #verifico reglas
         return 
     
     def visitClass(self, ctx:HelloVisitor.ClassContext):
