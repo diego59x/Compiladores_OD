@@ -1,5 +1,3 @@
 class Oli inherits Sip {
-kilo(): String {
-    let x : INT <- 5, y : INT <- 10 in x + y
-    };
+a:INT<-5;
 };
