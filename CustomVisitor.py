@@ -3,97 +3,100 @@ from yapl.utils.Node import *
 
 class CustomVisitor(HelloVisitor):
     def __init__(self):
+        self.hello = HelloVisitor()
         self.errores = []
 
-    def visitProgram(self, ctx:HelloVisitor.ProgramContext):
+    def visitProgram(self, ctx):
         #Creacion nodo
         #variable o una clase tabla de simbolos
         #verifico reglas
-        return 
+        return self.hello.visitProgram(self)
     
-    def visitClass(self, ctx:HelloVisitor.ClassContext):
-        return 
+    def visitClass(self):
+        return HelloVisitor.visitClass(self, ctx=HelloVisitor)
 
-    def visitDEFINITION_METHOD_PARAMS(self, ctx:HelloVisitor.DEFINITION_METHOD_PARAMSContext):
-        return 
+    def visitDEFINITION_METHOD_PARAMS(self):
+        return HelloVisitor.visitDEFINITION_METHOD_PARAMS(self, ctx=HelloVisitor)
 
-    def visitDEFINITION_PARAMS(self, ctx:HelloVisitor.DEFINITION_PARAMSContext):
-        return 
+    def visitDEFINITION_PARAMS(self):
+        return HelloVisitor.visitDEFINITION_PARAMS(self, ctx=HelloVisitor)
 
-    def visitFormal(self, ctx:HelloVisitor.FormalContext):
-        return 
+    def visitFormal(self):
+        return HelloVisitor.visitFormal(self, ctx=HelloVisitor)
     
-    def visitEXPR_PARAMS(self, ctx:HelloVisitor.EXPR_PARAMSContext):
-        return 
+    def visitEXPR_PARAMS(self):
+        return HelloVisitor.visitEXPR_PARAMS(self, ctx=HelloVisitor)
   
-    def visitTIMES(self, ctx:HelloVisitor.TIMESContext):
-        return
+    def visitTIMES(self):
+        return HelloVisitor.visitTIMES(self, ctx=HelloVisitor)
     
-    def visitEQUALS(self, ctx:HelloVisitor.EQUALSContext):
-        return
+    def visitEQUALS(self):
+        return HelloVisitor.visitEQUALS(self, ctx=HelloVisitor)
 
-    def visitVOID_EXPR(self, ctx:HelloVisitor.VOID_EXPRContext):
-        return 
+    def visitVOID_EXPR(self):
+        return HelloVisitor.visitVOID_EXPR(self, ctx=HelloVisitor)
 
-    def visitDECLARE_TYPE(self, ctx:HelloVisitor.DECLARE_TYPEContext):
-        return 
+    def visitDECLARE_TYPE(self):
+        return HelloVisitor.visitDECLARE_TYPE(self, ctx=HelloVisitor)
     
-    def visitTRUE(self, ctx:HelloVisitor.TRUEContext):
-        return BooleanNode(ctx.BOOLEAN_VAR().getText())
+    def visitTRUE(self):
+        # BooleanNode(ctx.BOOLEAN_VAR().getText())
+        return HelloVisitor.visitTRUE(self, ctx=HelloVisitor)
 
-    def visitWHILE_CLAUSE(self, ctx:HelloVisitor.WHILE_CLAUSEContext):
-        return 
+    def visitWHILE_CLAUSE(self):
+        return HelloVisitor.visitWHILE_CLAUSE(self, ctx=HelloVisitor)
 
-    def visitSUM(self, ctx:HelloVisitor.SUMContext):
-        return
+    def visitSUM(self):
+        return HelloVisitor.visitSUM(self, ctx=HelloVisitor)
+    def visitASSIGN_VAL(self):
+        return HelloVisitor.visitASSIGN_VAL(self, ctx=HelloVisitor)
+
+    def visitMINUS(self):
+        return HelloVisitor.visitMINUS(self, ctx=HelloVisitor)
+
+    def visitDIVIDE(self):
+        return HelloVisitor.visitDIVIDE(self, ctx=HelloVisitor)
     
-    def visitASSIGN_VAL(self, ctx:HelloVisitor.ASSIGN_VALContext):
-        return 
-
-    def visitMINUS(self, ctx:HelloVisitor.MINUSContext):
-        return 
-
-    def visitDIVIDE(self, ctx:HelloVisitor.DIVIDEContext):
-        return
+    def visitEXPR_NOT_KNOWN2(self):
+        return HelloVisitor.visitEXPR_NOT_KNOWN2(self, ctx=HelloVisitor)
     
-    def visitEXPR_NOT_KNOWN2(self, ctx:HelloVisitor.EXPR_NOT_KNOWN2Context):
-        return 
+    def visitDEFINITION_ASSIGN(self):
+        return HelloVisitor.visitDEFINITION_ASSIGN(self, ctx=HelloVisitor)
+
+    def visitBIGGER(self):
+        return HelloVisitor.visitBIGGER(self, ctx=HelloVisitor)
     
-    def visitDEFINITION_ASSIGN(self, ctx:HelloVisitor.DEFINITION_ASSIGNContext):
-        return 
+    def visitEXPR_NOT_KNOWN1(self):
+        return HelloVisitor.visitEXPR_NOT_KNOWN1(self, ctx=HelloVisitor)
 
-    def visitBIGGER(self, ctx:HelloVisitor.BIGGERContext):
-        return 
+    def visitNOT(self):
+        return HelloVisitor.visitNOT(self, ctx=HelloVisitor)
+
+    def visitOBJ_DEF(self):
+        return HelloVisitor.visitOBJ_DEF(self, ctx=HelloVisitor)
+
+    def visitIF_CLAUSE(self):
+        return HelloVisitor.visitIF_CLAUSE(self, ctx=HelloVisitor)
     
-    def visitEXPR_NOT_KNOWN1(self, ctx:HelloVisitor.EXPR_NOT_KNOWN1Context):
-        return 
+    def visitSTRING(self):
+        return HelloVisitor.visitSTRING(self, ctx=HelloVisitor)
 
-    def visitNOT(self, ctx:HelloVisitor.NOTContext):
-        return 
+    def visitTILDE(self):
+        return HelloVisitor.visitTILDE(self, ctx=HelloVisitor)
 
-    def visitOBJ_DEF(self, ctx:HelloVisitor.OBJ_DEFContext):
-        return 
+    def visitFALSE(self):
+        # BooleanNode(ctx.BOOLEAN_VAR().getText())
+        return HelloVisitor.visitFALSE(self, ctx=HelloVisitor)
 
-    def visitIF_CLAUSE(self, ctx:HelloVisitor.IF_CLAUSEContext):
-        return 
+    def visitID(self):
+        return HelloVisitor.visitID(self, ctx=HelloVisitor)
+
+    def visitBIGGEREQUALS(self):
+        return HelloVisitor.visitBIGGEREQUALS(self, ctx=HelloVisitor)
     
-    def visitSTRING(self, ctx:HelloVisitor.STRINGContext):
-        return 
-
-    def visitTILDE(self, ctx:HelloVisitor.TILDEContext):
-        return 
-
-    def visitFALSE(self, ctx:HelloVisitor.FALSEContext):
-        return BooleanNode(ctx.BOOLEAN_VAR().getText())
-
-    def visitID(self, ctx:HelloVisitor.IDContext):
-        return 
-
-    def visitBIGGEREQUALS(self, ctx:HelloVisitor.BIGGEREQUALSContext):
-        return
+    def visitINTEGER(self):
+        # IntNode(ctx.INT_VAR().getText())
+        return HelloVisitor.visitINTEGER(self, ctx=HelloVisitor)
     
-    def visitINTEGER(self, ctx:HelloVisitor.INTEGERContext):
-        return IntNode(ctx.INT_VAR().getText())
-    
-    def visitR(self, ctx:HelloVisitor.RContext):
-        return 
+    def visitR(self):
+        return HelloVisitor.visitR(self, ctx=HelloVisitor)

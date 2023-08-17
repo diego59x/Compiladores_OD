@@ -1,6 +1,8 @@
 from antlr4 import InputStream, CommonTokenStream
 from yapl.grammar.HelloLexer import HelloLexer
 from yapl.grammar.HelloParser import HelloParser
+from yapl.grammar.HelloVisitor import HelloVisitor
+
 from CustomVisitor import *
 
 file_path = './example.txt'
@@ -25,11 +27,11 @@ token_stream = CommonTokenStream(lexer)
 parser = HelloParser(token_stream)
 
 # Start parsing from the top-level rule of your grammar
-tree = parser.your_top_level_rule()
+tree = parser.program()
 
 # Now you have the parse tree, and you can traverse it as needed
 # For example, you can use the built-in visitor or listener classes from ANTLR
 
 # Instantiate the visitor and visit the parse tree
-visitor = HelloVisitor()
+visitor = CustomVisitor()
 result = visitor.visit(tree)
