@@ -1,4 +1,5 @@
 from yapl.grammar.HelloVisitor import HelloVisitor
+from yapl.grammar.HelloParser import HelloParser
 from yapl.utils.Node import *
 
 class CustomVisitor(HelloVisitor):
@@ -6,97 +7,97 @@ class CustomVisitor(HelloVisitor):
         self.hello = HelloVisitor()
         self.errores = []
 
-    def visitProgram(self, ctx):
+    def visitProgram(self, ctx:HelloParser.ProgramContext):
         #Creacion nodo
         #variable o una clase tabla de simbolos
         #verifico reglas
-        return self.hello.visitProgram(self)
+        return self.visitChildren(ctx)
     
-    def visitClass(self):
-        return HelloVisitor.visitClass(self, ctx=HelloVisitor)
+    def visitClass(self, ctx:HelloParser.ClassContext):
+        return self.visitChildren(ctx)
 
-    def visitDEFINITION_METHOD_PARAMS(self):
-        return HelloVisitor.visitDEFINITION_METHOD_PARAMS(self, ctx=HelloVisitor)
-
-    def visitDEFINITION_PARAMS(self):
-        return HelloVisitor.visitDEFINITION_PARAMS(self, ctx=HelloVisitor)
-
-    def visitFormal(self):
-        return HelloVisitor.visitFormal(self, ctx=HelloVisitor)
+    def visitDEFINITION_METHOD_PARAMS(self, ctx:HelloParser.DEFINITION_METHOD_PARAMSContext):
+        return self.visitChildren(ctx)
     
-    def visitEXPR_PARAMS(self):
-        return HelloVisitor.visitEXPR_PARAMS(self, ctx=HelloVisitor)
+    def visitDEFINITION_PARAMS(self, ctx:HelloParser.DEFINITION_PARAMSContext):
+        return self.visitChildren(ctx)
+    
+    def visitFormal(self, ctx:HelloParser.FormalContext):
+        return self.visitChildren(ctx)
+    
+    def visitEXPR_PARAMS(self, ctx:HelloParser.EXPR_PARAMSContext):
+        return self.visitChildren(ctx)
   
-    def visitTIMES(self):
-        return HelloVisitor.visitTIMES(self, ctx=HelloVisitor)
+    def visitTIMES(self, ctx:HelloParser.TIMESContext):
+        return self.visitChildren(ctx)
     
-    def visitEQUALS(self):
-        return HelloVisitor.visitEQUALS(self, ctx=HelloVisitor)
+    def visitEQUALS(self, ctx:HelloParser.EQUALSContext):
+        return self.visitChildren(ctx)
 
-    def visitVOID_EXPR(self):
-        return HelloVisitor.visitVOID_EXPR(self, ctx=HelloVisitor)
+    def visitVOID_EXPR(self, ctx:HelloParser.VOID_EXPRContext):
+        return self.visitChildren(ctx)
 
-    def visitDECLARE_TYPE(self):
-        return HelloVisitor.visitDECLARE_TYPE(self, ctx=HelloVisitor)
+    def visitDECLARE_TYPE(self, ctx:HelloParser.DECLARE_TYPEContext):
+        return self.visitChildren(ctx)
     
-    def visitTRUE(self):
+    def visitTRUE(self, ctx:HelloParser.TRUEContext):
         # BooleanNode(ctx.BOOLEAN_VAR().getText())
-        return HelloVisitor.visitTRUE(self, ctx=HelloVisitor)
+        return self.visitChildren(ctx)
 
-    def visitWHILE_CLAUSE(self):
-        return HelloVisitor.visitWHILE_CLAUSE(self, ctx=HelloVisitor)
+    def visitWHILE_CLAUSE(self, ctx:HelloParser.WHILE_CLAUSEContext):
+        return self.visitChildren(ctx)
 
-    def visitSUM(self):
-        return HelloVisitor.visitSUM(self, ctx=HelloVisitor)
-    def visitASSIGN_VAL(self):
-        return HelloVisitor.visitASSIGN_VAL(self, ctx=HelloVisitor)
-
-    def visitMINUS(self):
-        return HelloVisitor.visitMINUS(self, ctx=HelloVisitor)
-
-    def visitDIVIDE(self):
-        return HelloVisitor.visitDIVIDE(self, ctx=HelloVisitor)
+    def visitSUM(self, ctx:HelloParser.SUMContext):
+        return self.visitChildren(ctx)
     
-    def visitEXPR_NOT_KNOWN2(self):
-        return HelloVisitor.visitEXPR_NOT_KNOWN2(self, ctx=HelloVisitor)
+    def visitASSIGN_VAL(self, ctx:HelloParser.ASSIGN_VALContext):
+        return self.visitChildren(ctx)
+
+    def visitMINUS(self, ctx:HelloParser.MINUSContext):
+        return self.visitChildren(ctx)
+
+    def visitDIVIDE(self, ctx:HelloParser.DIVIDEContext):
+        return self.visitChildren(ctx)
     
-    def visitDEFINITION_ASSIGN(self):
-        return HelloVisitor.visitDEFINITION_ASSIGN(self, ctx=HelloVisitor)
-
-    def visitBIGGER(self):
-        return HelloVisitor.visitBIGGER(self, ctx=HelloVisitor)
+    def visitEXPR_NOT_KNOWN2(self, ctx:HelloParser.EXPR_NOT_KNOWN2Context):
+        return self.visitChildren(ctx)
     
-    def visitEXPR_NOT_KNOWN1(self):
-        return HelloVisitor.visitEXPR_NOT_KNOWN1(self, ctx=HelloVisitor)
+    def visitDEFINITION_ASSIGN(self, ctx:HelloParser.DEFINITION_ASSIGNContext):
+        return self.visitChildren(ctx)
 
-    def visitNOT(self):
-        return HelloVisitor.visitNOT(self, ctx=HelloVisitor)
-
-    def visitOBJ_DEF(self):
-        return HelloVisitor.visitOBJ_DEF(self, ctx=HelloVisitor)
-
-    def visitIF_CLAUSE(self):
-        return HelloVisitor.visitIF_CLAUSE(self, ctx=HelloVisitor)
+    def visitBIGGER(self, ctx:HelloParser.BIGGERContext):
+        return self.visitChildren(ctx)
     
-    def visitSTRING(self):
-        return HelloVisitor.visitSTRING(self, ctx=HelloVisitor)
+    def visitEXPR_NOT_KNOWN1(self, ctx:HelloParser.EXPR_NOT_KNOWN1Context):
+        return self.visitChildren(ctx)
 
-    def visitTILDE(self):
-        return HelloVisitor.visitTILDE(self, ctx=HelloVisitor)
+    def visitNOT(self, ctx:HelloParser.NOTContext):
+        return self.visitChildren(ctx)
 
-    def visitFALSE(self):
+    def visitOBJ_DEF(self, ctx:HelloParser.OBJ_DEFContext):
+        return self.visitChildren(ctx)
+
+    def visitIF_CLAUSE(self, ctx:HelloParser.IF_CLAUSEContext):
+        return self.visitChildren(ctx)
+    
+    def visitSTRING(self, ctx:HelloParser.STRINGContext):
+        return self.visitChildren(ctx)
+
+    def visitTILDE(self, ctx:HelloParser.TILDEContext):
+        return self.visitChildren(ctx)
+
+    def visitFALSE(self, ctx:HelloParser.FALSEContext):
         # BooleanNode(ctx.BOOLEAN_VAR().getText())
-        return HelloVisitor.visitFALSE(self, ctx=HelloVisitor)
+        return self.visitChildren(ctx)
 
-    def visitID(self):
-        return HelloVisitor.visitID(self, ctx=HelloVisitor)
+    def visitID(self, ctx:HelloParser.IDContext):
+        return self.visitChildren(ctx)
 
-    def visitBIGGEREQUALS(self):
-        return HelloVisitor.visitBIGGEREQUALS(self, ctx=HelloVisitor)
+    def visitBIGGEREQUALS(self, ctx:HelloParser.BIGGEREQUALSContext):
+        return self.visitChildren(ctx)
     
-    def visitINTEGER(self):
-        # IntNode(ctx.INT_VAR().getText())
-        return HelloVisitor.visitINTEGER(self, ctx=HelloVisitor)
+    def visitINTEGER(self, ctx:HelloParser.INTEGERContext):
+        return IntNode(ctx.INTEGER().getText())
     
-    def visitR(self):
-        return HelloVisitor.visitR(self, ctx=HelloVisitor)
+    def visitR(self, ctx:HelloParser.RContext):
+        return self.visitChildren(ctx)
