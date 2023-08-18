@@ -15,6 +15,11 @@ class BooleanNode(Node):
         self.token = token
         self.type = "boolean"
 
+class StringNode(Node):
+    def __init__(self, token):
+        self.token = token
+        self.type = "string"
+
 class SumNode(Node):
     def __init__(self, left, right):
         self.left = left

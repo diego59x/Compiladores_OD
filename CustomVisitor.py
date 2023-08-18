@@ -41,8 +41,7 @@ class CustomVisitor(HelloVisitor):
         return self.visitChildren(ctx)
     
     def visitTRUE(self, ctx:HelloParser.TRUEContext):
-        # BooleanNode(ctx.BOOLEAN_VAR().getText())
-        return self.visitChildren(ctx)
+        return BooleanNode(ctx.TRUE().getText())
 
     def visitWHILE_CLAUSE(self, ctx:HelloParser.WHILE_CLAUSEContext):
         return self.visitChildren(ctx)
@@ -81,17 +80,16 @@ class CustomVisitor(HelloVisitor):
         return self.visitChildren(ctx)
     
     def visitSTRING(self, ctx:HelloParser.STRINGContext):
-        return self.visitChildren(ctx)
+        return StringNode(ctx.STRING().getText())
 
     def visitTILDE(self, ctx:HelloParser.TILDEContext):
         return self.visitChildren(ctx)
 
     def visitFALSE(self, ctx:HelloParser.FALSEContext):
-        # BooleanNode(ctx.BOOLEAN_VAR().getText())
-        return self.visitChildren(ctx)
+        return BooleanNode(ctx.FALSE().getText())
 
     def visitID(self, ctx:HelloParser.IDContext):
-        return self.visitChildren(ctx)
+        return IdNode(ctx.ID().getText())
 
     def visitBIGGEREQUALS(self, ctx:HelloParser.BIGGEREQUALSContext):
         return self.visitChildren(ctx)
