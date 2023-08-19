@@ -7,6 +7,9 @@ class CustomVisitor(HelloVisitor):
         self.hello = HelloVisitor()
         self.errores = []
 
+    def visitR(self, ctx:HelloParser.RContext):
+        return self.visitChildren(ctx)
+
     def visitProgram(self, ctx:HelloParser.ProgramContext):
         #Creacion nodo
         #variable o una clase tabla de simbolos
@@ -20,9 +23,13 @@ class CustomVisitor(HelloVisitor):
         return self.visitChildren(ctx)
     
     def visitDEFINITION_PARAMS(self, ctx:HelloParser.DEFINITION_PARAMSContext):
+        print("DEFINITION_PARAMS")
         return self.visitChildren(ctx)
     
     def visitFormal(self, ctx:HelloParser.FormalContext):
+        return self.visitChildren(ctx)
+    
+    def visitCALL(self, ctx:HelloParser.CALLContext):
         return self.visitChildren(ctx)
     
     def visitEXPR_PARAMS(self, ctx:HelloParser.EXPR_PARAMSContext):
@@ -37,7 +44,11 @@ class CustomVisitor(HelloVisitor):
     def visitVOID_EXPR(self, ctx:HelloParser.VOID_EXPRContext):
         return self.visitChildren(ctx)
 
-    def visitDECLARE_TYPE(self, ctx:HelloParser.DECLARE_TYPEContext):
+    def visitDISPATCH(self, ctx:HelloParser.DISPATCHContext):
+        TypeNode(ctx.TYPE().getText())
+        return self.visitChildren(ctx)
+    
+    def visitBLOCK(self, ctx:HelloParser.BLOCKContext):
         return self.visitChildren(ctx)
     
     def visitTRUE(self, ctx:HelloParser.TRUEContext):
@@ -47,10 +58,29 @@ class CustomVisitor(HelloVisitor):
         return self.visitChildren(ctx)
 
     def visitSUM(self, ctx:HelloParser.SUMContext):
+        left_operand = ctx.expr(0)
+        right_operand = ctx.expr(1)
+
+        # Check if both operands are integers
+        if (self.is_integer(left_operand) and self.is_integer(right_operand)):
+            # Both operands are integers, sum is possible
+            return int(left_operand.getText()) + int(right_operand.getText())
+        else:
+            # At least one operand is not an integer, sum is not possible
+            self.errores.append("Error: Both operands of '+' must be integers.")
+
+        return self.visitChildren(ctx)
+    
+    def visitLET_PASS(self, ctx:HelloParser.LET_PASSContext):
         return self.visitChildren(ctx)
     
     def visitASSIGN_VAL(self, ctx:HelloParser.ASSIGN_VALContext):
-        return self.visitChildren(ctx)
+        print("asign", ctx.ID())
+        id = ctx.ID().getText()
+        exp = self.visit(ctx.expr())
+        node = AssignNode(id, exp)
+        print( ".-..-...- ", id, exp)
+        return node
 
     def visitMINUS(self, ctx:HelloParser.MINUSContext):
         return self.visitChildren(ctx)
@@ -58,22 +88,13 @@ class CustomVisitor(HelloVisitor):
     def visitDIVIDE(self, ctx:HelloParser.DIVIDEContext):
         return self.visitChildren(ctx)
     
-    def visitEXPR_NOT_KNOWN2(self, ctx:HelloParser.EXPR_NOT_KNOWN2Context):
-        return self.visitChildren(ctx)
-    
-    def visitDEFINITION_ASSIGN(self, ctx:HelloParser.DEFINITION_ASSIGNContext):
-        return self.visitChildren(ctx)
-
     def visitBIGGER(self, ctx:HelloParser.BIGGERContext):
         return self.visitChildren(ctx)
     
-    def visitEXPR_NOT_KNOWN1(self, ctx:HelloParser.EXPR_NOT_KNOWN1Context):
-        return self.visitChildren(ctx)
-
     def visitNOT(self, ctx:HelloParser.NOTContext):
         return self.visitChildren(ctx)
 
-    def visitOBJ_DEF(self, ctx:HelloParser.OBJ_DEFContext):
+    def visitNEWOBJ(self, ctx:HelloParser.OBJ_DEFContext):
         return self.visitChildren(ctx)
 
     def visitIF_CLAUSE(self, ctx:HelloParser.IF_CLAUSEContext):
@@ -97,5 +118,3 @@ class CustomVisitor(HelloVisitor):
     def visitINTEGER(self, ctx:HelloParser.INTEGERContext):
         return IntNode(ctx.INTEGER().getText())
     
-    def visitR(self, ctx:HelloParser.RContext):
-        return self.visitChildren(ctx)

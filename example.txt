@@ -1,3 +1,9 @@
 class Oli inherits Sip {
 a:INT<-5;
+    main(): SELF_TYPE {
+        {
+            s <- 4;
+            g <- 5;
+        }
+    };
 };

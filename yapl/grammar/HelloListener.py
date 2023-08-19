@@ -8,6 +8,15 @@ else:
 # This class defines a complete listener for a parse tree produced by HelloParser.
 class HelloListener(ParseTreeListener):
 
+    # Enter a parse tree produced by HelloParser#r.
+    def enterR(self, ctx:HelloParser.RContext):
+        pass
+
+    # Exit a parse tree produced by HelloParser#r.
+    def exitR(self, ctx:HelloParser.RContext):
+        pass
+
+
     # Enter a parse tree produced by HelloParser#program.
     def enterProgram(self, ctx:HelloParser.ProgramContext):
         pass
@@ -53,6 +62,15 @@ class HelloListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by HelloParser#CALL.
+    def enterCALL(self, ctx:HelloParser.CALLContext):
+        pass
+
+    # Exit a parse tree produced by HelloParser#CALL.
+    def exitCALL(self, ctx:HelloParser.CALLContext):
+        pass
+
+
     # Enter a parse tree produced by HelloParser#EXPR_PARAMS.
     def enterEXPR_PARAMS(self, ctx:HelloParser.EXPR_PARAMSContext):
         pass
@@ -89,12 +107,21 @@ class HelloListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by HelloParser#DECLARE_TYPE.
-    def enterDECLARE_TYPE(self, ctx:HelloParser.DECLARE_TYPEContext):
+    # Enter a parse tree produced by HelloParser#DISPATCH.
+    def enterDISPATCH(self, ctx:HelloParser.DISPATCHContext):
         pass
 
-    # Exit a parse tree produced by HelloParser#DECLARE_TYPE.
-    def exitDECLARE_TYPE(self, ctx:HelloParser.DECLARE_TYPEContext):
+    # Exit a parse tree produced by HelloParser#DISPATCH.
+    def exitDISPATCH(self, ctx:HelloParser.DISPATCHContext):
+        pass
+
+
+    # Enter a parse tree produced by HelloParser#BLOCK.
+    def enterBLOCK(self, ctx:HelloParser.BLOCKContext):
+        pass
+
+    # Exit a parse tree produced by HelloParser#BLOCK.
+    def exitBLOCK(self, ctx:HelloParser.BLOCKContext):
         pass
 
 
@@ -125,6 +152,15 @@ class HelloListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by HelloParser#LET_PASS.
+    def enterLET_PASS(self, ctx:HelloParser.LET_PASSContext):
+        pass
+
+    # Exit a parse tree produced by HelloParser#LET_PASS.
+    def exitLET_PASS(self, ctx:HelloParser.LET_PASSContext):
+        pass
+
+
     # Enter a parse tree produced by HelloParser#ASSIGN_VAL.
     def enterASSIGN_VAL(self, ctx:HelloParser.ASSIGN_VALContext):
         pass
@@ -152,39 +188,12 @@ class HelloListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by HelloParser#EXPR_NOT_KNOWN2.
-    def enterEXPR_NOT_KNOWN2(self, ctx:HelloParser.EXPR_NOT_KNOWN2Context):
-        pass
-
-    # Exit a parse tree produced by HelloParser#EXPR_NOT_KNOWN2.
-    def exitEXPR_NOT_KNOWN2(self, ctx:HelloParser.EXPR_NOT_KNOWN2Context):
-        pass
-
-
-    # Enter a parse tree produced by HelloParser#DEFINITION_ASSIGN.
-    def enterDEFINITION_ASSIGN(self, ctx:HelloParser.DEFINITION_ASSIGNContext):
-        pass
-
-    # Exit a parse tree produced by HelloParser#DEFINITION_ASSIGN.
-    def exitDEFINITION_ASSIGN(self, ctx:HelloParser.DEFINITION_ASSIGNContext):
-        pass
-
-
     # Enter a parse tree produced by HelloParser#BIGGER.
     def enterBIGGER(self, ctx:HelloParser.BIGGERContext):
         pass
 
     # Exit a parse tree produced by HelloParser#BIGGER.
     def exitBIGGER(self, ctx:HelloParser.BIGGERContext):
-        pass
-
-
-    # Enter a parse tree produced by HelloParser#EXPR_NOT_KNOWN1.
-    def enterEXPR_NOT_KNOWN1(self, ctx:HelloParser.EXPR_NOT_KNOWN1Context):
-        pass
-
-    # Exit a parse tree produced by HelloParser#EXPR_NOT_KNOWN1.
-    def exitEXPR_NOT_KNOWN1(self, ctx:HelloParser.EXPR_NOT_KNOWN1Context):
         pass
 
 
@@ -197,12 +206,12 @@ class HelloListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by HelloParser#OBJ_DEF.
-    def enterOBJ_DEF(self, ctx:HelloParser.OBJ_DEFContext):
+    # Enter a parse tree produced by HelloParser#NEWOBJ.
+    def enterNEWOBJ(self, ctx:HelloParser.NEWOBJContext):
         pass
 
-    # Exit a parse tree produced by HelloParser#OBJ_DEF.
-    def exitOBJ_DEF(self, ctx:HelloParser.OBJ_DEFContext):
+    # Exit a parse tree produced by HelloParser#NEWOBJ.
+    def exitNEWOBJ(self, ctx:HelloParser.NEWOBJContext):
         pass
 
 
@@ -266,15 +275,6 @@ class HelloListener(ParseTreeListener):
 
     # Exit a parse tree produced by HelloParser#INTEGER.
     def exitINTEGER(self, ctx:HelloParser.INTEGERContext):
-        pass
-
-
-    # Enter a parse tree produced by HelloParser#r.
-    def enterR(self, ctx:HelloParser.RContext):
-        pass
-
-    # Exit a parse tree produced by HelloParser#r.
-    def exitR(self, ctx:HelloParser.RContext):
         pass
 
 

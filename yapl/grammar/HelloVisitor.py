@@ -9,6 +9,11 @@ else:
 
 class HelloVisitor(ParseTreeVisitor):
 
+    # Visit a parse tree produced by HelloParser#r.
+    def visitR(self, ctx:HelloParser.RContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by HelloParser#program.
     def visitProgram(self, ctx:HelloParser.ProgramContext):
         return self.visitChildren(ctx)
@@ -34,6 +39,11 @@ class HelloVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by HelloParser#CALL.
+    def visitCALL(self, ctx:HelloParser.CALLContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by HelloParser#EXPR_PARAMS.
     def visitEXPR_PARAMS(self, ctx:HelloParser.EXPR_PARAMSContext):
         return self.visitChildren(ctx)
@@ -54,8 +64,13 @@ class HelloVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by HelloParser#DECLARE_TYPE.
-    def visitDECLARE_TYPE(self, ctx:HelloParser.DECLARE_TYPEContext):
+    # Visit a parse tree produced by HelloParser#DISPATCH.
+    def visitDISPATCH(self, ctx:HelloParser.DISPATCHContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by HelloParser#BLOCK.
+    def visitBLOCK(self, ctx:HelloParser.BLOCKContext):
         return self.visitChildren(ctx)
 
 
@@ -74,6 +89,11 @@ class HelloVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by HelloParser#LET_PASS.
+    def visitLET_PASS(self, ctx:HelloParser.LET_PASSContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by HelloParser#ASSIGN_VAL.
     def visitASSIGN_VAL(self, ctx:HelloParser.ASSIGN_VALContext):
         return self.visitChildren(ctx)
@@ -89,23 +109,8 @@ class HelloVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by HelloParser#EXPR_NOT_KNOWN2.
-    def visitEXPR_NOT_KNOWN2(self, ctx:HelloParser.EXPR_NOT_KNOWN2Context):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by HelloParser#DEFINITION_ASSIGN.
-    def visitDEFINITION_ASSIGN(self, ctx:HelloParser.DEFINITION_ASSIGNContext):
-        return self.visitChildren(ctx)
-
-
     # Visit a parse tree produced by HelloParser#BIGGER.
     def visitBIGGER(self, ctx:HelloParser.BIGGERContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by HelloParser#EXPR_NOT_KNOWN1.
-    def visitEXPR_NOT_KNOWN1(self, ctx:HelloParser.EXPR_NOT_KNOWN1Context):
         return self.visitChildren(ctx)
 
 
@@ -114,8 +119,8 @@ class HelloVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by HelloParser#OBJ_DEF.
-    def visitOBJ_DEF(self, ctx:HelloParser.OBJ_DEFContext):
+    # Visit a parse tree produced by HelloParser#NEWOBJ.
+    def visitNEWOBJ(self, ctx:HelloParser.NEWOBJContext):
         return self.visitChildren(ctx)
 
 
@@ -151,11 +156,6 @@ class HelloVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by HelloParser#INTEGER.
     def visitINTEGER(self, ctx:HelloParser.INTEGERContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by HelloParser#r.
-    def visitR(self, ctx:HelloParser.RContext):
         return self.visitChildren(ctx)
 
 

@@ -15,6 +15,11 @@ class BooleanNode(Node):
         self.token = token
         self.type = "boolean"
 
+class TypeNode(Node):
+    def __init__(self, token):
+        self.token = token
+        self.type = "type"
+
 class StringNode(Node):
     def __init__(self, token):
         self.token = token
@@ -25,6 +30,12 @@ class SumNode(Node):
         self.left = left
         self.right = right
         self.type = "sum"
+
+class AssignNode(Node):
+    def __init__(self, token, expr):
+        self.token = token
+        self.expr = expr
+        self.type = "assign"
 
 class IdNode(Node):
     def __init__(self, token):
