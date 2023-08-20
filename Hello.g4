@@ -41,6 +41,10 @@ AT: '@';
 ID : [a-z]([a-zA-Z0-9]|'_')*;
 TYPE : [A-Z]([a-zA-Z0-9]|'_')*;
 WS: [ \n\t\r] -> skip;
+LINE_COMMENT : '--' (~ '\n')* '\n'? -> skip;
+INIT_COMMENT: '(*';
+FINISH_COMMENT: '*)';
+COMMENT: INIT_COMMENT (COMMENT | .)*? FINISH_COMMENT -> skip;
 r  : program ;
 
 program: (class SEMICOLON)+ ;
@@ -57,7 +61,7 @@ expr:
         | WHILE expr LOOP expr POOL                                                             #WHILE_CLAUSE
         | LBRACKET (expr SEMICOLON)+ RBRACKET                                                   #BLOCK
         | LET ID COLON TYPE ( ASSIGN expr )? (COMMA ID COLON TYPE (ASSIGN expr)?)* IN expr      #LET_PASS
-        | (NEW TYPE)+                                                                           #NEWOBJ
+        | NEW TYPE                                                                              #NEWOBJ
         | ISVOID expr                                                                           #VOID_EXPR
         | expr PLUS expr                                                                        #SUM
         | expr MINUS expr                                                                       #MINUS

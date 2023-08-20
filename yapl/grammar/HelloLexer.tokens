@@ -37,6 +37,10 @@ AT=36
 ID=37
 TYPE=38
 WS=39
+LINE_COMMENT=40
+INIT_COMMENT=41
+FINISH_COMMENT=42
+COMMENT=43
 '='=17
 '<'=18
 '<='=19
@@ -57,3 +61,5 @@ WS=39
 ','=34
 '.'=35
 '@'=36
+'(*'=41
+'*)'=42

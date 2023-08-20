@@ -1,9 +1,12 @@
 class Oli inherits Sip {
-a:INT<-5;
     main(): SELF_TYPE {
         {
-            s <- 4;
-            g <- 5;
+            (let x : Int in
+                {
+                    x <- num1 + num2;
+                }
+            );
         }
     };
+    a:INT<-5;
 };
