@@ -44,8 +44,9 @@ class ClassNode(Node):
         self.type = "class"
 
 class FormalNode(Node):
-    def __init__(self, token):
+    def __init__(self, token, type):
         self.token = token
+        self.type = type
         self.type = "formal"
 
 class SumNode(Node):
@@ -147,10 +148,16 @@ class ProgramNode(Node):
         self.token = token
         self.type = "program"
 
-class LetPassNode(Node):
-    def __init__(self, token, expresions, expr):
+class FormalAssignNode(Node):
+    def __init__(self, token, type, expr):
         self.token = token
-        self.expresions = expresions
+        self.type = type
+        self.expr = expr
+        self.type = "formalAssign"    
+
+class LetPassNode(Node):
+    def __init__(self, formalAssign, expr):
+        self.formalAssign = formalAssign
         self.expr = expr
         self.type = "letPass"
 

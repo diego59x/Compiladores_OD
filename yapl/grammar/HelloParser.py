@@ -10,77 +10,78 @@ else:
 
 def serializedATN():
     return [
-        4,1,43,199,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,1,0,1,
-        0,1,1,1,1,1,1,4,1,18,8,1,11,1,12,1,19,1,2,1,2,1,2,1,2,3,2,26,8,2,
-        1,2,1,2,1,2,1,2,5,2,32,8,2,10,2,12,2,35,9,2,1,2,1,2,1,3,1,3,1,3,
-        1,3,1,3,5,3,44,8,3,10,3,12,3,47,9,3,3,3,49,8,3,1,3,1,3,1,3,1,3,1,
-        3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,3,3,63,8,3,3,3,65,8,3,1,4,1,4,1,4,
-        1,4,1,5,1,5,1,5,1,5,1,5,1,5,5,5,77,8,5,10,5,12,5,80,9,5,3,5,82,8,
-        5,1,5,1,5,1,5,1,5,1,5,1,5,1,5,1,5,1,5,1,5,1,5,1,5,1,5,1,5,1,5,1,
-        5,1,5,1,5,1,5,4,5,103,8,5,11,5,12,5,104,1,5,1,5,1,5,1,5,1,5,1,5,
-        1,5,1,5,3,5,115,8,5,1,5,1,5,1,5,1,5,1,5,1,5,3,5,123,8,5,5,5,125,
-        8,5,10,5,12,5,128,9,5,1,5,1,5,1,5,1,5,1,5,1,5,1,5,1,5,1,5,1,5,1,
-        5,1,5,1,5,1,5,1,5,1,5,1,5,1,5,1,5,1,5,1,5,1,5,1,5,1,5,1,5,3,5,155,
-        8,5,1,5,1,5,1,5,1,5,1,5,1,5,1,5,1,5,1,5,1,5,1,5,1,5,1,5,1,5,1,5,
-        1,5,1,5,1,5,1,5,1,5,1,5,1,5,1,5,1,5,1,5,1,5,1,5,1,5,1,5,1,5,5,5,
-        187,8,5,10,5,12,5,190,9,5,3,5,192,8,5,5,5,194,8,5,10,5,12,5,197,
-        9,5,1,5,0,1,10,6,0,2,4,6,8,10,0,0,230,0,12,1,0,0,0,2,17,1,0,0,0,
-        4,21,1,0,0,0,6,64,1,0,0,0,8,66,1,0,0,0,10,154,1,0,0,0,12,13,3,2,
-        1,0,13,1,1,0,0,0,14,15,3,4,2,0,15,16,5,28,0,0,16,18,1,0,0,0,17,14,
-        1,0,0,0,18,19,1,0,0,0,19,17,1,0,0,0,19,20,1,0,0,0,20,3,1,0,0,0,21,
-        22,5,1,0,0,22,25,5,38,0,0,23,24,5,2,0,0,24,26,5,38,0,0,25,23,1,0,
-        0,0,25,26,1,0,0,0,26,27,1,0,0,0,27,33,5,26,0,0,28,29,3,6,3,0,29,
-        30,5,28,0,0,30,32,1,0,0,0,31,28,1,0,0,0,32,35,1,0,0,0,33,31,1,0,
-        0,0,33,34,1,0,0,0,34,36,1,0,0,0,35,33,1,0,0,0,36,37,5,27,0,0,37,
-        5,1,0,0,0,38,39,5,37,0,0,39,48,5,24,0,0,40,45,3,8,4,0,41,42,5,34,
-        0,0,42,44,3,8,4,0,43,41,1,0,0,0,44,47,1,0,0,0,45,43,1,0,0,0,45,46,
-        1,0,0,0,46,49,1,0,0,0,47,45,1,0,0,0,48,40,1,0,0,0,48,49,1,0,0,0,
-        49,50,1,0,0,0,50,51,5,25,0,0,51,52,5,33,0,0,52,53,5,38,0,0,53,54,
-        5,26,0,0,54,55,3,10,5,0,55,56,5,27,0,0,56,65,1,0,0,0,57,58,5,37,
-        0,0,58,59,5,33,0,0,59,62,5,38,0,0,60,61,5,31,0,0,61,63,3,10,5,0,
-        62,60,1,0,0,0,62,63,1,0,0,0,63,65,1,0,0,0,64,38,1,0,0,0,64,57,1,
-        0,0,0,65,7,1,0,0,0,66,67,5,37,0,0,67,68,5,33,0,0,68,69,5,38,0,0,
-        69,9,1,0,0,0,70,71,6,5,-1,0,71,72,5,37,0,0,72,81,5,24,0,0,73,78,
-        3,10,5,0,74,75,5,34,0,0,75,77,3,10,5,0,76,74,1,0,0,0,77,80,1,0,0,
-        0,78,76,1,0,0,0,78,79,1,0,0,0,79,82,1,0,0,0,80,78,1,0,0,0,81,73,
-        1,0,0,0,81,82,1,0,0,0,82,83,1,0,0,0,83,155,5,25,0,0,84,85,5,5,0,
-        0,85,86,3,10,5,0,86,87,5,13,0,0,87,88,3,10,5,0,88,89,5,7,0,0,89,
-        90,3,10,5,0,90,91,5,6,0,0,91,155,1,0,0,0,92,93,5,8,0,0,93,94,3,10,
-        5,0,94,95,5,9,0,0,95,96,3,10,5,0,96,97,5,10,0,0,97,155,1,0,0,0,98,
-        102,5,26,0,0,99,100,3,10,5,0,100,101,5,28,0,0,101,103,1,0,0,0,102,
-        99,1,0,0,0,103,104,1,0,0,0,104,102,1,0,0,0,104,105,1,0,0,0,105,106,
-        1,0,0,0,106,107,5,27,0,0,107,155,1,0,0,0,108,109,5,11,0,0,109,110,
-        5,37,0,0,110,111,5,33,0,0,111,114,5,38,0,0,112,113,5,31,0,0,113,
-        115,3,10,5,0,114,112,1,0,0,0,114,115,1,0,0,0,115,126,1,0,0,0,116,
-        117,5,34,0,0,117,118,5,37,0,0,118,119,5,33,0,0,119,122,5,38,0,0,
-        120,121,5,31,0,0,121,123,3,10,5,0,122,120,1,0,0,0,122,123,1,0,0,
-        0,123,125,1,0,0,0,124,116,1,0,0,0,125,128,1,0,0,0,126,124,1,0,0,
-        0,126,127,1,0,0,0,127,129,1,0,0,0,128,126,1,0,0,0,129,130,5,12,0,
-        0,130,155,3,10,5,19,131,132,5,14,0,0,132,155,5,38,0,0,133,134,5,
-        15,0,0,134,155,3,10,5,17,135,136,5,32,0,0,136,155,3,10,5,12,137,
-        138,5,16,0,0,138,139,5,24,0,0,139,140,3,10,5,0,140,141,5,25,0,0,
-        141,155,1,0,0,0,142,143,5,24,0,0,143,144,3,10,5,0,144,145,5,25,0,
-        0,145,155,1,0,0,0,146,155,5,37,0,0,147,155,5,4,0,0,148,155,5,3,0,
-        0,149,155,5,22,0,0,150,155,5,23,0,0,151,152,5,37,0,0,152,153,5,31,
-        0,0,153,155,3,10,5,1,154,70,1,0,0,0,154,84,1,0,0,0,154,92,1,0,0,
-        0,154,98,1,0,0,0,154,108,1,0,0,0,154,131,1,0,0,0,154,133,1,0,0,0,
-        154,135,1,0,0,0,154,137,1,0,0,0,154,142,1,0,0,0,154,146,1,0,0,0,
-        154,147,1,0,0,0,154,148,1,0,0,0,154,149,1,0,0,0,154,150,1,0,0,0,
-        154,151,1,0,0,0,155,195,1,0,0,0,156,157,10,16,0,0,157,158,5,29,0,
-        0,158,194,3,10,5,17,159,160,10,15,0,0,160,161,5,30,0,0,161,194,3,
-        10,5,16,162,163,10,14,0,0,163,164,5,21,0,0,164,194,3,10,5,15,165,
-        166,10,13,0,0,166,167,5,20,0,0,167,194,3,10,5,14,168,169,10,11,0,
-        0,169,170,5,18,0,0,170,194,3,10,5,12,171,172,10,10,0,0,172,173,5,
-        19,0,0,173,194,3,10,5,11,174,175,10,9,0,0,175,176,5,17,0,0,176,194,
-        3,10,5,10,177,178,10,24,0,0,178,179,5,36,0,0,179,180,5,38,0,0,180,
-        181,1,0,0,0,181,182,5,35,0,0,182,191,5,37,0,0,183,188,3,10,5,0,184,
-        185,5,34,0,0,185,187,3,10,5,0,186,184,1,0,0,0,187,190,1,0,0,0,188,
-        186,1,0,0,0,188,189,1,0,0,0,189,192,1,0,0,0,190,188,1,0,0,0,191,
-        183,1,0,0,0,191,192,1,0,0,0,192,194,1,0,0,0,193,156,1,0,0,0,193,
-        159,1,0,0,0,193,162,1,0,0,0,193,165,1,0,0,0,193,168,1,0,0,0,193,
-        171,1,0,0,0,193,174,1,0,0,0,193,177,1,0,0,0,194,197,1,0,0,0,195,
-        193,1,0,0,0,195,196,1,0,0,0,196,11,1,0,0,0,197,195,1,0,0,0,18,19,
-        25,33,45,48,62,64,78,81,104,114,122,126,154,188,191,193,195
+        4,1,43,203,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,
+        6,1,0,1,0,1,1,1,1,1,1,4,1,20,8,1,11,1,12,1,21,1,2,1,2,1,2,1,2,3,
+        2,28,8,2,1,2,1,2,1,2,1,2,5,2,34,8,2,10,2,12,2,37,9,2,1,2,1,2,1,3,
+        1,3,1,3,1,3,1,3,5,3,46,8,3,10,3,12,3,49,9,3,3,3,51,8,3,1,3,1,3,1,
+        3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,3,3,65,8,3,3,3,67,8,3,1,4,
+        1,4,1,4,1,4,1,5,1,5,1,5,1,5,1,5,3,5,78,8,5,1,6,1,6,1,6,1,6,1,6,1,
+        6,5,6,86,8,6,10,6,12,6,89,9,6,3,6,91,8,6,1,6,1,6,1,6,1,6,1,6,1,6,
+        1,6,1,6,1,6,1,6,1,6,1,6,1,6,1,6,1,6,1,6,1,6,1,6,1,6,4,6,112,8,6,
+        11,6,12,6,113,1,6,1,6,1,6,1,6,1,6,1,6,5,6,122,8,6,10,6,12,6,125,
+        9,6,1,6,1,6,1,6,1,6,1,6,1,6,1,6,1,6,1,6,1,6,1,6,1,6,1,6,1,6,1,6,
+        1,6,1,6,1,6,1,6,1,6,1,6,1,6,1,6,1,6,1,6,1,6,3,6,153,8,6,1,6,1,6,
+        1,6,1,6,1,6,1,6,1,6,1,6,1,6,1,6,1,6,1,6,1,6,1,6,1,6,1,6,1,6,1,6,
+        1,6,1,6,1,6,1,6,1,6,1,6,3,6,179,8,6,1,6,1,6,1,6,1,6,1,6,1,6,5,6,
+        187,8,6,10,6,12,6,190,9,6,5,6,192,8,6,10,6,12,6,195,9,6,1,6,5,6,
+        198,8,6,10,6,12,6,201,9,6,1,6,0,1,12,7,0,2,4,6,8,10,12,0,0,233,0,
+        14,1,0,0,0,2,19,1,0,0,0,4,23,1,0,0,0,6,66,1,0,0,0,8,68,1,0,0,0,10,
+        72,1,0,0,0,12,152,1,0,0,0,14,15,3,2,1,0,15,1,1,0,0,0,16,17,3,4,2,
+        0,17,18,5,28,0,0,18,20,1,0,0,0,19,16,1,0,0,0,20,21,1,0,0,0,21,19,
+        1,0,0,0,21,22,1,0,0,0,22,3,1,0,0,0,23,24,5,1,0,0,24,27,5,38,0,0,
+        25,26,5,2,0,0,26,28,5,38,0,0,27,25,1,0,0,0,27,28,1,0,0,0,28,29,1,
+        0,0,0,29,35,5,26,0,0,30,31,3,6,3,0,31,32,5,28,0,0,32,34,1,0,0,0,
+        33,30,1,0,0,0,34,37,1,0,0,0,35,33,1,0,0,0,35,36,1,0,0,0,36,38,1,
+        0,0,0,37,35,1,0,0,0,38,39,5,27,0,0,39,5,1,0,0,0,40,41,5,37,0,0,41,
+        50,5,24,0,0,42,47,3,8,4,0,43,44,5,34,0,0,44,46,3,8,4,0,45,43,1,0,
+        0,0,46,49,1,0,0,0,47,45,1,0,0,0,47,48,1,0,0,0,48,51,1,0,0,0,49,47,
+        1,0,0,0,50,42,1,0,0,0,50,51,1,0,0,0,51,52,1,0,0,0,52,53,5,25,0,0,
+        53,54,5,33,0,0,54,55,5,38,0,0,55,56,5,26,0,0,56,57,3,12,6,0,57,58,
+        5,27,0,0,58,67,1,0,0,0,59,60,5,37,0,0,60,61,5,33,0,0,61,64,5,38,
+        0,0,62,63,5,31,0,0,63,65,3,12,6,0,64,62,1,0,0,0,64,65,1,0,0,0,65,
+        67,1,0,0,0,66,40,1,0,0,0,66,59,1,0,0,0,67,7,1,0,0,0,68,69,5,37,0,
+        0,69,70,5,33,0,0,70,71,5,38,0,0,71,9,1,0,0,0,72,73,5,37,0,0,73,74,
+        5,33,0,0,74,77,5,38,0,0,75,76,5,31,0,0,76,78,3,12,6,0,77,75,1,0,
+        0,0,77,78,1,0,0,0,78,11,1,0,0,0,79,80,6,6,-1,0,80,81,5,37,0,0,81,
+        90,5,24,0,0,82,87,3,12,6,0,83,84,5,34,0,0,84,86,3,12,6,0,85,83,1,
+        0,0,0,86,89,1,0,0,0,87,85,1,0,0,0,87,88,1,0,0,0,88,91,1,0,0,0,89,
+        87,1,0,0,0,90,82,1,0,0,0,90,91,1,0,0,0,91,92,1,0,0,0,92,153,5,25,
+        0,0,93,94,5,5,0,0,94,95,3,12,6,0,95,96,5,13,0,0,96,97,3,12,6,0,97,
+        98,5,7,0,0,98,99,3,12,6,0,99,100,5,6,0,0,100,153,1,0,0,0,101,102,
+        5,8,0,0,102,103,3,12,6,0,103,104,5,9,0,0,104,105,3,12,6,0,105,106,
+        5,10,0,0,106,153,1,0,0,0,107,111,5,26,0,0,108,109,3,12,6,0,109,110,
+        5,28,0,0,110,112,1,0,0,0,111,108,1,0,0,0,112,113,1,0,0,0,113,111,
+        1,0,0,0,113,114,1,0,0,0,114,115,1,0,0,0,115,116,5,27,0,0,116,153,
+        1,0,0,0,117,118,5,11,0,0,118,123,3,10,5,0,119,120,5,34,0,0,120,122,
+        3,10,5,0,121,119,1,0,0,0,122,125,1,0,0,0,123,121,1,0,0,0,123,124,
+        1,0,0,0,124,126,1,0,0,0,125,123,1,0,0,0,126,127,5,12,0,0,127,128,
+        3,12,6,19,128,153,1,0,0,0,129,130,5,14,0,0,130,153,5,38,0,0,131,
+        132,5,15,0,0,132,153,3,12,6,17,133,134,5,32,0,0,134,153,3,12,6,12,
+        135,136,5,16,0,0,136,137,5,24,0,0,137,138,3,12,6,0,138,139,5,25,
+        0,0,139,153,1,0,0,0,140,141,5,24,0,0,141,142,3,12,6,0,142,143,5,
+        25,0,0,143,153,1,0,0,0,144,153,5,37,0,0,145,153,5,4,0,0,146,153,
+        5,3,0,0,147,153,5,22,0,0,148,153,5,23,0,0,149,150,5,37,0,0,150,151,
+        5,31,0,0,151,153,3,12,6,1,152,79,1,0,0,0,152,93,1,0,0,0,152,101,
+        1,0,0,0,152,107,1,0,0,0,152,117,1,0,0,0,152,129,1,0,0,0,152,131,
+        1,0,0,0,152,133,1,0,0,0,152,135,1,0,0,0,152,140,1,0,0,0,152,144,
+        1,0,0,0,152,145,1,0,0,0,152,146,1,0,0,0,152,147,1,0,0,0,152,148,
+        1,0,0,0,152,149,1,0,0,0,153,199,1,0,0,0,154,155,10,16,0,0,155,156,
+        5,29,0,0,156,198,3,12,6,17,157,158,10,15,0,0,158,159,5,30,0,0,159,
+        198,3,12,6,16,160,161,10,14,0,0,161,162,5,21,0,0,162,198,3,12,6,
+        15,163,164,10,13,0,0,164,165,5,20,0,0,165,198,3,12,6,14,166,167,
+        10,11,0,0,167,168,5,18,0,0,168,198,3,12,6,12,169,170,10,10,0,0,170,
+        171,5,19,0,0,171,198,3,12,6,11,172,173,10,9,0,0,173,174,5,17,0,0,
+        174,198,3,12,6,10,175,178,10,24,0,0,176,177,5,36,0,0,177,179,5,38,
+        0,0,178,176,1,0,0,0,178,179,1,0,0,0,179,180,1,0,0,0,180,181,5,35,
+        0,0,181,182,5,37,0,0,182,193,5,24,0,0,183,188,3,12,6,0,184,185,5,
+        34,0,0,185,187,3,12,6,0,186,184,1,0,0,0,187,190,1,0,0,0,188,186,
+        1,0,0,0,188,189,1,0,0,0,189,192,1,0,0,0,190,188,1,0,0,0,191,183,
+        1,0,0,0,192,195,1,0,0,0,193,191,1,0,0,0,193,194,1,0,0,0,194,196,
+        1,0,0,0,195,193,1,0,0,0,196,198,5,25,0,0,197,154,1,0,0,0,197,157,
+        1,0,0,0,197,160,1,0,0,0,197,163,1,0,0,0,197,166,1,0,0,0,197,169,
+        1,0,0,0,197,172,1,0,0,0,197,175,1,0,0,0,198,201,1,0,0,0,199,197,
+        1,0,0,0,199,200,1,0,0,0,200,13,1,0,0,0,201,199,1,0,0,0,18,21,27,
+        35,47,50,64,66,77,87,90,113,123,152,178,188,193,197,199
     ]
 
 class HelloParser ( Parser ):
@@ -116,9 +117,11 @@ class HelloParser ( Parser ):
     RULE_class = 2
     RULE_feature = 3
     RULE_formal = 4
-    RULE_expr = 5
+    RULE_formalAssign = 5
+    RULE_expr = 6
 
-    ruleNames =  [ "r", "program", "class", "feature", "formal", "expr" ]
+    ruleNames =  [ "r", "program", "class", "feature", "formal", "formalAssign", 
+                   "expr" ]
 
     EOF = Token.EOF
     CLASS=1
@@ -211,7 +214,7 @@ class HelloParser ( Parser ):
         self.enterRule(localctx, 0, self.RULE_r)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 12
+            self.state = 14
             self.program()
         except RecognitionException as re:
             localctx.exception = re
@@ -269,15 +272,15 @@ class HelloParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 17 
+            self.state = 19 
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while True:
-                self.state = 14
+                self.state = 16
                 self.class_()
-                self.state = 15
+                self.state = 17
                 self.match(HelloParser.SEMICOLON)
-                self.state = 19 
+                self.state = 21 
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
                 if not (_la==1):
@@ -357,35 +360,35 @@ class HelloParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 21
+            self.state = 23
             self.match(HelloParser.CLASS)
-            self.state = 22
+            self.state = 24
             self.match(HelloParser.TYPE)
-            self.state = 25
+            self.state = 27
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             if _la==2:
-                self.state = 23
+                self.state = 25
                 self.match(HelloParser.INHERITS)
-                self.state = 24
+                self.state = 26
                 self.match(HelloParser.TYPE)
 
 
-            self.state = 27
+            self.state = 29
             self.match(HelloParser.LBRACKET)
-            self.state = 33
+            self.state = 35
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while _la==37:
-                self.state = 28
+                self.state = 30
                 self.feature()
-                self.state = 29
+                self.state = 31
                 self.match(HelloParser.SEMICOLON)
-                self.state = 35
+                self.state = 37
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
 
-            self.state = 36
+            self.state = 38
             self.match(HelloParser.RBRACKET)
         except RecognitionException as re:
             localctx.exception = re
@@ -503,66 +506,66 @@ class HelloParser ( Parser ):
         self.enterRule(localctx, 6, self.RULE_feature)
         self._la = 0 # Token type
         try:
-            self.state = 64
+            self.state = 66
             self._errHandler.sync(self)
             la_ = self._interp.adaptivePredict(self._input,6,self._ctx)
             if la_ == 1:
                 localctx = HelloParser.DEFINITION_METHOD_PARAMSContext(self, localctx)
                 self.enterOuterAlt(localctx, 1)
-                self.state = 38
+                self.state = 40
                 self.match(HelloParser.ID)
-                self.state = 39
+                self.state = 41
                 self.match(HelloParser.LPAREN)
-                self.state = 48
+                self.state = 50
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
                 if _la==37:
-                    self.state = 40
+                    self.state = 42
                     self.formal()
-                    self.state = 45
+                    self.state = 47
                     self._errHandler.sync(self)
                     _la = self._input.LA(1)
                     while _la==34:
-                        self.state = 41
+                        self.state = 43
                         self.match(HelloParser.COMMA)
-                        self.state = 42
+                        self.state = 44
                         self.formal()
-                        self.state = 47
+                        self.state = 49
                         self._errHandler.sync(self)
                         _la = self._input.LA(1)
 
 
 
-                self.state = 50
-                self.match(HelloParser.RPAREN)
-                self.state = 51
-                self.match(HelloParser.COLON)
                 self.state = 52
-                self.match(HelloParser.TYPE)
+                self.match(HelloParser.RPAREN)
                 self.state = 53
-                self.match(HelloParser.LBRACKET)
+                self.match(HelloParser.COLON)
                 self.state = 54
-                self.expr(0)
+                self.match(HelloParser.TYPE)
                 self.state = 55
+                self.match(HelloParser.LBRACKET)
+                self.state = 56
+                self.expr(0)
+                self.state = 57
                 self.match(HelloParser.RBRACKET)
                 pass
 
             elif la_ == 2:
                 localctx = HelloParser.DEFINITION_PARAMSContext(self, localctx)
                 self.enterOuterAlt(localctx, 2)
-                self.state = 57
-                self.match(HelloParser.ID)
-                self.state = 58
-                self.match(HelloParser.COLON)
                 self.state = 59
+                self.match(HelloParser.ID)
+                self.state = 60
+                self.match(HelloParser.COLON)
+                self.state = 61
                 self.match(HelloParser.TYPE)
-                self.state = 62
+                self.state = 64
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
                 if _la==31:
-                    self.state = 60
+                    self.state = 62
                     self.match(HelloParser.ASSIGN)
-                    self.state = 61
+                    self.state = 63
                     self.expr(0)
 
 
@@ -620,12 +623,87 @@ class HelloParser ( Parser ):
         self.enterRule(localctx, 8, self.RULE_formal)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 66
-            self.match(HelloParser.ID)
-            self.state = 67
-            self.match(HelloParser.COLON)
             self.state = 68
+            self.match(HelloParser.ID)
+            self.state = 69
+            self.match(HelloParser.COLON)
+            self.state = 70
             self.match(HelloParser.TYPE)
+        except RecognitionException as re:
+            localctx.exception = re
+            self._errHandler.reportError(self, re)
+            self._errHandler.recover(self, re)
+        finally:
+            self.exitRule()
+        return localctx
+
+
+    class FormalAssignContext(ParserRuleContext):
+        __slots__ = 'parser'
+
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
+            self.parser = parser
+
+        def ID(self):
+            return self.getToken(HelloParser.ID, 0)
+
+        def COLON(self):
+            return self.getToken(HelloParser.COLON, 0)
+
+        def TYPE(self):
+            return self.getToken(HelloParser.TYPE, 0)
+
+        def ASSIGN(self):
+            return self.getToken(HelloParser.ASSIGN, 0)
+
+        def expr(self):
+            return self.getTypedRuleContext(HelloParser.ExprContext,0)
+
+
+        def getRuleIndex(self):
+            return HelloParser.RULE_formalAssign
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterFormalAssign" ):
+                listener.enterFormalAssign(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitFormalAssign" ):
+                listener.exitFormalAssign(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitFormalAssign" ):
+                return visitor.visitFormalAssign(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+
+
+    def formalAssign(self):
+
+        localctx = HelloParser.FormalAssignContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 10, self.RULE_formalAssign)
+        self._la = 0 # Token type
+        try:
+            self.enterOuterAlt(localctx, 1)
+            self.state = 72
+            self.match(HelloParser.ID)
+            self.state = 73
+            self.match(HelloParser.COLON)
+            self.state = 74
+            self.match(HelloParser.TYPE)
+            self.state = 77
+            self._errHandler.sync(self)
+            _la = self._input.LA(1)
+            if _la==31:
+                self.state = 75
+                self.match(HelloParser.ASSIGN)
+                self.state = 76
+                self.expr(0)
+
+
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -822,6 +900,10 @@ class HelloParser ( Parser ):
             return self.getToken(HelloParser.DOT, 0)
         def ID(self):
             return self.getToken(HelloParser.ID, 0)
+        def LPAREN(self):
+            return self.getToken(HelloParser.LPAREN, 0)
+        def RPAREN(self):
+            return self.getToken(HelloParser.RPAREN, 0)
         def AT(self):
             return self.getToken(HelloParser.AT, 0)
         def TYPE(self):
@@ -980,34 +1062,17 @@ class HelloParser ( Parser ):
 
         def LET(self):
             return self.getToken(HelloParser.LET, 0)
-        def ID(self, i:int=None):
+        def formalAssign(self, i:int=None):
             if i is None:
-                return self.getTokens(HelloParser.ID)
+                return self.getTypedRuleContexts(HelloParser.FormalAssignContext)
             else:
-                return self.getToken(HelloParser.ID, i)
-        def COLON(self, i:int=None):
-            if i is None:
-                return self.getTokens(HelloParser.COLON)
-            else:
-                return self.getToken(HelloParser.COLON, i)
-        def TYPE(self, i:int=None):
-            if i is None:
-                return self.getTokens(HelloParser.TYPE)
-            else:
-                return self.getToken(HelloParser.TYPE, i)
+                return self.getTypedRuleContext(HelloParser.FormalAssignContext,i)
+
         def IN(self):
             return self.getToken(HelloParser.IN, 0)
-        def expr(self, i:int=None):
-            if i is None:
-                return self.getTypedRuleContexts(HelloParser.ExprContext)
-            else:
-                return self.getTypedRuleContext(HelloParser.ExprContext,i)
+        def expr(self):
+            return self.getTypedRuleContext(HelloParser.ExprContext,0)
 
-        def ASSIGN(self, i:int=None):
-            if i is None:
-                return self.getTokens(HelloParser.ASSIGN)
-            else:
-                return self.getToken(HelloParser.ASSIGN, i)
         def COMMA(self, i:int=None):
             if i is None:
                 return self.getTokens(HelloParser.COMMA)
@@ -1400,44 +1465,44 @@ class HelloParser ( Parser ):
         _parentState = self.state
         localctx = HelloParser.ExprContext(self, self._ctx, _parentState)
         _prevctx = localctx
-        _startState = 10
-        self.enterRecursionRule(localctx, 10, self.RULE_expr, _p)
+        _startState = 12
+        self.enterRecursionRule(localctx, 12, self.RULE_expr, _p)
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 154
+            self.state = 152
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,13,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input,12,self._ctx)
             if la_ == 1:
                 localctx = HelloParser.CALLContext(self, localctx)
                 self._ctx = localctx
                 _prevctx = localctx
 
-                self.state = 71
+                self.state = 80
                 self.match(HelloParser.ID)
-                self.state = 72
-                self.match(HelloParser.LPAREN)
                 self.state = 81
+                self.match(HelloParser.LPAREN)
+                self.state = 90
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
                 if (((_la) & ~0x3f) == 0 and ((1 << _la) & 141830506808) != 0):
-                    self.state = 73
+                    self.state = 82
                     self.expr(0)
-                    self.state = 78
+                    self.state = 87
                     self._errHandler.sync(self)
                     _la = self._input.LA(1)
                     while _la==34:
-                        self.state = 74
+                        self.state = 83
                         self.match(HelloParser.COMMA)
-                        self.state = 75
+                        self.state = 84
                         self.expr(0)
-                        self.state = 80
+                        self.state = 89
                         self._errHandler.sync(self)
                         _la = self._input.LA(1)
 
 
 
-                self.state = 83
+                self.state = 92
                 self.match(HelloParser.RPAREN)
                 pass
 
@@ -1445,19 +1510,19 @@ class HelloParser ( Parser ):
                 localctx = HelloParser.IF_CLAUSEContext(self, localctx)
                 self._ctx = localctx
                 _prevctx = localctx
-                self.state = 84
+                self.state = 93
                 self.match(HelloParser.IF)
-                self.state = 85
+                self.state = 94
                 self.expr(0)
-                self.state = 86
+                self.state = 95
                 self.match(HelloParser.THEN)
-                self.state = 87
+                self.state = 96
                 self.expr(0)
-                self.state = 88
+                self.state = 97
                 self.match(HelloParser.ELSE)
-                self.state = 89
+                self.state = 98
                 self.expr(0)
-                self.state = 90
+                self.state = 99
                 self.match(HelloParser.FI)
                 pass
 
@@ -1465,15 +1530,15 @@ class HelloParser ( Parser ):
                 localctx = HelloParser.WHILE_CLAUSEContext(self, localctx)
                 self._ctx = localctx
                 _prevctx = localctx
-                self.state = 92
+                self.state = 101
                 self.match(HelloParser.WHILE)
-                self.state = 93
+                self.state = 102
                 self.expr(0)
-                self.state = 94
+                self.state = 103
                 self.match(HelloParser.LOOP)
-                self.state = 95
+                self.state = 104
                 self.expr(0)
-                self.state = 96
+                self.state = 105
                 self.match(HelloParser.POOL)
                 pass
 
@@ -1481,23 +1546,23 @@ class HelloParser ( Parser ):
                 localctx = HelloParser.BLOCKContext(self, localctx)
                 self._ctx = localctx
                 _prevctx = localctx
-                self.state = 98
+                self.state = 107
                 self.match(HelloParser.LBRACKET)
-                self.state = 102 
+                self.state = 111 
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
                 while True:
-                    self.state = 99
+                    self.state = 108
                     self.expr(0)
-                    self.state = 100
+                    self.state = 109
                     self.match(HelloParser.SEMICOLON)
-                    self.state = 104 
+                    self.state = 113 
                     self._errHandler.sync(self)
                     _la = self._input.LA(1)
                     if not ((((_la) & ~0x3f) == 0 and ((1 << _la) & 141830506808) != 0)):
                         break
 
-                self.state = 106
+                self.state = 115
                 self.match(HelloParser.RBRACKET)
                 pass
 
@@ -1505,53 +1570,25 @@ class HelloParser ( Parser ):
                 localctx = HelloParser.LET_PASSContext(self, localctx)
                 self._ctx = localctx
                 _prevctx = localctx
-                self.state = 108
+                self.state = 117
                 self.match(HelloParser.LET)
-                self.state = 109
-                self.match(HelloParser.ID)
-                self.state = 110
-                self.match(HelloParser.COLON)
-                self.state = 111
-                self.match(HelloParser.TYPE)
-                self.state = 114
-                self._errHandler.sync(self)
-                _la = self._input.LA(1)
-                if _la==31:
-                    self.state = 112
-                    self.match(HelloParser.ASSIGN)
-                    self.state = 113
-                    self.expr(0)
-
-
-                self.state = 126
+                self.state = 118
+                self.formalAssign()
+                self.state = 123
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
                 while _la==34:
-                    self.state = 116
-                    self.match(HelloParser.COMMA)
-                    self.state = 117
-                    self.match(HelloParser.ID)
-                    self.state = 118
-                    self.match(HelloParser.COLON)
                     self.state = 119
-                    self.match(HelloParser.TYPE)
-                    self.state = 122
-                    self._errHandler.sync(self)
-                    _la = self._input.LA(1)
-                    if _la==31:
-                        self.state = 120
-                        self.match(HelloParser.ASSIGN)
-                        self.state = 121
-                        self.expr(0)
-
-
-                    self.state = 128
+                    self.match(HelloParser.COMMA)
+                    self.state = 120
+                    self.formalAssign()
+                    self.state = 125
                     self._errHandler.sync(self)
                     _la = self._input.LA(1)
 
-                self.state = 129
+                self.state = 126
                 self.match(HelloParser.IN)
-                self.state = 130
+                self.state = 127
                 self.expr(19)
                 pass
 
@@ -1559,9 +1596,9 @@ class HelloParser ( Parser ):
                 localctx = HelloParser.NEWOBJContext(self, localctx)
                 self._ctx = localctx
                 _prevctx = localctx
-                self.state = 131
+                self.state = 129
                 self.match(HelloParser.NEW)
-                self.state = 132
+                self.state = 130
                 self.match(HelloParser.TYPE)
                 pass
 
@@ -1569,9 +1606,9 @@ class HelloParser ( Parser ):
                 localctx = HelloParser.VOID_EXPRContext(self, localctx)
                 self._ctx = localctx
                 _prevctx = localctx
-                self.state = 133
+                self.state = 131
                 self.match(HelloParser.ISVOID)
-                self.state = 134
+                self.state = 132
                 self.expr(17)
                 pass
 
@@ -1579,9 +1616,9 @@ class HelloParser ( Parser ):
                 localctx = HelloParser.TILDEContext(self, localctx)
                 self._ctx = localctx
                 _prevctx = localctx
-                self.state = 135
+                self.state = 133
                 self.match(HelloParser.TILDE)
-                self.state = 136
+                self.state = 134
                 self.expr(12)
                 pass
 
@@ -1589,13 +1626,13 @@ class HelloParser ( Parser ):
                 localctx = HelloParser.NOTContext(self, localctx)
                 self._ctx = localctx
                 _prevctx = localctx
-                self.state = 137
+                self.state = 135
                 self.match(HelloParser.NOT)
-                self.state = 138
+                self.state = 136
                 self.match(HelloParser.LPAREN)
-                self.state = 139
+                self.state = 137
                 self.expr(0)
-                self.state = 140
+                self.state = 138
                 self.match(HelloParser.RPAREN)
                 pass
 
@@ -1603,11 +1640,11 @@ class HelloParser ( Parser ):
                 localctx = HelloParser.EXPR_PARAMSContext(self, localctx)
                 self._ctx = localctx
                 _prevctx = localctx
-                self.state = 142
+                self.state = 140
                 self.match(HelloParser.LPAREN)
-                self.state = 143
+                self.state = 141
                 self.expr(0)
-                self.state = 144
+                self.state = 142
                 self.match(HelloParser.RPAREN)
                 pass
 
@@ -1615,7 +1652,7 @@ class HelloParser ( Parser ):
                 localctx = HelloParser.IDContext(self, localctx)
                 self._ctx = localctx
                 _prevctx = localctx
-                self.state = 146
+                self.state = 144
                 self.match(HelloParser.ID)
                 pass
 
@@ -1623,7 +1660,7 @@ class HelloParser ( Parser ):
                 localctx = HelloParser.INTEGERContext(self, localctx)
                 self._ctx = localctx
                 _prevctx = localctx
-                self.state = 147
+                self.state = 145
                 self.match(HelloParser.INTEGER)
                 pass
 
@@ -1631,7 +1668,7 @@ class HelloParser ( Parser ):
                 localctx = HelloParser.STRINGContext(self, localctx)
                 self._ctx = localctx
                 _prevctx = localctx
-                self.state = 148
+                self.state = 146
                 self.match(HelloParser.STRING)
                 pass
 
@@ -1639,7 +1676,7 @@ class HelloParser ( Parser ):
                 localctx = HelloParser.TRUEContext(self, localctx)
                 self._ctx = localctx
                 _prevctx = localctx
-                self.state = 149
+                self.state = 147
                 self.match(HelloParser.TRUE)
                 pass
 
@@ -1647,7 +1684,7 @@ class HelloParser ( Parser ):
                 localctx = HelloParser.FALSEContext(self, localctx)
                 self._ctx = localctx
                 _prevctx = localctx
-                self.state = 150
+                self.state = 148
                 self.match(HelloParser.FALSE)
                 pass
 
@@ -1655,17 +1692,17 @@ class HelloParser ( Parser ):
                 localctx = HelloParser.ASSIGN_VALContext(self, localctx)
                 self._ctx = localctx
                 _prevctx = localctx
-                self.state = 151
+                self.state = 149
                 self.match(HelloParser.ID)
-                self.state = 152
+                self.state = 150
                 self.match(HelloParser.ASSIGN)
-                self.state = 153
+                self.state = 151
                 self.expr(1)
                 pass
 
 
             self._ctx.stop = self._input.LT(-1)
-            self.state = 195
+            self.state = 199
             self._errHandler.sync(self)
             _alt = self._interp.adaptivePredict(self._input,17,self._ctx)
             while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
@@ -1673,141 +1710,151 @@ class HelloParser ( Parser ):
                     if self._parseListeners is not None:
                         self.triggerExitRuleEvent()
                     _prevctx = localctx
-                    self.state = 193
+                    self.state = 197
                     self._errHandler.sync(self)
                     la_ = self._interp.adaptivePredict(self._input,16,self._ctx)
                     if la_ == 1:
                         localctx = HelloParser.SUMContext(self, HelloParser.ExprContext(self, _parentctx, _parentState))
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expr)
-                        self.state = 156
+                        self.state = 154
                         if not self.precpred(self._ctx, 16):
                             from antlr4.error.Errors import FailedPredicateException
                             raise FailedPredicateException(self, "self.precpred(self._ctx, 16)")
-                        self.state = 157
+                        self.state = 155
                         self.match(HelloParser.PLUS)
-                        self.state = 158
+                        self.state = 156
                         self.expr(17)
                         pass
 
                     elif la_ == 2:
                         localctx = HelloParser.MINUSContext(self, HelloParser.ExprContext(self, _parentctx, _parentState))
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expr)
-                        self.state = 159
+                        self.state = 157
                         if not self.precpred(self._ctx, 15):
                             from antlr4.error.Errors import FailedPredicateException
                             raise FailedPredicateException(self, "self.precpred(self._ctx, 15)")
-                        self.state = 160
+                        self.state = 158
                         self.match(HelloParser.MINUS)
-                        self.state = 161
+                        self.state = 159
                         self.expr(16)
                         pass
 
                     elif la_ == 3:
                         localctx = HelloParser.TIMESContext(self, HelloParser.ExprContext(self, _parentctx, _parentState))
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expr)
-                        self.state = 162
+                        self.state = 160
                         if not self.precpred(self._ctx, 14):
                             from antlr4.error.Errors import FailedPredicateException
                             raise FailedPredicateException(self, "self.precpred(self._ctx, 14)")
-                        self.state = 163
+                        self.state = 161
                         self.match(HelloParser.TIMES)
-                        self.state = 164
+                        self.state = 162
                         self.expr(15)
                         pass
 
                     elif la_ == 4:
                         localctx = HelloParser.DIVIDEContext(self, HelloParser.ExprContext(self, _parentctx, _parentState))
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expr)
-                        self.state = 165
+                        self.state = 163
                         if not self.precpred(self._ctx, 13):
                             from antlr4.error.Errors import FailedPredicateException
                             raise FailedPredicateException(self, "self.precpred(self._ctx, 13)")
-                        self.state = 166
+                        self.state = 164
                         self.match(HelloParser.DIVIDE)
-                        self.state = 167
+                        self.state = 165
                         self.expr(14)
                         pass
 
                     elif la_ == 5:
                         localctx = HelloParser.BIGGERContext(self, HelloParser.ExprContext(self, _parentctx, _parentState))
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expr)
-                        self.state = 168
+                        self.state = 166
                         if not self.precpred(self._ctx, 11):
                             from antlr4.error.Errors import FailedPredicateException
                             raise FailedPredicateException(self, "self.precpred(self._ctx, 11)")
-                        self.state = 169
+                        self.state = 167
                         self.match(HelloParser.BIGGER)
-                        self.state = 170
+                        self.state = 168
                         self.expr(12)
                         pass
 
                     elif la_ == 6:
                         localctx = HelloParser.BIGGEREQUALSContext(self, HelloParser.ExprContext(self, _parentctx, _parentState))
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expr)
-                        self.state = 171
+                        self.state = 169
                         if not self.precpred(self._ctx, 10):
                             from antlr4.error.Errors import FailedPredicateException
                             raise FailedPredicateException(self, "self.precpred(self._ctx, 10)")
-                        self.state = 172
+                        self.state = 170
                         self.match(HelloParser.BIGGEREQUALS)
-                        self.state = 173
+                        self.state = 171
                         self.expr(11)
                         pass
 
                     elif la_ == 7:
                         localctx = HelloParser.EQUALSContext(self, HelloParser.ExprContext(self, _parentctx, _parentState))
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expr)
-                        self.state = 174
+                        self.state = 172
                         if not self.precpred(self._ctx, 9):
                             from antlr4.error.Errors import FailedPredicateException
                             raise FailedPredicateException(self, "self.precpred(self._ctx, 9)")
-                        self.state = 175
+                        self.state = 173
                         self.match(HelloParser.EQUALS)
-                        self.state = 176
+                        self.state = 174
                         self.expr(10)
                         pass
 
                     elif la_ == 8:
                         localctx = HelloParser.DISPATCHContext(self, HelloParser.ExprContext(self, _parentctx, _parentState))
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expr)
-                        self.state = 177
+                        self.state = 175
                         if not self.precpred(self._ctx, 24):
                             from antlr4.error.Errors import FailedPredicateException
                             raise FailedPredicateException(self, "self.precpred(self._ctx, 24)")
-
                         self.state = 178
-                        self.match(HelloParser.AT)
-                        self.state = 179
-                        self.match(HelloParser.TYPE)
-                        self.state = 181
-                        self.match(HelloParser.DOT)
-                        self.state = 182
-                        self.match(HelloParser.ID)
-                        self.state = 191
                         self._errHandler.sync(self)
-                        la_ = self._interp.adaptivePredict(self._input,15,self._ctx)
-                        if la_ == 1:
+                        _la = self._input.LA(1)
+                        if _la==36:
+                            self.state = 176
+                            self.match(HelloParser.AT)
+                            self.state = 177
+                            self.match(HelloParser.TYPE)
+
+
+                        self.state = 180
+                        self.match(HelloParser.DOT)
+                        self.state = 181
+                        self.match(HelloParser.ID)
+                        self.state = 182
+                        self.match(HelloParser.LPAREN)
+                        self.state = 193
+                        self._errHandler.sync(self)
+                        _la = self._input.LA(1)
+                        while (((_la) & ~0x3f) == 0 and ((1 << _la) & 141830506808) != 0):
                             self.state = 183
                             self.expr(0)
                             self.state = 188
                             self._errHandler.sync(self)
-                            _alt = self._interp.adaptivePredict(self._input,14,self._ctx)
-                            while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
-                                if _alt==1:
-                                    self.state = 184
-                                    self.match(HelloParser.COMMA)
-                                    self.state = 185
-                                    self.expr(0) 
+                            _la = self._input.LA(1)
+                            while _la==34:
+                                self.state = 184
+                                self.match(HelloParser.COMMA)
+                                self.state = 185
+                                self.expr(0)
                                 self.state = 190
                                 self._errHandler.sync(self)
-                                _alt = self._interp.adaptivePredict(self._input,14,self._ctx)
+                                _la = self._input.LA(1)
 
+                            self.state = 195
+                            self._errHandler.sync(self)
+                            _la = self._input.LA(1)
 
-
+                        self.state = 196
+                        self.match(HelloParser.RPAREN)
                         pass
 
              
-                self.state = 197
+                self.state = 201
                 self._errHandler.sync(self)
                 _alt = self._interp.adaptivePredict(self._input,17,self._ctx)
 
@@ -1824,7 +1871,7 @@ class HelloParser ( Parser ):
     def sempred(self, localctx:RuleContext, ruleIndex:int, predIndex:int):
         if self._predicates == None:
             self._predicates = dict()
-        self._predicates[5] = self.expr_sempred
+        self._predicates[6] = self.expr_sempred
         pred = self._predicates.get(ruleIndex, None)
         if pred is None:
             raise Exception("No predicate with index:" + str(ruleIndex))

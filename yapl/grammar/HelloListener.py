@@ -62,6 +62,15 @@ class HelloListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by HelloParser#formalAssign.
+    def enterFormalAssign(self, ctx:HelloParser.FormalAssignContext):
+        pass
+
+    # Exit a parse tree produced by HelloParser#formalAssign.
+    def exitFormalAssign(self, ctx:HelloParser.FormalAssignContext):
+        pass
+
+
     # Enter a parse tree produced by HelloParser#CALL.
     def enterCALL(self, ctx:HelloParser.CALLContext):
         pass

@@ -39,6 +39,11 @@ class HelloVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by HelloParser#formalAssign.
+    def visitFormalAssign(self, ctx:HelloParser.FormalAssignContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by HelloParser#CALL.
     def visitCALL(self, ctx:HelloParser.CALLContext):
         return self.visitChildren(ctx)

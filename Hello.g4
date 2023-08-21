@@ -53,14 +53,15 @@ feature:
         ID LPAREN (formal (COMMA formal)* )? RPAREN COLON TYPE LBRACKET expr RBRACKET           #DEFINITION_METHOD_PARAMS
         | ID COLON TYPE (ASSIGN expr)?                                                          #DEFINITION_PARAMS ;
 formal: ID COLON TYPE;
+formalAssign: ID COLON TYPE ( ASSIGN expr )?;
 
 expr:
-        expr(AT TYPE) DOT ID( ( expr(COMMA expr)* ))?                                           #DISPATCH
+        expr (AT TYPE)? DOT ID LPAREN ( expr (COMMA expr)* )* RPAREN                            #DISPATCH
         | ID LPAREN ( expr (COMMA expr)* )? RPAREN                                              #CALL
         | IF expr THEN expr ELSE expr FI                                                        #IF_CLAUSE
         | WHILE expr LOOP expr POOL                                                             #WHILE_CLAUSE
         | LBRACKET (expr SEMICOLON)+ RBRACKET                                                   #BLOCK
-        | LET ID COLON TYPE ( ASSIGN expr )? (COMMA ID COLON TYPE (ASSIGN expr)?)* IN expr      #LET_PASS
+        | LET formalAssign (COMMA formalAssign)* IN expr                                        #LET_PASS
         | NEW TYPE                                                                              #NEWOBJ
         | ISVOID expr                                                                           #VOID_EXPR
         | expr PLUS expr                                                                        #SUM
