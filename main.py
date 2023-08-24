@@ -4,6 +4,7 @@ from yapl.grammar.HelloParser import HelloParser
 from yapl.grammar.HelloVisitor import HelloVisitor
 
 from CustomVisitor import *
+from TableVisitor import *
 
 file_path = './example.txt'
 file_content = ''
@@ -31,6 +32,9 @@ tree = parser.program()
 
 # Now you have the parse tree, and you can traverse it as needed
 # For example, you can use the built-in visitor or listener classes from ANTLR
+
+# Instantiate the visitor and visit the parse tree for the symbols table
+# visitor = TableVisitor()
 
 # Instantiate the visitor and visit the parse tree
 visitor = CustomVisitor()
