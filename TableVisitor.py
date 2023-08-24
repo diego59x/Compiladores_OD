@@ -166,6 +166,12 @@ class TableVisitor(HelloVisitor):
         id = ctx.ID().getText()
         exp = self.visit(ctx.expr())
         node = AssignNode(id, exp)
+        # self.symbol_table.add_local_variable(
+        #     name=id, 
+        #     value=exp, 
+        #     scope='local', 
+        #     type=type(exp)
+        # )
         return node
 
     def visitMINUS(self, ctx:HelloParser.MINUSContext):
