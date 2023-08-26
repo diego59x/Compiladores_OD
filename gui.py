@@ -11,12 +11,13 @@ def save_to_file():
         display_error("Error: por favor, no envíe archivos vacíos.")
         return
 
-    filename = "output.txt"
+    # filename = "output.txt"
+    filename = file_selector.get()
     with open(filename, "w") as file:
         file.write(content)
 
     try:
-        result = subprocess.check_output(['python', 'external_script.py', filename], text=True)
+        result = subprocess.check_output(['python', 'main.py', filename], text=True)
         display_error(result.strip())
     except subprocess.CalledProcessError as e:
         display_error(f"Error: {e.output}")
