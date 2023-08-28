@@ -6,6 +6,7 @@ from generated.GrammarVisitor import GrammarVisitor
 from utils.Node import *
 from utils.SymbolsTable import SymbolsTable
 from utils.ErrorTable import ErrorTable
+from utils.Validations import *
 
 TYPES = {
     'Int': int,
@@ -248,6 +249,12 @@ class CustomVisitor(GrammarVisitor):
         id = ctx.ID().getText()
         exp = self.visit(ctx.expr())
         node = AssignNode(id, exp)
+        # !TODO VALIDAR SI SE ASIGNA UNA VARIABLE
+        print('aquiiiiii, ', id, exp, type(exp))
+        exp_value = exp.token if exp is not None else ''
+        valid, message = validateAssignVal(self.current_scope, self.formal_params, self.symbols_table.getTable(), id, exp_value)
+        if not valid:
+            self.errors_table.addCustomError(f'{ctx.start.line}:{ctx.start.column}', message)
         return node
 
     def visitMINUS(self, ctx:GrammarParser.MINUSContext):

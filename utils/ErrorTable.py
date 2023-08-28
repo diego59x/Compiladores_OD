@@ -33,5 +33,8 @@ class ErrorTable():
     def addVarAlreadyExistsError(self, line, varName):
         error = f'Error in line {line}: { varName } already exists in the current scope.'
         self.errors.append(error)
+    def addCustomError(self, line, message):
+        error = f'Error in line {line}: { message }'
+        self.errors.append(error)
     
     
