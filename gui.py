@@ -11,13 +11,12 @@ def save_to_file():
         display_error("Error: por favor, no envíe archivos vacíos.")
         return
 
-    # filename = "output.txt"
-    filename = file_selector.get()
-    with open(filename, "w") as file:
+    selected_file = file_selector.get()
+    with open(f'./tests/{selected_file}', 'w') as file:
         file.write(content)
 
     try:
-        result = subprocess.check_output(['python', 'main.py', filename], text=True)
+        result = subprocess.check_output(['python', 'main.py', selected_file], text=True)
         display_error(result.strip())
     except subprocess.CalledProcessError as e:
         display_error(f"Error: {e.output}")
@@ -25,7 +24,7 @@ def save_to_file():
 def clear_input():
     entry.delete("1.0", tk.END)
     file_selector.set("New")
-    # clear_error()
+    clear_error()
 
 def display_error(message):
     error_display.configure(state=tk.NORMAL)
@@ -37,6 +36,11 @@ def display_error(message):
     else:
         error_display.insert(tk.END, message, "error")
 
+    error_display.configure(state=tk.DISABLED)
+
+def clear_error():
+    error_display.configure(state=tk.NORMAL)
+    error_display.delete("1.0", tk.END)
     error_display.configure(state=tk.DISABLED)
 
 def on_hover(event):
@@ -59,7 +63,7 @@ def load_selected_file(event):
     if selected_file == "New":
         entry.delete("1.0", tk.END)
         return
-    filepath = os.path.join('pruebas', selected_file)
+    filepath = os.path.join('tests', selected_file)
     with open(filepath, 'r') as file:
         content = file.read()
     entry.delete("1.0", tk.END)
@@ -82,7 +86,7 @@ entry.pack(fill=tk.BOTH, expand=True, side=tk.LEFT, anchor="nw", padx=(10,5))
 entry.bind("<KeyRelease>", on_key_release)
 
 # Top Input Label and Text Box
-tk.Label(root, text="Input", bg="#272822", fg="white", font=label_font).pack(pady=(0,2), anchor="nw", side=tk.TOP)
+# tk.Label(root, text="Input", bg="#272822", fg="white", font=label_font).pack(pady=(0,2), anchor="nw", side=tk.TOP)
 top_entry = tk.Text(root, wrap=tk.WORD, bg="#272822", fg="white", font=default_font, height=10, insertbackground="white")
 top_entry.pack(fill=tk.X, anchor="nw", padx=(5,10))
 
@@ -94,7 +98,7 @@ for btn_text, btn_command in [("Compile", save_to_file), ("Clear", clear_input),
     btn.bind("<Leave>", on_leave)
 
 # Combobox to select files
-files_in_directory = ["New"] + [f for f in os.listdir('pruebas') if os.path.isfile(os.path.join('pruebas', f))]
+files_in_directory = ["New"] + [f for f in os.listdir('tests') if os.path.isfile(os.path.join('tests', f))]
 file_selector_label = tk.Label(root, text="Selecciona un archivo:", bg="#272822", fg="white", font=label_font)
 file_selector_label.pack(pady=(10,2), anchor="nw", side=tk.TOP)
 file_selector = ttk.Combobox(root, values=files_in_directory)

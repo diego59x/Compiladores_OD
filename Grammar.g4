@@ -1,5 +1,5 @@
-// Define a grammar called Hello
-grammar Hello;
+// Define a grammar called Grammar
+grammar Grammar;
 
 CLASS: 'class' | 'CLASS';
 INHERITS: 'inherits' | 'INHERITS';
@@ -47,8 +47,8 @@ FINISH_COMMENT: '*)';
 COMMENT: INIT_COMMENT (COMMENT | .)*? FINISH_COMMENT -> skip;
 r  : program ;
 
-program: (class SEMICOLON)+ ;
-class: CLASS TYPE (INHERITS TYPE)? LBRACKET (feature SEMICOLON)* RBRACKET ; 
+program: (classDef SEMICOLON)+ ;
+classDef: CLASS TYPE (INHERITS TYPE)? LBRACKET (feature SEMICOLON)* RBRACKET                    #CLASS_DEFINITION;               
 feature: 
         ID LPAREN (formal (COMMA formal)* )? RPAREN COLON TYPE LBRACKET expr RBRACKET           #DEFINITION_METHOD_PARAMS
         | ID COLON TYPE (ASSIGN expr)?                                                          #DEFINITION_PARAMS ;

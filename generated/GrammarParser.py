@@ -1,4 +1,4 @@
-# Generated from ./Hello.g4 by ANTLR 4.13.0
+# Generated from Grammar.g4 by ANTLR 4.13.0
 # encoding: utf-8
 from antlr4 import *
 from io import StringIO
@@ -84,9 +84,9 @@ def serializedATN():
         35,47,50,64,66,77,87,90,113,123,152,178,188,193,197,199
     ]
 
-class HelloParser ( Parser ):
+class GrammarParser ( Parser ):
 
-    grammarFileName = "Hello.g4"
+    grammarFileName = "Grammar.g4"
 
     atn = ATNDeserializer().deserialize(serializedATN())
 
@@ -114,13 +114,13 @@ class HelloParser ( Parser ):
 
     RULE_r = 0
     RULE_program = 1
-    RULE_class = 2
+    RULE_classDef = 2
     RULE_feature = 3
     RULE_formal = 4
     RULE_formalAssign = 5
     RULE_expr = 6
 
-    ruleNames =  [ "r", "program", "class", "feature", "formal", "formalAssign", 
+    ruleNames =  [ "r", "program", "classDef", "feature", "formal", "formalAssign", 
                    "expr" ]
 
     EOF = Token.EOF
@@ -185,11 +185,11 @@ class HelloParser ( Parser ):
             self.parser = parser
 
         def program(self):
-            return self.getTypedRuleContext(HelloParser.ProgramContext,0)
+            return self.getTypedRuleContext(GrammarParser.ProgramContext,0)
 
 
         def getRuleIndex(self):
-            return HelloParser.RULE_r
+            return GrammarParser.RULE_r
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterR" ):
@@ -210,7 +210,7 @@ class HelloParser ( Parser ):
 
     def r(self):
 
-        localctx = HelloParser.RContext(self, self._ctx, self.state)
+        localctx = GrammarParser.RContext(self, self._ctx, self.state)
         self.enterRule(localctx, 0, self.RULE_r)
         try:
             self.enterOuterAlt(localctx, 1)
@@ -232,21 +232,21 @@ class HelloParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def class_(self, i:int=None):
+        def classDef(self, i:int=None):
             if i is None:
-                return self.getTypedRuleContexts(HelloParser.ClassContext)
+                return self.getTypedRuleContexts(GrammarParser.ClassDefContext)
             else:
-                return self.getTypedRuleContext(HelloParser.ClassContext,i)
+                return self.getTypedRuleContext(GrammarParser.ClassDefContext,i)
 
 
         def SEMICOLON(self, i:int=None):
             if i is None:
-                return self.getTokens(HelloParser.SEMICOLON)
+                return self.getTokens(GrammarParser.SEMICOLON)
             else:
-                return self.getToken(HelloParser.SEMICOLON, i)
+                return self.getToken(GrammarParser.SEMICOLON, i)
 
         def getRuleIndex(self):
-            return HelloParser.RULE_program
+            return GrammarParser.RULE_program
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterProgram" ):
@@ -267,7 +267,7 @@ class HelloParser ( Parser ):
 
     def program(self):
 
-        localctx = HelloParser.ProgramContext(self, self._ctx, self.state)
+        localctx = GrammarParser.ProgramContext(self, self._ctx, self.state)
         self.enterRule(localctx, 2, self.RULE_program)
         self._la = 0 # Token type
         try:
@@ -277,9 +277,9 @@ class HelloParser ( Parser ):
             _la = self._input.LA(1)
             while True:
                 self.state = 16
-                self.class_()
+                self.classDef()
                 self.state = 17
-                self.match(HelloParser.SEMICOLON)
+                self.match(GrammarParser.SEMICOLON)
                 self.state = 21 
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
@@ -295,87 +295,94 @@ class HelloParser ( Parser ):
         return localctx
 
 
-    class ClassContext(ParserRuleContext):
+    class ClassDefContext(ParserRuleContext):
         __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def CLASS(self):
-            return self.getToken(HelloParser.CLASS, 0)
 
+        def getRuleIndex(self):
+            return GrammarParser.RULE_classDef
+
+     
+        def copyFrom(self, ctx:ParserRuleContext):
+            super().copyFrom(ctx)
+
+
+
+    class CLASS_DEFINITIONContext(ClassDefContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a GrammarParser.ClassDefContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def CLASS(self):
+            return self.getToken(GrammarParser.CLASS, 0)
         def TYPE(self, i:int=None):
             if i is None:
-                return self.getTokens(HelloParser.TYPE)
+                return self.getTokens(GrammarParser.TYPE)
             else:
-                return self.getToken(HelloParser.TYPE, i)
-
+                return self.getToken(GrammarParser.TYPE, i)
         def LBRACKET(self):
-            return self.getToken(HelloParser.LBRACKET, 0)
-
+            return self.getToken(GrammarParser.LBRACKET, 0)
         def RBRACKET(self):
-            return self.getToken(HelloParser.RBRACKET, 0)
-
+            return self.getToken(GrammarParser.RBRACKET, 0)
         def INHERITS(self):
-            return self.getToken(HelloParser.INHERITS, 0)
-
+            return self.getToken(GrammarParser.INHERITS, 0)
         def feature(self, i:int=None):
             if i is None:
-                return self.getTypedRuleContexts(HelloParser.FeatureContext)
+                return self.getTypedRuleContexts(GrammarParser.FeatureContext)
             else:
-                return self.getTypedRuleContext(HelloParser.FeatureContext,i)
-
+                return self.getTypedRuleContext(GrammarParser.FeatureContext,i)
 
         def SEMICOLON(self, i:int=None):
             if i is None:
-                return self.getTokens(HelloParser.SEMICOLON)
+                return self.getTokens(GrammarParser.SEMICOLON)
             else:
-                return self.getToken(HelloParser.SEMICOLON, i)
-
-        def getRuleIndex(self):
-            return HelloParser.RULE_class
+                return self.getToken(GrammarParser.SEMICOLON, i)
 
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterClass" ):
-                listener.enterClass(self)
+            if hasattr( listener, "enterCLASS_DEFINITION" ):
+                listener.enterCLASS_DEFINITION(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitClass" ):
-                listener.exitClass(self)
+            if hasattr( listener, "exitCLASS_DEFINITION" ):
+                listener.exitCLASS_DEFINITION(self)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitClass" ):
-                return visitor.visitClass(self)
+            if hasattr( visitor, "visitCLASS_DEFINITION" ):
+                return visitor.visitCLASS_DEFINITION(self)
             else:
                 return visitor.visitChildren(self)
 
 
 
+    def classDef(self):
 
-    def class_(self):
-
-        localctx = HelloParser.ClassContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 4, self.RULE_class)
+        localctx = GrammarParser.ClassDefContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 4, self.RULE_classDef)
         self._la = 0 # Token type
         try:
+            localctx = GrammarParser.CLASS_DEFINITIONContext(self, localctx)
             self.enterOuterAlt(localctx, 1)
             self.state = 23
-            self.match(HelloParser.CLASS)
+            self.match(GrammarParser.CLASS)
             self.state = 24
-            self.match(HelloParser.TYPE)
+            self.match(GrammarParser.TYPE)
             self.state = 27
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             if _la==2:
                 self.state = 25
-                self.match(HelloParser.INHERITS)
+                self.match(GrammarParser.INHERITS)
                 self.state = 26
-                self.match(HelloParser.TYPE)
+                self.match(GrammarParser.TYPE)
 
 
             self.state = 29
-            self.match(HelloParser.LBRACKET)
+            self.match(GrammarParser.LBRACKET)
             self.state = 35
             self._errHandler.sync(self)
             _la = self._input.LA(1)
@@ -383,13 +390,13 @@ class HelloParser ( Parser ):
                 self.state = 30
                 self.feature()
                 self.state = 31
-                self.match(HelloParser.SEMICOLON)
+                self.match(GrammarParser.SEMICOLON)
                 self.state = 37
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
 
             self.state = 38
-            self.match(HelloParser.RBRACKET)
+            self.match(GrammarParser.RBRACKET)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -408,7 +415,7 @@ class HelloParser ( Parser ):
 
 
         def getRuleIndex(self):
-            return HelloParser.RULE_feature
+            return GrammarParser.RULE_feature
 
      
         def copyFrom(self, ctx:ParserRuleContext):
@@ -418,38 +425,38 @@ class HelloParser ( Parser ):
 
     class DEFINITION_METHOD_PARAMSContext(FeatureContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a HelloParser.FeatureContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a GrammarParser.FeatureContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def ID(self):
-            return self.getToken(HelloParser.ID, 0)
+            return self.getToken(GrammarParser.ID, 0)
         def LPAREN(self):
-            return self.getToken(HelloParser.LPAREN, 0)
+            return self.getToken(GrammarParser.LPAREN, 0)
         def RPAREN(self):
-            return self.getToken(HelloParser.RPAREN, 0)
+            return self.getToken(GrammarParser.RPAREN, 0)
         def COLON(self):
-            return self.getToken(HelloParser.COLON, 0)
+            return self.getToken(GrammarParser.COLON, 0)
         def TYPE(self):
-            return self.getToken(HelloParser.TYPE, 0)
+            return self.getToken(GrammarParser.TYPE, 0)
         def LBRACKET(self):
-            return self.getToken(HelloParser.LBRACKET, 0)
+            return self.getToken(GrammarParser.LBRACKET, 0)
         def expr(self):
-            return self.getTypedRuleContext(HelloParser.ExprContext,0)
+            return self.getTypedRuleContext(GrammarParser.ExprContext,0)
 
         def RBRACKET(self):
-            return self.getToken(HelloParser.RBRACKET, 0)
+            return self.getToken(GrammarParser.RBRACKET, 0)
         def formal(self, i:int=None):
             if i is None:
-                return self.getTypedRuleContexts(HelloParser.FormalContext)
+                return self.getTypedRuleContexts(GrammarParser.FormalContext)
             else:
-                return self.getTypedRuleContext(HelloParser.FormalContext,i)
+                return self.getTypedRuleContext(GrammarParser.FormalContext,i)
 
         def COMMA(self, i:int=None):
             if i is None:
-                return self.getTokens(HelloParser.COMMA)
+                return self.getTokens(GrammarParser.COMMA)
             else:
-                return self.getToken(HelloParser.COMMA, i)
+                return self.getToken(GrammarParser.COMMA, i)
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterDEFINITION_METHOD_PARAMS" ):
@@ -468,20 +475,20 @@ class HelloParser ( Parser ):
 
     class DEFINITION_PARAMSContext(FeatureContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a HelloParser.FeatureContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a GrammarParser.FeatureContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def ID(self):
-            return self.getToken(HelloParser.ID, 0)
+            return self.getToken(GrammarParser.ID, 0)
         def COLON(self):
-            return self.getToken(HelloParser.COLON, 0)
+            return self.getToken(GrammarParser.COLON, 0)
         def TYPE(self):
-            return self.getToken(HelloParser.TYPE, 0)
+            return self.getToken(GrammarParser.TYPE, 0)
         def ASSIGN(self):
-            return self.getToken(HelloParser.ASSIGN, 0)
+            return self.getToken(GrammarParser.ASSIGN, 0)
         def expr(self):
-            return self.getTypedRuleContext(HelloParser.ExprContext,0)
+            return self.getTypedRuleContext(GrammarParser.ExprContext,0)
 
 
         def enterRule(self, listener:ParseTreeListener):
@@ -502,7 +509,7 @@ class HelloParser ( Parser ):
 
     def feature(self):
 
-        localctx = HelloParser.FeatureContext(self, self._ctx, self.state)
+        localctx = GrammarParser.FeatureContext(self, self._ctx, self.state)
         self.enterRule(localctx, 6, self.RULE_feature)
         self._la = 0 # Token type
         try:
@@ -510,12 +517,12 @@ class HelloParser ( Parser ):
             self._errHandler.sync(self)
             la_ = self._interp.adaptivePredict(self._input,6,self._ctx)
             if la_ == 1:
-                localctx = HelloParser.DEFINITION_METHOD_PARAMSContext(self, localctx)
+                localctx = GrammarParser.DEFINITION_METHOD_PARAMSContext(self, localctx)
                 self.enterOuterAlt(localctx, 1)
                 self.state = 40
-                self.match(HelloParser.ID)
+                self.match(GrammarParser.ID)
                 self.state = 41
-                self.match(HelloParser.LPAREN)
+                self.match(GrammarParser.LPAREN)
                 self.state = 50
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
@@ -527,7 +534,7 @@ class HelloParser ( Parser ):
                     _la = self._input.LA(1)
                     while _la==34:
                         self.state = 43
-                        self.match(HelloParser.COMMA)
+                        self.match(GrammarParser.COMMA)
                         self.state = 44
                         self.formal()
                         self.state = 49
@@ -537,34 +544,34 @@ class HelloParser ( Parser ):
 
 
                 self.state = 52
-                self.match(HelloParser.RPAREN)
+                self.match(GrammarParser.RPAREN)
                 self.state = 53
-                self.match(HelloParser.COLON)
+                self.match(GrammarParser.COLON)
                 self.state = 54
-                self.match(HelloParser.TYPE)
+                self.match(GrammarParser.TYPE)
                 self.state = 55
-                self.match(HelloParser.LBRACKET)
+                self.match(GrammarParser.LBRACKET)
                 self.state = 56
                 self.expr(0)
                 self.state = 57
-                self.match(HelloParser.RBRACKET)
+                self.match(GrammarParser.RBRACKET)
                 pass
 
             elif la_ == 2:
-                localctx = HelloParser.DEFINITION_PARAMSContext(self, localctx)
+                localctx = GrammarParser.DEFINITION_PARAMSContext(self, localctx)
                 self.enterOuterAlt(localctx, 2)
                 self.state = 59
-                self.match(HelloParser.ID)
+                self.match(GrammarParser.ID)
                 self.state = 60
-                self.match(HelloParser.COLON)
+                self.match(GrammarParser.COLON)
                 self.state = 61
-                self.match(HelloParser.TYPE)
+                self.match(GrammarParser.TYPE)
                 self.state = 64
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
                 if _la==31:
                     self.state = 62
-                    self.match(HelloParser.ASSIGN)
+                    self.match(GrammarParser.ASSIGN)
                     self.state = 63
                     self.expr(0)
 
@@ -589,16 +596,16 @@ class HelloParser ( Parser ):
             self.parser = parser
 
         def ID(self):
-            return self.getToken(HelloParser.ID, 0)
+            return self.getToken(GrammarParser.ID, 0)
 
         def COLON(self):
-            return self.getToken(HelloParser.COLON, 0)
+            return self.getToken(GrammarParser.COLON, 0)
 
         def TYPE(self):
-            return self.getToken(HelloParser.TYPE, 0)
+            return self.getToken(GrammarParser.TYPE, 0)
 
         def getRuleIndex(self):
-            return HelloParser.RULE_formal
+            return GrammarParser.RULE_formal
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterFormal" ):
@@ -619,16 +626,16 @@ class HelloParser ( Parser ):
 
     def formal(self):
 
-        localctx = HelloParser.FormalContext(self, self._ctx, self.state)
+        localctx = GrammarParser.FormalContext(self, self._ctx, self.state)
         self.enterRule(localctx, 8, self.RULE_formal)
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 68
-            self.match(HelloParser.ID)
+            self.match(GrammarParser.ID)
             self.state = 69
-            self.match(HelloParser.COLON)
+            self.match(GrammarParser.COLON)
             self.state = 70
-            self.match(HelloParser.TYPE)
+            self.match(GrammarParser.TYPE)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -646,23 +653,23 @@ class HelloParser ( Parser ):
             self.parser = parser
 
         def ID(self):
-            return self.getToken(HelloParser.ID, 0)
+            return self.getToken(GrammarParser.ID, 0)
 
         def COLON(self):
-            return self.getToken(HelloParser.COLON, 0)
+            return self.getToken(GrammarParser.COLON, 0)
 
         def TYPE(self):
-            return self.getToken(HelloParser.TYPE, 0)
+            return self.getToken(GrammarParser.TYPE, 0)
 
         def ASSIGN(self):
-            return self.getToken(HelloParser.ASSIGN, 0)
+            return self.getToken(GrammarParser.ASSIGN, 0)
 
         def expr(self):
-            return self.getTypedRuleContext(HelloParser.ExprContext,0)
+            return self.getTypedRuleContext(GrammarParser.ExprContext,0)
 
 
         def getRuleIndex(self):
-            return HelloParser.RULE_formalAssign
+            return GrammarParser.RULE_formalAssign
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterFormalAssign" ):
@@ -683,23 +690,23 @@ class HelloParser ( Parser ):
 
     def formalAssign(self):
 
-        localctx = HelloParser.FormalAssignContext(self, self._ctx, self.state)
+        localctx = GrammarParser.FormalAssignContext(self, self._ctx, self.state)
         self.enterRule(localctx, 10, self.RULE_formalAssign)
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 72
-            self.match(HelloParser.ID)
+            self.match(GrammarParser.ID)
             self.state = 73
-            self.match(HelloParser.COLON)
+            self.match(GrammarParser.COLON)
             self.state = 74
-            self.match(HelloParser.TYPE)
+            self.match(GrammarParser.TYPE)
             self.state = 77
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             if _la==31:
                 self.state = 75
-                self.match(HelloParser.ASSIGN)
+                self.match(GrammarParser.ASSIGN)
                 self.state = 76
                 self.expr(0)
 
@@ -722,7 +729,7 @@ class HelloParser ( Parser ):
 
 
         def getRuleIndex(self):
-            return HelloParser.RULE_expr
+            return GrammarParser.RULE_expr
 
      
         def copyFrom(self, ctx:ParserRuleContext):
@@ -731,27 +738,27 @@ class HelloParser ( Parser ):
 
     class CALLContext(ExprContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a HelloParser.ExprContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a GrammarParser.ExprContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def ID(self):
-            return self.getToken(HelloParser.ID, 0)
+            return self.getToken(GrammarParser.ID, 0)
         def LPAREN(self):
-            return self.getToken(HelloParser.LPAREN, 0)
+            return self.getToken(GrammarParser.LPAREN, 0)
         def RPAREN(self):
-            return self.getToken(HelloParser.RPAREN, 0)
+            return self.getToken(GrammarParser.RPAREN, 0)
         def expr(self, i:int=None):
             if i is None:
-                return self.getTypedRuleContexts(HelloParser.ExprContext)
+                return self.getTypedRuleContexts(GrammarParser.ExprContext)
             else:
-                return self.getTypedRuleContext(HelloParser.ExprContext,i)
+                return self.getTypedRuleContext(GrammarParser.ExprContext,i)
 
         def COMMA(self, i:int=None):
             if i is None:
-                return self.getTokens(HelloParser.COMMA)
+                return self.getTokens(GrammarParser.COMMA)
             else:
-                return self.getToken(HelloParser.COMMA, i)
+                return self.getToken(GrammarParser.COMMA, i)
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterCALL" ):
@@ -770,17 +777,17 @@ class HelloParser ( Parser ):
 
     class EXPR_PARAMSContext(ExprContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a HelloParser.ExprContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a GrammarParser.ExprContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def LPAREN(self):
-            return self.getToken(HelloParser.LPAREN, 0)
+            return self.getToken(GrammarParser.LPAREN, 0)
         def expr(self):
-            return self.getTypedRuleContext(HelloParser.ExprContext,0)
+            return self.getTypedRuleContext(GrammarParser.ExprContext,0)
 
         def RPAREN(self):
-            return self.getToken(HelloParser.RPAREN, 0)
+            return self.getToken(GrammarParser.RPAREN, 0)
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterEXPR_PARAMS" ):
@@ -799,18 +806,18 @@ class HelloParser ( Parser ):
 
     class TIMESContext(ExprContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a HelloParser.ExprContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a GrammarParser.ExprContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def expr(self, i:int=None):
             if i is None:
-                return self.getTypedRuleContexts(HelloParser.ExprContext)
+                return self.getTypedRuleContexts(GrammarParser.ExprContext)
             else:
-                return self.getTypedRuleContext(HelloParser.ExprContext,i)
+                return self.getTypedRuleContext(GrammarParser.ExprContext,i)
 
         def TIMES(self):
-            return self.getToken(HelloParser.TIMES, 0)
+            return self.getToken(GrammarParser.TIMES, 0)
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterTIMES" ):
@@ -829,18 +836,18 @@ class HelloParser ( Parser ):
 
     class EQUALSContext(ExprContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a HelloParser.ExprContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a GrammarParser.ExprContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def expr(self, i:int=None):
             if i is None:
-                return self.getTypedRuleContexts(HelloParser.ExprContext)
+                return self.getTypedRuleContexts(GrammarParser.ExprContext)
             else:
-                return self.getTypedRuleContext(HelloParser.ExprContext,i)
+                return self.getTypedRuleContext(GrammarParser.ExprContext,i)
 
         def EQUALS(self):
-            return self.getToken(HelloParser.EQUALS, 0)
+            return self.getToken(GrammarParser.EQUALS, 0)
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterEQUALS" ):
@@ -859,14 +866,14 @@ class HelloParser ( Parser ):
 
     class VOID_EXPRContext(ExprContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a HelloParser.ExprContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a GrammarParser.ExprContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def ISVOID(self):
-            return self.getToken(HelloParser.ISVOID, 0)
+            return self.getToken(GrammarParser.ISVOID, 0)
         def expr(self):
-            return self.getTypedRuleContext(HelloParser.ExprContext,0)
+            return self.getTypedRuleContext(GrammarParser.ExprContext,0)
 
 
         def enterRule(self, listener:ParseTreeListener):
@@ -886,33 +893,33 @@ class HelloParser ( Parser ):
 
     class DISPATCHContext(ExprContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a HelloParser.ExprContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a GrammarParser.ExprContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def expr(self, i:int=None):
             if i is None:
-                return self.getTypedRuleContexts(HelloParser.ExprContext)
+                return self.getTypedRuleContexts(GrammarParser.ExprContext)
             else:
-                return self.getTypedRuleContext(HelloParser.ExprContext,i)
+                return self.getTypedRuleContext(GrammarParser.ExprContext,i)
 
         def DOT(self):
-            return self.getToken(HelloParser.DOT, 0)
+            return self.getToken(GrammarParser.DOT, 0)
         def ID(self):
-            return self.getToken(HelloParser.ID, 0)
+            return self.getToken(GrammarParser.ID, 0)
         def LPAREN(self):
-            return self.getToken(HelloParser.LPAREN, 0)
+            return self.getToken(GrammarParser.LPAREN, 0)
         def RPAREN(self):
-            return self.getToken(HelloParser.RPAREN, 0)
+            return self.getToken(GrammarParser.RPAREN, 0)
         def AT(self):
-            return self.getToken(HelloParser.AT, 0)
+            return self.getToken(GrammarParser.AT, 0)
         def TYPE(self):
-            return self.getToken(HelloParser.TYPE, 0)
+            return self.getToken(GrammarParser.TYPE, 0)
         def COMMA(self, i:int=None):
             if i is None:
-                return self.getTokens(HelloParser.COMMA)
+                return self.getTokens(GrammarParser.COMMA)
             else:
-                return self.getToken(HelloParser.COMMA, i)
+                return self.getToken(GrammarParser.COMMA, i)
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterDISPATCH" ):
@@ -931,25 +938,25 @@ class HelloParser ( Parser ):
 
     class BLOCKContext(ExprContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a HelloParser.ExprContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a GrammarParser.ExprContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def LBRACKET(self):
-            return self.getToken(HelloParser.LBRACKET, 0)
+            return self.getToken(GrammarParser.LBRACKET, 0)
         def RBRACKET(self):
-            return self.getToken(HelloParser.RBRACKET, 0)
+            return self.getToken(GrammarParser.RBRACKET, 0)
         def expr(self, i:int=None):
             if i is None:
-                return self.getTypedRuleContexts(HelloParser.ExprContext)
+                return self.getTypedRuleContexts(GrammarParser.ExprContext)
             else:
-                return self.getTypedRuleContext(HelloParser.ExprContext,i)
+                return self.getTypedRuleContext(GrammarParser.ExprContext,i)
 
         def SEMICOLON(self, i:int=None):
             if i is None:
-                return self.getTokens(HelloParser.SEMICOLON)
+                return self.getTokens(GrammarParser.SEMICOLON)
             else:
-                return self.getToken(HelloParser.SEMICOLON, i)
+                return self.getToken(GrammarParser.SEMICOLON, i)
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterBLOCK" ):
@@ -968,12 +975,12 @@ class HelloParser ( Parser ):
 
     class TRUEContext(ExprContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a HelloParser.ExprContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a GrammarParser.ExprContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def TRUE(self):
-            return self.getToken(HelloParser.TRUE, 0)
+            return self.getToken(GrammarParser.TRUE, 0)
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterTRUE" ):
@@ -992,22 +999,22 @@ class HelloParser ( Parser ):
 
     class WHILE_CLAUSEContext(ExprContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a HelloParser.ExprContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a GrammarParser.ExprContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def WHILE(self):
-            return self.getToken(HelloParser.WHILE, 0)
+            return self.getToken(GrammarParser.WHILE, 0)
         def expr(self, i:int=None):
             if i is None:
-                return self.getTypedRuleContexts(HelloParser.ExprContext)
+                return self.getTypedRuleContexts(GrammarParser.ExprContext)
             else:
-                return self.getTypedRuleContext(HelloParser.ExprContext,i)
+                return self.getTypedRuleContext(GrammarParser.ExprContext,i)
 
         def LOOP(self):
-            return self.getToken(HelloParser.LOOP, 0)
+            return self.getToken(GrammarParser.LOOP, 0)
         def POOL(self):
-            return self.getToken(HelloParser.POOL, 0)
+            return self.getToken(GrammarParser.POOL, 0)
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterWHILE_CLAUSE" ):
@@ -1026,18 +1033,18 @@ class HelloParser ( Parser ):
 
     class SUMContext(ExprContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a HelloParser.ExprContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a GrammarParser.ExprContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def expr(self, i:int=None):
             if i is None:
-                return self.getTypedRuleContexts(HelloParser.ExprContext)
+                return self.getTypedRuleContexts(GrammarParser.ExprContext)
             else:
-                return self.getTypedRuleContext(HelloParser.ExprContext,i)
+                return self.getTypedRuleContext(GrammarParser.ExprContext,i)
 
         def PLUS(self):
-            return self.getToken(HelloParser.PLUS, 0)
+            return self.getToken(GrammarParser.PLUS, 0)
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterSUM" ):
@@ -1056,28 +1063,28 @@ class HelloParser ( Parser ):
 
     class LET_PASSContext(ExprContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a HelloParser.ExprContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a GrammarParser.ExprContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def LET(self):
-            return self.getToken(HelloParser.LET, 0)
+            return self.getToken(GrammarParser.LET, 0)
         def formalAssign(self, i:int=None):
             if i is None:
-                return self.getTypedRuleContexts(HelloParser.FormalAssignContext)
+                return self.getTypedRuleContexts(GrammarParser.FormalAssignContext)
             else:
-                return self.getTypedRuleContext(HelloParser.FormalAssignContext,i)
+                return self.getTypedRuleContext(GrammarParser.FormalAssignContext,i)
 
         def IN(self):
-            return self.getToken(HelloParser.IN, 0)
+            return self.getToken(GrammarParser.IN, 0)
         def expr(self):
-            return self.getTypedRuleContext(HelloParser.ExprContext,0)
+            return self.getTypedRuleContext(GrammarParser.ExprContext,0)
 
         def COMMA(self, i:int=None):
             if i is None:
-                return self.getTokens(HelloParser.COMMA)
+                return self.getTokens(GrammarParser.COMMA)
             else:
-                return self.getToken(HelloParser.COMMA, i)
+                return self.getToken(GrammarParser.COMMA, i)
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterLET_PASS" ):
@@ -1096,16 +1103,16 @@ class HelloParser ( Parser ):
 
     class ASSIGN_VALContext(ExprContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a HelloParser.ExprContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a GrammarParser.ExprContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def ID(self):
-            return self.getToken(HelloParser.ID, 0)
+            return self.getToken(GrammarParser.ID, 0)
         def ASSIGN(self):
-            return self.getToken(HelloParser.ASSIGN, 0)
+            return self.getToken(GrammarParser.ASSIGN, 0)
         def expr(self):
-            return self.getTypedRuleContext(HelloParser.ExprContext,0)
+            return self.getTypedRuleContext(GrammarParser.ExprContext,0)
 
 
         def enterRule(self, listener:ParseTreeListener):
@@ -1125,18 +1132,18 @@ class HelloParser ( Parser ):
 
     class MINUSContext(ExprContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a HelloParser.ExprContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a GrammarParser.ExprContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def expr(self, i:int=None):
             if i is None:
-                return self.getTypedRuleContexts(HelloParser.ExprContext)
+                return self.getTypedRuleContexts(GrammarParser.ExprContext)
             else:
-                return self.getTypedRuleContext(HelloParser.ExprContext,i)
+                return self.getTypedRuleContext(GrammarParser.ExprContext,i)
 
         def MINUS(self):
-            return self.getToken(HelloParser.MINUS, 0)
+            return self.getToken(GrammarParser.MINUS, 0)
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterMINUS" ):
@@ -1155,18 +1162,18 @@ class HelloParser ( Parser ):
 
     class DIVIDEContext(ExprContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a HelloParser.ExprContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a GrammarParser.ExprContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def expr(self, i:int=None):
             if i is None:
-                return self.getTypedRuleContexts(HelloParser.ExprContext)
+                return self.getTypedRuleContexts(GrammarParser.ExprContext)
             else:
-                return self.getTypedRuleContext(HelloParser.ExprContext,i)
+                return self.getTypedRuleContext(GrammarParser.ExprContext,i)
 
         def DIVIDE(self):
-            return self.getToken(HelloParser.DIVIDE, 0)
+            return self.getToken(GrammarParser.DIVIDE, 0)
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterDIVIDE" ):
@@ -1185,18 +1192,18 @@ class HelloParser ( Parser ):
 
     class BIGGERContext(ExprContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a HelloParser.ExprContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a GrammarParser.ExprContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def expr(self, i:int=None):
             if i is None:
-                return self.getTypedRuleContexts(HelloParser.ExprContext)
+                return self.getTypedRuleContexts(GrammarParser.ExprContext)
             else:
-                return self.getTypedRuleContext(HelloParser.ExprContext,i)
+                return self.getTypedRuleContext(GrammarParser.ExprContext,i)
 
         def BIGGER(self):
-            return self.getToken(HelloParser.BIGGER, 0)
+            return self.getToken(GrammarParser.BIGGER, 0)
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterBIGGER" ):
@@ -1215,19 +1222,19 @@ class HelloParser ( Parser ):
 
     class NOTContext(ExprContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a HelloParser.ExprContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a GrammarParser.ExprContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def NOT(self):
-            return self.getToken(HelloParser.NOT, 0)
+            return self.getToken(GrammarParser.NOT, 0)
         def LPAREN(self):
-            return self.getToken(HelloParser.LPAREN, 0)
+            return self.getToken(GrammarParser.LPAREN, 0)
         def expr(self):
-            return self.getTypedRuleContext(HelloParser.ExprContext,0)
+            return self.getTypedRuleContext(GrammarParser.ExprContext,0)
 
         def RPAREN(self):
-            return self.getToken(HelloParser.RPAREN, 0)
+            return self.getToken(GrammarParser.RPAREN, 0)
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterNOT" ):
@@ -1246,14 +1253,14 @@ class HelloParser ( Parser ):
 
     class NEWOBJContext(ExprContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a HelloParser.ExprContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a GrammarParser.ExprContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def NEW(self):
-            return self.getToken(HelloParser.NEW, 0)
+            return self.getToken(GrammarParser.NEW, 0)
         def TYPE(self):
-            return self.getToken(HelloParser.TYPE, 0)
+            return self.getToken(GrammarParser.TYPE, 0)
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterNEWOBJ" ):
@@ -1272,24 +1279,24 @@ class HelloParser ( Parser ):
 
     class IF_CLAUSEContext(ExprContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a HelloParser.ExprContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a GrammarParser.ExprContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def IF(self):
-            return self.getToken(HelloParser.IF, 0)
+            return self.getToken(GrammarParser.IF, 0)
         def expr(self, i:int=None):
             if i is None:
-                return self.getTypedRuleContexts(HelloParser.ExprContext)
+                return self.getTypedRuleContexts(GrammarParser.ExprContext)
             else:
-                return self.getTypedRuleContext(HelloParser.ExprContext,i)
+                return self.getTypedRuleContext(GrammarParser.ExprContext,i)
 
         def THEN(self):
-            return self.getToken(HelloParser.THEN, 0)
+            return self.getToken(GrammarParser.THEN, 0)
         def ELSE(self):
-            return self.getToken(HelloParser.ELSE, 0)
+            return self.getToken(GrammarParser.ELSE, 0)
         def FI(self):
-            return self.getToken(HelloParser.FI, 0)
+            return self.getToken(GrammarParser.FI, 0)
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterIF_CLAUSE" ):
@@ -1308,12 +1315,12 @@ class HelloParser ( Parser ):
 
     class STRINGContext(ExprContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a HelloParser.ExprContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a GrammarParser.ExprContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def STRING(self):
-            return self.getToken(HelloParser.STRING, 0)
+            return self.getToken(GrammarParser.STRING, 0)
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterSTRING" ):
@@ -1332,14 +1339,14 @@ class HelloParser ( Parser ):
 
     class TILDEContext(ExprContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a HelloParser.ExprContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a GrammarParser.ExprContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def TILDE(self):
-            return self.getToken(HelloParser.TILDE, 0)
+            return self.getToken(GrammarParser.TILDE, 0)
         def expr(self):
-            return self.getTypedRuleContext(HelloParser.ExprContext,0)
+            return self.getTypedRuleContext(GrammarParser.ExprContext,0)
 
 
         def enterRule(self, listener:ParseTreeListener):
@@ -1359,12 +1366,12 @@ class HelloParser ( Parser ):
 
     class FALSEContext(ExprContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a HelloParser.ExprContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a GrammarParser.ExprContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def FALSE(self):
-            return self.getToken(HelloParser.FALSE, 0)
+            return self.getToken(GrammarParser.FALSE, 0)
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterFALSE" ):
@@ -1383,12 +1390,12 @@ class HelloParser ( Parser ):
 
     class IDContext(ExprContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a HelloParser.ExprContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a GrammarParser.ExprContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def ID(self):
-            return self.getToken(HelloParser.ID, 0)
+            return self.getToken(GrammarParser.ID, 0)
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterID" ):
@@ -1407,18 +1414,18 @@ class HelloParser ( Parser ):
 
     class BIGGEREQUALSContext(ExprContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a HelloParser.ExprContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a GrammarParser.ExprContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def expr(self, i:int=None):
             if i is None:
-                return self.getTypedRuleContexts(HelloParser.ExprContext)
+                return self.getTypedRuleContexts(GrammarParser.ExprContext)
             else:
-                return self.getTypedRuleContext(HelloParser.ExprContext,i)
+                return self.getTypedRuleContext(GrammarParser.ExprContext,i)
 
         def BIGGEREQUALS(self):
-            return self.getToken(HelloParser.BIGGEREQUALS, 0)
+            return self.getToken(GrammarParser.BIGGEREQUALS, 0)
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterBIGGEREQUALS" ):
@@ -1437,12 +1444,12 @@ class HelloParser ( Parser ):
 
     class INTEGERContext(ExprContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a HelloParser.ExprContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a GrammarParser.ExprContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def INTEGER(self):
-            return self.getToken(HelloParser.INTEGER, 0)
+            return self.getToken(GrammarParser.INTEGER, 0)
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterINTEGER" ):
@@ -1463,7 +1470,7 @@ class HelloParser ( Parser ):
     def expr(self, _p:int=0):
         _parentctx = self._ctx
         _parentState = self.state
-        localctx = HelloParser.ExprContext(self, self._ctx, _parentState)
+        localctx = GrammarParser.ExprContext(self, self._ctx, _parentState)
         _prevctx = localctx
         _startState = 12
         self.enterRecursionRule(localctx, 12, self.RULE_expr, _p)
@@ -1474,14 +1481,14 @@ class HelloParser ( Parser ):
             self._errHandler.sync(self)
             la_ = self._interp.adaptivePredict(self._input,12,self._ctx)
             if la_ == 1:
-                localctx = HelloParser.CALLContext(self, localctx)
+                localctx = GrammarParser.CALLContext(self, localctx)
                 self._ctx = localctx
                 _prevctx = localctx
 
                 self.state = 80
-                self.match(HelloParser.ID)
+                self.match(GrammarParser.ID)
                 self.state = 81
-                self.match(HelloParser.LPAREN)
+                self.match(GrammarParser.LPAREN)
                 self.state = 90
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
@@ -1493,7 +1500,7 @@ class HelloParser ( Parser ):
                     _la = self._input.LA(1)
                     while _la==34:
                         self.state = 83
-                        self.match(HelloParser.COMMA)
+                        self.match(GrammarParser.COMMA)
                         self.state = 84
                         self.expr(0)
                         self.state = 89
@@ -1503,51 +1510,51 @@ class HelloParser ( Parser ):
 
 
                 self.state = 92
-                self.match(HelloParser.RPAREN)
+                self.match(GrammarParser.RPAREN)
                 pass
 
             elif la_ == 2:
-                localctx = HelloParser.IF_CLAUSEContext(self, localctx)
+                localctx = GrammarParser.IF_CLAUSEContext(self, localctx)
                 self._ctx = localctx
                 _prevctx = localctx
                 self.state = 93
-                self.match(HelloParser.IF)
+                self.match(GrammarParser.IF)
                 self.state = 94
                 self.expr(0)
                 self.state = 95
-                self.match(HelloParser.THEN)
+                self.match(GrammarParser.THEN)
                 self.state = 96
                 self.expr(0)
                 self.state = 97
-                self.match(HelloParser.ELSE)
+                self.match(GrammarParser.ELSE)
                 self.state = 98
                 self.expr(0)
                 self.state = 99
-                self.match(HelloParser.FI)
+                self.match(GrammarParser.FI)
                 pass
 
             elif la_ == 3:
-                localctx = HelloParser.WHILE_CLAUSEContext(self, localctx)
+                localctx = GrammarParser.WHILE_CLAUSEContext(self, localctx)
                 self._ctx = localctx
                 _prevctx = localctx
                 self.state = 101
-                self.match(HelloParser.WHILE)
+                self.match(GrammarParser.WHILE)
                 self.state = 102
                 self.expr(0)
                 self.state = 103
-                self.match(HelloParser.LOOP)
+                self.match(GrammarParser.LOOP)
                 self.state = 104
                 self.expr(0)
                 self.state = 105
-                self.match(HelloParser.POOL)
+                self.match(GrammarParser.POOL)
                 pass
 
             elif la_ == 4:
-                localctx = HelloParser.BLOCKContext(self, localctx)
+                localctx = GrammarParser.BLOCKContext(self, localctx)
                 self._ctx = localctx
                 _prevctx = localctx
                 self.state = 107
-                self.match(HelloParser.LBRACKET)
+                self.match(GrammarParser.LBRACKET)
                 self.state = 111 
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
@@ -1555,7 +1562,7 @@ class HelloParser ( Parser ):
                     self.state = 108
                     self.expr(0)
                     self.state = 109
-                    self.match(HelloParser.SEMICOLON)
+                    self.match(GrammarParser.SEMICOLON)
                     self.state = 113 
                     self._errHandler.sync(self)
                     _la = self._input.LA(1)
@@ -1563,15 +1570,15 @@ class HelloParser ( Parser ):
                         break
 
                 self.state = 115
-                self.match(HelloParser.RBRACKET)
+                self.match(GrammarParser.RBRACKET)
                 pass
 
             elif la_ == 5:
-                localctx = HelloParser.LET_PASSContext(self, localctx)
+                localctx = GrammarParser.LET_PASSContext(self, localctx)
                 self._ctx = localctx
                 _prevctx = localctx
                 self.state = 117
-                self.match(HelloParser.LET)
+                self.match(GrammarParser.LET)
                 self.state = 118
                 self.formalAssign()
                 self.state = 123
@@ -1579,7 +1586,7 @@ class HelloParser ( Parser ):
                 _la = self._input.LA(1)
                 while _la==34:
                     self.state = 119
-                    self.match(HelloParser.COMMA)
+                    self.match(GrammarParser.COMMA)
                     self.state = 120
                     self.formalAssign()
                     self.state = 125
@@ -1587,115 +1594,115 @@ class HelloParser ( Parser ):
                     _la = self._input.LA(1)
 
                 self.state = 126
-                self.match(HelloParser.IN)
+                self.match(GrammarParser.IN)
                 self.state = 127
                 self.expr(19)
                 pass
 
             elif la_ == 6:
-                localctx = HelloParser.NEWOBJContext(self, localctx)
+                localctx = GrammarParser.NEWOBJContext(self, localctx)
                 self._ctx = localctx
                 _prevctx = localctx
                 self.state = 129
-                self.match(HelloParser.NEW)
+                self.match(GrammarParser.NEW)
                 self.state = 130
-                self.match(HelloParser.TYPE)
+                self.match(GrammarParser.TYPE)
                 pass
 
             elif la_ == 7:
-                localctx = HelloParser.VOID_EXPRContext(self, localctx)
+                localctx = GrammarParser.VOID_EXPRContext(self, localctx)
                 self._ctx = localctx
                 _prevctx = localctx
                 self.state = 131
-                self.match(HelloParser.ISVOID)
+                self.match(GrammarParser.ISVOID)
                 self.state = 132
                 self.expr(17)
                 pass
 
             elif la_ == 8:
-                localctx = HelloParser.TILDEContext(self, localctx)
+                localctx = GrammarParser.TILDEContext(self, localctx)
                 self._ctx = localctx
                 _prevctx = localctx
                 self.state = 133
-                self.match(HelloParser.TILDE)
+                self.match(GrammarParser.TILDE)
                 self.state = 134
                 self.expr(12)
                 pass
 
             elif la_ == 9:
-                localctx = HelloParser.NOTContext(self, localctx)
+                localctx = GrammarParser.NOTContext(self, localctx)
                 self._ctx = localctx
                 _prevctx = localctx
                 self.state = 135
-                self.match(HelloParser.NOT)
+                self.match(GrammarParser.NOT)
                 self.state = 136
-                self.match(HelloParser.LPAREN)
+                self.match(GrammarParser.LPAREN)
                 self.state = 137
                 self.expr(0)
                 self.state = 138
-                self.match(HelloParser.RPAREN)
+                self.match(GrammarParser.RPAREN)
                 pass
 
             elif la_ == 10:
-                localctx = HelloParser.EXPR_PARAMSContext(self, localctx)
+                localctx = GrammarParser.EXPR_PARAMSContext(self, localctx)
                 self._ctx = localctx
                 _prevctx = localctx
                 self.state = 140
-                self.match(HelloParser.LPAREN)
+                self.match(GrammarParser.LPAREN)
                 self.state = 141
                 self.expr(0)
                 self.state = 142
-                self.match(HelloParser.RPAREN)
+                self.match(GrammarParser.RPAREN)
                 pass
 
             elif la_ == 11:
-                localctx = HelloParser.IDContext(self, localctx)
+                localctx = GrammarParser.IDContext(self, localctx)
                 self._ctx = localctx
                 _prevctx = localctx
                 self.state = 144
-                self.match(HelloParser.ID)
+                self.match(GrammarParser.ID)
                 pass
 
             elif la_ == 12:
-                localctx = HelloParser.INTEGERContext(self, localctx)
+                localctx = GrammarParser.INTEGERContext(self, localctx)
                 self._ctx = localctx
                 _prevctx = localctx
                 self.state = 145
-                self.match(HelloParser.INTEGER)
+                self.match(GrammarParser.INTEGER)
                 pass
 
             elif la_ == 13:
-                localctx = HelloParser.STRINGContext(self, localctx)
+                localctx = GrammarParser.STRINGContext(self, localctx)
                 self._ctx = localctx
                 _prevctx = localctx
                 self.state = 146
-                self.match(HelloParser.STRING)
+                self.match(GrammarParser.STRING)
                 pass
 
             elif la_ == 14:
-                localctx = HelloParser.TRUEContext(self, localctx)
+                localctx = GrammarParser.TRUEContext(self, localctx)
                 self._ctx = localctx
                 _prevctx = localctx
                 self.state = 147
-                self.match(HelloParser.TRUE)
+                self.match(GrammarParser.TRUE)
                 pass
 
             elif la_ == 15:
-                localctx = HelloParser.FALSEContext(self, localctx)
+                localctx = GrammarParser.FALSEContext(self, localctx)
                 self._ctx = localctx
                 _prevctx = localctx
                 self.state = 148
-                self.match(HelloParser.FALSE)
+                self.match(GrammarParser.FALSE)
                 pass
 
             elif la_ == 16:
-                localctx = HelloParser.ASSIGN_VALContext(self, localctx)
+                localctx = GrammarParser.ASSIGN_VALContext(self, localctx)
                 self._ctx = localctx
                 _prevctx = localctx
                 self.state = 149
-                self.match(HelloParser.ID)
+                self.match(GrammarParser.ID)
                 self.state = 150
-                self.match(HelloParser.ASSIGN)
+                self.match(GrammarParser.ASSIGN)
                 self.state = 151
                 self.expr(1)
                 pass
@@ -1714,98 +1721,98 @@ class HelloParser ( Parser ):
                     self._errHandler.sync(self)
                     la_ = self._interp.adaptivePredict(self._input,16,self._ctx)
                     if la_ == 1:
-                        localctx = HelloParser.SUMContext(self, HelloParser.ExprContext(self, _parentctx, _parentState))
+                        localctx = GrammarParser.SUMContext(self, GrammarParser.ExprContext(self, _parentctx, _parentState))
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expr)
                         self.state = 154
                         if not self.precpred(self._ctx, 16):
                             from antlr4.error.Errors import FailedPredicateException
                             raise FailedPredicateException(self, "self.precpred(self._ctx, 16)")
                         self.state = 155
-                        self.match(HelloParser.PLUS)
+                        self.match(GrammarParser.PLUS)
                         self.state = 156
                         self.expr(17)
                         pass
 
                     elif la_ == 2:
-                        localctx = HelloParser.MINUSContext(self, HelloParser.ExprContext(self, _parentctx, _parentState))
+                        localctx = GrammarParser.MINUSContext(self, GrammarParser.ExprContext(self, _parentctx, _parentState))
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expr)
                         self.state = 157
                         if not self.precpred(self._ctx, 15):
                             from antlr4.error.Errors import FailedPredicateException
                             raise FailedPredicateException(self, "self.precpred(self._ctx, 15)")
                         self.state = 158
-                        self.match(HelloParser.MINUS)
+                        self.match(GrammarParser.MINUS)
                         self.state = 159
                         self.expr(16)
                         pass
 
                     elif la_ == 3:
-                        localctx = HelloParser.TIMESContext(self, HelloParser.ExprContext(self, _parentctx, _parentState))
+                        localctx = GrammarParser.TIMESContext(self, GrammarParser.ExprContext(self, _parentctx, _parentState))
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expr)
                         self.state = 160
                         if not self.precpred(self._ctx, 14):
                             from antlr4.error.Errors import FailedPredicateException
                             raise FailedPredicateException(self, "self.precpred(self._ctx, 14)")
                         self.state = 161
-                        self.match(HelloParser.TIMES)
+                        self.match(GrammarParser.TIMES)
                         self.state = 162
                         self.expr(15)
                         pass
 
                     elif la_ == 4:
-                        localctx = HelloParser.DIVIDEContext(self, HelloParser.ExprContext(self, _parentctx, _parentState))
+                        localctx = GrammarParser.DIVIDEContext(self, GrammarParser.ExprContext(self, _parentctx, _parentState))
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expr)
                         self.state = 163
                         if not self.precpred(self._ctx, 13):
                             from antlr4.error.Errors import FailedPredicateException
                             raise FailedPredicateException(self, "self.precpred(self._ctx, 13)")
                         self.state = 164
-                        self.match(HelloParser.DIVIDE)
+                        self.match(GrammarParser.DIVIDE)
                         self.state = 165
                         self.expr(14)
                         pass
 
                     elif la_ == 5:
-                        localctx = HelloParser.BIGGERContext(self, HelloParser.ExprContext(self, _parentctx, _parentState))
+                        localctx = GrammarParser.BIGGERContext(self, GrammarParser.ExprContext(self, _parentctx, _parentState))
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expr)
                         self.state = 166
                         if not self.precpred(self._ctx, 11):
                             from antlr4.error.Errors import FailedPredicateException
                             raise FailedPredicateException(self, "self.precpred(self._ctx, 11)")
                         self.state = 167
-                        self.match(HelloParser.BIGGER)
+                        self.match(GrammarParser.BIGGER)
                         self.state = 168
                         self.expr(12)
                         pass
 
                     elif la_ == 6:
-                        localctx = HelloParser.BIGGEREQUALSContext(self, HelloParser.ExprContext(self, _parentctx, _parentState))
+                        localctx = GrammarParser.BIGGEREQUALSContext(self, GrammarParser.ExprContext(self, _parentctx, _parentState))
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expr)
                         self.state = 169
                         if not self.precpred(self._ctx, 10):
                             from antlr4.error.Errors import FailedPredicateException
                             raise FailedPredicateException(self, "self.precpred(self._ctx, 10)")
                         self.state = 170
-                        self.match(HelloParser.BIGGEREQUALS)
+                        self.match(GrammarParser.BIGGEREQUALS)
                         self.state = 171
                         self.expr(11)
                         pass
 
                     elif la_ == 7:
-                        localctx = HelloParser.EQUALSContext(self, HelloParser.ExprContext(self, _parentctx, _parentState))
+                        localctx = GrammarParser.EQUALSContext(self, GrammarParser.ExprContext(self, _parentctx, _parentState))
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expr)
                         self.state = 172
                         if not self.precpred(self._ctx, 9):
                             from antlr4.error.Errors import FailedPredicateException
                             raise FailedPredicateException(self, "self.precpred(self._ctx, 9)")
                         self.state = 173
-                        self.match(HelloParser.EQUALS)
+                        self.match(GrammarParser.EQUALS)
                         self.state = 174
                         self.expr(10)
                         pass
 
                     elif la_ == 8:
-                        localctx = HelloParser.DISPATCHContext(self, HelloParser.ExprContext(self, _parentctx, _parentState))
+                        localctx = GrammarParser.DISPATCHContext(self, GrammarParser.ExprContext(self, _parentctx, _parentState))
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expr)
                         self.state = 175
                         if not self.precpred(self._ctx, 24):
@@ -1816,17 +1823,17 @@ class HelloParser ( Parser ):
                         _la = self._input.LA(1)
                         if _la==36:
                             self.state = 176
-                            self.match(HelloParser.AT)
+                            self.match(GrammarParser.AT)
                             self.state = 177
-                            self.match(HelloParser.TYPE)
+                            self.match(GrammarParser.TYPE)
 
 
                         self.state = 180
-                        self.match(HelloParser.DOT)
+                        self.match(GrammarParser.DOT)
                         self.state = 181
-                        self.match(HelloParser.ID)
+                        self.match(GrammarParser.ID)
                         self.state = 182
-                        self.match(HelloParser.LPAREN)
+                        self.match(GrammarParser.LPAREN)
                         self.state = 193
                         self._errHandler.sync(self)
                         _la = self._input.LA(1)
@@ -1838,7 +1845,7 @@ class HelloParser ( Parser ):
                             _la = self._input.LA(1)
                             while _la==34:
                                 self.state = 184
-                                self.match(HelloParser.COMMA)
+                                self.match(GrammarParser.COMMA)
                                 self.state = 185
                                 self.expr(0)
                                 self.state = 190
@@ -1850,7 +1857,7 @@ class HelloParser ( Parser ):
                             _la = self._input.LA(1)
 
                         self.state = 196
-                        self.match(HelloParser.RPAREN)
+                        self.match(GrammarParser.RPAREN)
                         pass
 
              
