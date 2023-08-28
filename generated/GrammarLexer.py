@@ -1,4 +1,4 @@
-# Generated from ./Hello.g4 by ANTLR 4.13.0
+# Generated from Grammar.g4 by ANTLR 4.13.0
 from antlr4 import *
 from io import StringIO
 import sys
@@ -134,7 +134,7 @@ def serializedATN():
         292,297,299,312,316,329,331,1,6,0,0
     ]
 
-class HelloLexer(Lexer):
+class GrammarLexer(Lexer):
 
     atn = ATNDeserializer().deserialize(serializedATN())
 
@@ -211,7 +211,7 @@ class HelloLexer(Lexer):
                   "TYPE", "WS", "LINE_COMMENT", "INIT_COMMENT", "FINISH_COMMENT", 
                   "COMMENT" ]
 
-    grammarFileName = "Hello.g4"
+    grammarFileName = "Grammar.g4"
 
     def __init__(self, input=None, output:TextIO = sys.stdout):
         super().__init__(input, output)
