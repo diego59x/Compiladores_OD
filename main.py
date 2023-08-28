@@ -10,7 +10,7 @@ from generated.GrammarVisitor import GrammarVisitor
 from utils.CustomVisitor import CustomVisitor
 import json
 
-file_name = 'test1.cl'
+file_name = 'test4.cl'
 file_path = f'./tests/{ file_name }'
 
 file_content = ''

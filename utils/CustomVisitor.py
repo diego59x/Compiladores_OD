@@ -103,7 +103,7 @@ class CustomVisitor(GrammarVisitor):
                     else:
                         if exp_value.lower() not in self.bool_list:
                             try:
-                                exp_value = int(exp_value)
+                                int(exp_value)
                                 self.errors_table.addVariableDeclarationTypeError(f'{ctx.start.line}:{ctx.start.column}', id, typE, 'Int')
                             except:
                                 self.errors_table.addVariableDeclarationTypeError(f'{ctx.start.line}:{ctx.start.column}', id, typE, 'Unknown')
@@ -111,7 +111,7 @@ class CustomVisitor(GrammarVisitor):
                             self.errors_table.addVariableDeclarationTypeError(f'{ctx.start.line}:{ctx.start.column}', id, typE, 'Bool')
             elif realType == 'int':
                 try:
-                    exp_value = int(exp_value)
+                    int(exp_value)
                 except:
                     if exp_value in self.bool_list:
                         self.errors_table.addVariableDeclarationTypeError(f'{ctx.start.line}:{ctx.start.column}', id, typE, 'Bool')
@@ -125,8 +125,6 @@ class CustomVisitor(GrammarVisitor):
             self.errors_table.addVarAlreadyExistsError(f'{ctx.start.line}:{ctx.start.column}', id)
         else:
             self.symbols_table.addVariable(parent, id, typE, exp_value)
-        tabla = self.symbols_table.getTable()
-
         return node
     
     def visitFormal(self, ctx:GrammarParser.FormalContext):
@@ -208,32 +206,14 @@ class CustomVisitor(GrammarVisitor):
     def visitSUM(self, ctx:GrammarParser.SUMContext):
         leftOperand = self.visit(ctx.expr(0))
         rightOperand = self.visit(ctx.expr(1))
+
         leftOperantToken = leftOperand.token
         rightOperantToken = rightOperand.token
+        valid, message = validateSum(leftOperantToken, rightOperantToken, self.symbols_table.getTable(), self.current_scope, self.formal_params)
+        if not valid:
+            self.errors_table.addCustomError(f'{ctx.start.line}:{ctx.start.column}', message)
 
         node = SumNode(leftOperand, rightOperand)
-
-        if leftOperantToken in self.formal_params:
-            leftOperantType = self.formal_params[leftOperand.token]
-        else:
-            if leftOperantToken in self.symbols_table.getTable()[self.current_scope]['variables']:
-                leftOperantType = self.symbols_table.getTable()[self.current_scope]['variables'][leftOperantToken]['type']
-            else:
-                self.errors_table.addScopeError(f'{ctx.start.line}:{ctx.start.column}', leftOperantToken)
-                leftOperantType = None
-        if rightOperantToken in self.formal_params:
-            rightOperantType = self.formal_params[rightOperand.token]
-        else:
-            if rightOperantToken in self.symbols_table.getTable()[self.current_scope]['variables']:
-                rightOperantType = self.symbols_table.getTable()[self.current_scope]['variables'][rightOperantToken]['type']
-            else:
-                self.errors_table.addScopeError(f'{ctx.start.line}:{ctx.start.column}', rightOperantToken)
-                rightOperantType = None
-        if leftOperantType is not None and rightOperantType is not None:
-            if leftOperantType != 'Int' or rightOperantType != 'Int':
-                self.errors_table.addOperationError(f'{ctx.start.line}:{ctx.start.column}', 'Sum', leftOperantType, rightOperantType)
-        else:
-            self.errors_table.addOperationError(f'{ctx.start.line}:{ctx.start.column}', 'Sum', leftOperantType, rightOperantType)
         return node
     
     def visitLET_PASS(self, ctx:GrammarParser.LET_PASSContext):
@@ -249,12 +229,13 @@ class CustomVisitor(GrammarVisitor):
         id = ctx.ID().getText()
         exp = self.visit(ctx.expr())
         node = AssignNode(id, exp)
-        # !TODO VALIDAR SI SE ASIGNA UNA VARIABLE
-        print('aquiiiiii, ', id, exp, type(exp))
-        exp_value = exp.token if exp is not None else ''
-        valid, message = validateAssignVal(self.current_scope, self.formal_params, self.symbols_table.getTable(), id, exp_value)
-        if not valid:
-            self.errors_table.addCustomError(f'{ctx.start.line}:{ctx.start.column}', message)
+        if exp.type in ['sum', 'minus', 'times']:
+            pass
+        else:
+            exp_value = exp.token if exp is not None else ''
+            valid, message = validateAssignVal(self.current_scope, self.formal_params, self.symbols_table.getTable(), id, exp_value)
+            if not valid:
+                self.errors_table.addCustomError(f'{ctx.start.line}:{ctx.start.column}', message)
         return node
 
     def visitMINUS(self, ctx:GrammarParser.MINUSContext):
@@ -288,6 +269,24 @@ class CustomVisitor(GrammarVisitor):
         doIf = self.visit(ctx.expr(1))
         doElse = self.visit(ctx.expr(2))
         node = IfNode(condition, doIf, doElse)
+        if condition.type == 'id':
+            token = condition.token
+            valid, message = validateIfClause(self.current_scope, self.formal_params, self.symbols_table.getTable(), token, recursion_depth=0)
+            if not valid:
+                self.errors_table.addCustomError(f'{ctx.start.line}:{ctx.start.column}', message)
+        else:
+            valid, result = validateValueType(condition.token)
+            if not valid:
+                self.errors_table.addCustomError(f'{ctx.start.line}:{ctx.start.column}', result)
+            else:
+                if result != 'Bool':
+                    if result == 'Int':
+                        if int(condition.token) == 0 or int(condition.token) == 1:
+                            pass
+                        else:
+                            self.errors_table.addCustomError(f'{ctx.start.line}:{ctx.start.column}', f'If clause condition must be of type Bool, got { result } instead.')
+                    else:
+                        self.errors_table.addCustomError(f'{ctx.start.line}:{ctx.start.column}', f'If clause condition must be of type Bool, got { result } instead.')
         return node
     
     def visitSTRING(self, ctx:GrammarParser.STRINGContext):

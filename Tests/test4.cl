@@ -20,7 +20,7 @@ class Main inherits IO {
   instancia: Suma;
   main(): Object {
     {
-      instancia <- new Suma
-    };
-  }
+      instancia <- new Suma;
+    }
+  };
 };

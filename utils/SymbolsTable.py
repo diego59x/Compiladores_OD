@@ -7,7 +7,10 @@ class SymbolsTable:
     def addInherits(self, scope, inherits):
         self.symbols_table[scope]['inherits'] = inherits
     def addVariable(self, scope, id, typE, value):
-        self.symbols_table[scope]['variables'] = {id: {'type': typE, 'value': value}}
+        if 'variables' in self.symbols_table[scope]:
+            self.symbols_table[scope]['variables'][id] = {'type': typE, 'value': value}
+        else:
+            self.symbols_table[scope]['variables'] = {id: {'type': typE, 'value': value}}
     def addMethod(self, scope, id, returnType, params):
         self.symbols_table[scope]['methods'] = {id: {'returnType': returnType, 'params': params}}
     def getTable(self):
