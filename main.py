@@ -11,7 +11,8 @@ from utils.CustomVisitor import CustomVisitor
 import json
 
 file_name = 'test4.cl'
-file_path = f'./tests/{ file_name }'
+# file_path = f'./tests/{ file_name }'
+file_path = 'tests/arith.cl'
 
 file_content = ''
 with open(file_path, 'r') as file:
