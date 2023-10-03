@@ -1,0 +1,12 @@
+class_A:
+end_class_A
+class_B:
+end_class_B
+class_C:
+end_class_C
+class_D:
+end_class_D
+class_E:
+end_class_E
+class_Main:
+end_class_Main
