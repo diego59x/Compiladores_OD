@@ -1,12 +1,16 @@
-class_A:
-end_class_A
-class_B:
-end_class_B
-class_C:
-end_class_C
-class_D:
-end_class_D
-class_E:
-end_class_E
 class_Main:
+var1=1
+var2=2
+var3=3
+t1 = 1 + var1
+t2 = var2 * 2
+t3 = 2 - var3
+t4 = 5 + t3
+t5 = t2 / t4
+t6 = t1 - t5
+prueba = t6
+class_add_counter_Main[Int]:
+add_counter(10-5,20,30)
+end_class_add_counter_Main
+class_main_Main[Object]:
 end_class_Main
