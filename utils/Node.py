@@ -54,6 +54,7 @@ class SumNode(Node):
         self.left = left
         self.right = right
         self.type = "sum"
+        self.token = "+"
 
 class MinusNode(Node):
     def __init__(self, left, right):

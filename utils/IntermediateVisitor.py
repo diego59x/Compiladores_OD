@@ -206,7 +206,8 @@ class IntermediateVisitor(GrammarVisitor):
         id = ctx.ID().getText()
         exp = self.visit(ctx.expr())
         node = AssignNode(id, exp)
-        # print("visitASSIGN_VAL ", id)
+        # print("visitASSIGN_VAL ")
+        self.intermediateCode += f'{id}={ctx.expr().getText()}\n'
         return node
 
     def visitMINUS(self, ctx:GrammarParser.MINUSContext):
