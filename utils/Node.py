@@ -66,6 +66,7 @@ class DivNode(Node):
         self.left = left
         self.right = right
         self.type = "divide"
+        self.token = "/"
 
 class TimesNode(Node):
     def __init__(self, left, right):
