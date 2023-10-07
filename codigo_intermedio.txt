@@ -1,14 +1,10 @@
 class_Main:
-var=true
+var="string"
+class_add_counter_Main[Int]:
+var=1
+var+1
+end_class_add_counter_Main
 class_main_Main[Object]:
-t1=var
-if t1 goto label1
-else goto label2 endif
-label1_init
-out_string("Hello, World.\n")
-label1_finish
-label2_init
-out_string("Hello, World 2.\n")
-label2_finish
+add_counter(10)
 end_class_main_Main
 end_class_Main
