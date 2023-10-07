@@ -1,16 +1,14 @@
 class_Main:
-var1=1
-var2=2
-var3=3
-t1 = 1 + var1
-t2 = var2 * 2
-t3 = 2 - var3
-t4 = 5 + t3
-t5 = t2 / t4
-t6 = t1 - t5
-prueba = t6
-class_add_counter_Main[Int]:
-add_counter(10-5,20,30)
-end_class_add_counter_Main
+var=true
 class_main_Main[Object]:
+t1=var
+if t1 goto label1
+else goto label2 endif
+label1_init
+out_string("Hello, World.\n")
+label1_finish
+label2_init
+out_string("Hello, World 2.\n")
+label2_finish
+end_class_main_Main
 end_class_Main

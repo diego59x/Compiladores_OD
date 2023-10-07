@@ -10,6 +10,8 @@ class IntermediateVisitor(GrammarVisitor):
         self.currentClass = None
         self.currentMethod = None
         self.intermediateCode = ''
+        self.temps = 0
+        self.labelTemps = 0
         self.tags = []
     
     def getIntermediateCode(self):
@@ -59,11 +61,8 @@ class IntermediateVisitor(GrammarVisitor):
             formal = ctx.formal(param)
             visitedFormal = self.visit(formal)
             params.append(visitedFormal)
-        expr = self.visit(ctx.expr())
         typE = ctx.TYPE().getText()
-        node = MethodNode(name, typE, params, expr)
         if self.currentMethod is not None:
-            self.intermediateCode += f'end_class_{self.currentMethod}_{self.currentClass}\n'
             self.currentMethod = name
             if typE:
                 self.intermediateCode += f'class_{name}_{self.currentClass}[{typE}]:\n'
@@ -75,6 +74,9 @@ class IntermediateVisitor(GrammarVisitor):
                 self.intermediateCode += f'class_{name}_{self.currentClass}[{typE}]:\n'
             else:
                 self.intermediateCode += f'class_{name}_{self.currentClass}:\n'
+        expr = self.visit(ctx.expr())
+        self.intermediateCode += f'end_class_{self.currentMethod}_{self.currentClass}\n'
+        node = MethodNode(name, typE, params, expr)
         return node
     
     def visitDEFINITION_PARAMS(self, ctx:GrammarParser.DEFINITION_PARAMSContext):
@@ -244,8 +246,24 @@ class IntermediateVisitor(GrammarVisitor):
     def visitIF_CLAUSE(self, ctx:GrammarParser.IF_CLAUSEContext):
         #print("visitIF_CLAUSE")
         condition = self.visit(ctx.expr(0))
+        self.temps += 1
+        self.labelTemps += 1
+
+        firstlabel = "label" + str(self.labelTemps)
+        self.labelTemps += 1
+        secondlabel = "label" + str(self.labelTemps)
+
+        self.intermediateCode += f't{str(self.temps)}={condition}\n'
+        self.intermediateCode += f'if t{str(self.temps)} goto {firstlabel}\n'
+        self.intermediateCode += f'else goto {secondlabel} endif\n'
+
+
+        self.intermediateCode += f'{firstlabel}_init\n'
         doIf = self.visit(ctx.expr(1))
+        self.intermediateCode += f'{firstlabel}_finish\n'
+        self.intermediateCode += f'{secondlabel}_init\n'
         doElse = self.visit(ctx.expr(2))
+        self.intermediateCode += f'{secondlabel}_finish\n'
         node = IfNode(condition, doIf, doElse)
         return node
     
