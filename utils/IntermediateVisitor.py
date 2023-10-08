@@ -97,14 +97,14 @@ class IntermediateVisitor(GrammarVisitor):
             self.intermediateCode += f'{result}\n'
         # print("visitDEFINITION_PARAMS ", id, typE)
         return node
-    #TODO: ASK FOR THIS
+    #JUST ADD OFFSET
     def visitFormal(self, ctx:GrammarParser.FormalContext):
         id = ctx.ID().getText()
         typE = ctx.TYPE().getText()
         node = FormalNode(id, typE)
         # print("visitFormal ", id, typE)
         return node
-    #TODO: ASK FOR THIS
+    #TODO: Verify Case
     def visitFormalAssign(self, ctx:GrammarParser.FormalAssignContext):
         typE = ctx.TYPE().getText()
         id = ctx.ID().getText()
@@ -169,7 +169,7 @@ class IntermediateVisitor(GrammarVisitor):
             exprArguments.append(arg)
         node = DispatchNode(exprInitial, method, exprArguments)
         return node
-    #TODO: ASK FOR THIS
+
     def visitBLOCK(self, ctx:GrammarParser.BLOCKContext):
         #print("visitBLOCK")
         expr = []
@@ -181,7 +181,7 @@ class IntermediateVisitor(GrammarVisitor):
     def visitTRUE(self, ctx:GrammarParser.TRUEContext):
         #print("visitTRUE")
         return BooleanNode(ctx.TRUE().getText())
-    #TODO: ASK FOR THIS
+
     def visitWHILE_CLAUSE(self, ctx:GrammarParser.WHILE_CLAUSEContext):
         #print("visitWHILE_CLAUSE")
         condition = self.visit(ctx.expr(0))
@@ -204,6 +204,8 @@ class IntermediateVisitor(GrammarVisitor):
             formalAssignVisited = self.visit(ctx.formalAssign(i))
             formalAssign.append(formalAssignVisited)
         expr = self.visit(ctx.expr())
+        # self.intermediateCode += f'class_{name}_{self.currentClass}:\n'
+
         node = LetPassNode(formalAssign, expr)
         return node
     
@@ -238,7 +240,7 @@ class IntermediateVisitor(GrammarVisitor):
         node = BiggerNode(leftOperand, rightOperand)
         self.intermediateCode += f'{leftOperand}>{rightOperand}\n'
         return node
-    # TODO: NEED REVIEW
+
     def visitNOT(self, ctx:GrammarParser.NOTContext):
         #print("visitNOT")
         expr = self.visit(ctx.expr())

@@ -54,13 +54,14 @@ class SumNode(Node):
         self.left = left
         self.right = right
         self.type = "sum"
-        self.token = "+"
+        self.token = left.token + "+" + right.token
 
 class MinusNode(Node):
     def __init__(self, left, right):
         self.left = left
         self.right = right
         self.type = "minus"
+        self.token = left.token + "-" + right.token
 
 class DivNode(Node):
     def __init__(self, left, right):
@@ -68,29 +69,34 @@ class DivNode(Node):
         self.right = right
         self.type = "divide"
         self.token = "/"
+        self.token = left.token + "/" + right.token
 
 class TimesNode(Node):
     def __init__(self, left, right):
         self.left = left
         self.right = right
         self.type = "times"
+        self.token = left.token + "*" + right.token
 
 class EqualsNode(Node):
     def __init__(self, left, right):
         self.left = left
         self.right = right
         self.type = "equals"
+        self.token = left.token + "=" + right.token
 
 class BiggerNode(Node):
     def __init__(self, left, right):
         self.left = left
         self.right = right
+        self.token = left.token + ">" + right.token
         self.type = "bigger"
 
 class BiggerEqualsNode(Node):
     def __init__(self, left, right):
         self.left = left
         self.right = right
+        self.token = left.token + ">=" + right.token
         self.type = "biggerEquals"
 
 class IfNode(Node):
