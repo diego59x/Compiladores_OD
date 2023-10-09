@@ -11,7 +11,7 @@ from utils.SemanticVisitor import SemanticVisitor
 from utils.IntermediateVisitor import IntermediateVisitor
 import json
 
-file_name = 'primes.cl'
+file_name = 'testWhile.cl'
 file_path = f'./tests/{ file_name }'
 # file_path = 'tests/arith.cl'
 

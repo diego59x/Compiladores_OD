@@ -190,8 +190,25 @@ class IntermediateVisitor(GrammarVisitor):
 
     def visitWHILE_CLAUSE(self, ctx:GrammarParser.WHILE_CLAUSEContext):
         #print("visitWHILE_CLAUSE")
-        condition = self.visit(ctx.expr(0))
+        self.labelTemps+=1
+        
+        self.intermediateCode += f'label{str(self.labelTemps)}_init\n'
+
         expr = self.visit(ctx.expr(1))
+        setattr(expr, "lastTemp", "t"+str(self.temps))
+        self.intermediateCode += f'label{str(self.labelTemps)}_finish\n'
+
+        condition = self.visit(ctx.expr(0))
+        if (hasattr(condition, "temp")):
+            self.intermediateCode += f'if {condition.temp}, label{str(self.labelTemps)}_init\n'
+        else:
+            self.intermediateCode += f'if {condition}, label{str(self.labelTemps)}_init\n'
+        
+        if (hasattr(condition, "left")):
+            self.intermediateCode += f'return {expr.lastTemp}\n'
+        else:
+            self.intermediateCode += f'return {condition}'
+            
         node = WhileNode(condition, expr)
         return node
 

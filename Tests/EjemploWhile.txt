@@ -1,0 +1,18 @@
+program:
+Main:
+	num = 1
+	x = 1
+main:
+	jump tag_20519
+tag_54045:
+	* t_92095, x, y
+	x = t_92095
+	+ t_51807, y, 1
+	y = t_51807
+	t_81311 = y
+	lessorequal t_80716, y, num
+	if t_80716, tag_54045
+	return t_81311
+
+end_Main
+end_program:
