@@ -95,13 +95,14 @@ class IntermediateVisitor(GrammarVisitor):
             exp = str(ctx.expr().getText())
             result = generate_intermediate_code(exp, id)
             self.intermediateCode += f'{result}\n'
-        # print("visitDEFINITION_PARAMS ", id, typE)
+        print("visitDEFINITION_PARAMS ", id, typE)
         return node
     #JUST ADD OFFSET
     def visitFormal(self, ctx:GrammarParser.FormalContext):
         id = ctx.ID().getText()
         typE = ctx.TYPE().getText()
         node = FormalNode(id, typE)
+        self.intermediateCode += f'PARAM {id}\n'
         # print("visitFormal ", id, typE)
         return node
     #TODO: Verify Case
@@ -117,19 +118,21 @@ class IntermediateVisitor(GrammarVisitor):
         return node
     
     def visitCALL(self, ctx:GrammarParser.CALLContext):
+        # print("visitCALL")
         name = ctx.ID().getText()
         expressions = []
         intermediate_call = '' + name + '('
         for param in range(len(ctx.expr())):
             expr = ctx.expr(param)
-            intermediate_call += expr.getText()
             if param < len(ctx.expr()) - 1:
                 intermediate_call += ','
             visitedExp = self.visit(expr)
+            intermediate_call += f't{self.temps}'
             expressions.append(visitedExp)
         intermediate_call += ')'
-        node = CallNode(name, expressions)
-        self.intermediateCode += f'{intermediate_call}\n'
+        self.temps += 1
+        node = CallNode(name, expressions, "t"+str(self.temps))
+        self.intermediateCode += f't{self.temps}={intermediate_call}\n'
         return node
     #TODO: ASK FOR THIS
     def visitEXPR_PARAMS(self, ctx:GrammarParser.EXPR_PARAMSContext):
@@ -141,7 +144,8 @@ class IntermediateVisitor(GrammarVisitor):
         leftOperand = self.visit(ctx.expr(0))
         rightOperand = self.visit(ctx.expr(1))
         node = TimesNode(leftOperand, rightOperand)
-        self.intermediateCode += f'{leftOperand}*{rightOperand}\n'
+        self.temps += 1
+        self.intermediateCode += f't{str(self.temps)}={leftOperand}*{rightOperand}\n'
         return node
     
     def visitEQUALS(self, ctx:GrammarParser.EQUALSContext):
@@ -193,8 +197,17 @@ class IntermediateVisitor(GrammarVisitor):
         #print("visitSUM")
         leftOperand = self.visit(ctx.expr(0))
         rightOperand = self.visit(ctx.expr(1))
-        node = SumNode(leftOperand, rightOperand)
-        self.intermediateCode += f'{leftOperand}+{rightOperand}\n'
+        self.temps += 1
+
+        if (leftOperand.type == "call" and rightOperand.type == "call"):
+            self.intermediateCode += f't{str(self.temps)}={leftOperand.temp}+{rightOperand.temp}\n'
+        elif (leftOperand.type == "call" and rightOperand.type != "call"):
+            self.intermediateCode += f't{str(self.temps)}={leftOperand.temp}+{rightOperand}\n'
+        elif (leftOperand.type != "call" and rightOperand.type == "call"):
+            self.intermediateCode += f't{str(self.temps)}={leftOperand}+{rightOperand.temp}\n'
+        else:
+            self.intermediateCode += f't{str(self.temps)}={leftOperand}+{rightOperand}\n'
+        node = SumNode(leftOperand, rightOperand, "t"+str(+self.temps))
         return node
     # TODO: NEED REVIEW
     def visitLET_PASS(self, ctx:GrammarParser.LET_PASSContext):
@@ -214,7 +227,10 @@ class IntermediateVisitor(GrammarVisitor):
         exp = self.visit(ctx.expr())
         node = AssignNode(id, exp)
         # print("visitASSIGN_VAL ")
-        self.intermediateCode += f'{id}={ctx.expr().getText()}\n'
+        if (exp.temp != None):
+            self.intermediateCode += f'{id}={exp.temp}\n'
+        else:
+            self.intermediateCode += f'{id}={ctx.expr().getText()}\n'
         return node
 
     def visitMINUS(self, ctx:GrammarParser.MINUSContext):
@@ -222,7 +238,8 @@ class IntermediateVisitor(GrammarVisitor):
         leftOperand = self.visit(ctx.expr(0))
         rightOperand = self.visit(ctx.expr(1))
         node = MinusNode(leftOperand, rightOperand)
-        self.intermediateCode += f'{leftOperand}-{rightOperand}\n'
+        self.temps += 1
+        self.intermediateCode += f't{str(self.temps)}={leftOperand}-{rightOperand}\n'
         return node
 
     def visitDIVIDE(self, ctx:GrammarParser.DIVIDEContext):
@@ -230,7 +247,8 @@ class IntermediateVisitor(GrammarVisitor):
         leftOperand = self.visit(ctx.expr(0))
         rightOperand = self.visit(ctx.expr(1))
         node = DivNode(leftOperand, rightOperand)
-        self.intermediateCode += f'{leftOperand}/{rightOperand}\n'
+        self.temps += 1
+        self.intermediateCode += f't{str(self.temps)}={leftOperand}/{rightOperand}\n'
         return node
     
     def visitBIGGER(self, ctx:GrammarParser.BIGGERContext):
@@ -238,7 +256,8 @@ class IntermediateVisitor(GrammarVisitor):
         leftOperand = self.visit(ctx.expr(0))
         rightOperand = self.visit(ctx.expr(1))
         node = BiggerNode(leftOperand, rightOperand)
-        self.intermediateCode += f'{leftOperand}>{rightOperand}\n'
+        self.temps += 1
+        self.intermediateCode += f't{str(self.temps)}={leftOperand}>{rightOperand}\n'
         return node
 
     def visitNOT(self, ctx:GrammarParser.NOTContext):
@@ -299,7 +318,8 @@ class IntermediateVisitor(GrammarVisitor):
         leftOperand = self.visit(ctx.expr(0))
         rightOperand = self.visit(ctx.expr(1))
         node = BiggerEqualsNode(leftOperand, rightOperand)
-        self.intermediateCode += f'{leftOperand}>={rightOperand}\n'
+        self.temps += 1
+        self.intermediateCode += f't{str(self.temps)}={leftOperand}>={rightOperand}\n'
         return node
     
     def visitINTEGER(self, ctx:GrammarParser.INTEGERContext):

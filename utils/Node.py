@@ -50,10 +50,11 @@ class FormalNode(Node):
         self.type = "formal"
 
 class SumNode(Node):
-    def __init__(self, left, right):
+    def __init__(self, left, right, temp):
         self.left = left
         self.right = right
         self.type = "sum"
+        self.temp = temp
         self.token = left.token + "+" + right.token
 
 class MinusNode(Node):
@@ -141,9 +142,10 @@ class MethodNode(Node):
         self.type = "method"
 
 class CallNode(Node):
-    def __init__(self, token, expr):
+    def __init__(self, token, expr, temp):
         self.token = token
         self.expr = expr
+        self.temp = temp
         self.type = "call"
 
 class ObjNode(Node):

@@ -1,0 +1,75 @@
+program:
+Factorial:
+	var = 0
+factorial:
+	equals t_3170, n, 0
+	if_not t_3170, tag_51281
+	f = 0
+	t_6463 = f
+	goto tag_46635
+tag_51281:
+	equals t_5922, n, 1
+	if_not t_5922, tag_29713
+	f = 1
+	t_65319 = f
+	goto tag_88522
+tag_29713:
+	- t_50872, n, 1
+
+	param t_50872
+	call t_3744, factorial
+	* t_14078, n, t_3744
+	f = t_14078
+	t_65319 = f
+tag_88522:
+	t_6463 = t_65319
+tag_46635:
+	return t_6463
+
+end_FactorialFibonacci:
+fibonacci:
+	equals t_16864, n, 1
+	if_not t_16864, tag_90844
+	f = 1
+	t_67399 = f
+	goto tag_21430
+tag_90844:
+	equals t_65735, n, 2
+	if_not t_65735, tag_62438
+	f = 1
+	t_96997 = f
+	goto tag_59533
+tag_62438:
+	- t_53265, n, 1
+
+	param t_53265
+	call t_9165, fibonacci
+	- t_36350, n, 2
+
+	param t_36350
+	call t_71882, fibonacci
+	+ t_47031, t_9165, t_71882
+	f = t_47031
+	t_96997 = f
+tag_59533:
+	t_67399 = t_96997
+tag_21430:
+	return t_67399
+
+end_FibonacciMain:
+	n = 10
+main:
+	new t_10520, Factorial
+	facto = t_10520
+	new t_41449, Fibonacci
+	fibo = t_41449
+
+	param n
+	call t_15843, fibonacci
+
+	param t_15843
+	call t_21467, out_int
+	return self
+
+end_Main
+end_program:

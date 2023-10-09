@@ -1,4 +1,5 @@
 class_Fibonacci:
+PARAM n
 class_fibonacci_Fibonacci[Int]:
 n=1
 t1=n=1
@@ -16,12 +17,12 @@ label3_init
 f=1
 label3_finish
 label4_init
-n-1             #CAMBIAR
-fibonacci(n-1) #CAMBIAR
-n-2             #CAMBIAR
-fibonacci(n-2)  #CAMBIAR
-fibonacci+fibonacci #CAMBIAR
-f=fibonacci(n-1)+fibonacci(n-2)
+t3=n-1
+t4=fibonacci(t3)
+t5=n-2
+t6=fibonacci(t5)
+t7=t4+t6
+f=t7
 label4_finish
 label2_finish
 end_class_fibonacci_Fibonacci
