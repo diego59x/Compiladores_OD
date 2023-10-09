@@ -18,9 +18,9 @@ f=1
 label3_finish
 label4_init
 t3=n-1
-t4=fibonacci(t3)
+t4= CALL fibonacci(t3)
 t5=n-2
-t6=fibonacci(t5)
+t6= CALL fibonacci(t5)
 t7=t4+t6
 f=t7
 label4_finish

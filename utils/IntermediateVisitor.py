@@ -132,7 +132,7 @@ class IntermediateVisitor(GrammarVisitor):
         intermediate_call += ')'
         self.temps += 1
         node = CallNode(name, expressions, "t"+str(self.temps))
-        self.intermediateCode += f't{self.temps}={intermediate_call}\n'
+        self.intermediateCode += f't{self.temps}= CALL {intermediate_call}\n'
         return node
     #TODO: ASK FOR THIS
     def visitEXPR_PARAMS(self, ctx:GrammarParser.EXPR_PARAMSContext):
@@ -227,7 +227,7 @@ class IntermediateVisitor(GrammarVisitor):
         exp = self.visit(ctx.expr())
         node = AssignNode(id, exp)
         # print("visitASSIGN_VAL ")
-        if (exp.temp != None):
+        if (hasattr(exp, "temp")):
             self.intermediateCode += f'{id}={exp.temp}\n'
         else:
             self.intermediateCode += f'{id}={ctx.expr().getText()}\n'
