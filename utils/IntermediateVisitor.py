@@ -87,6 +87,8 @@ class IntermediateVisitor(GrammarVisitor):
             node = DefParamsNode(id, typE, None)
             return node
         expr = self.visit(ctx.expr())
+        if expr.type == "block":
+            exit()
         node = DefParamsNode(id, typE, expr)
         contains_operator = any(op in str(expr) for op in operations)
         if not contains_operator:
@@ -143,8 +145,8 @@ class IntermediateVisitor(GrammarVisitor):
         #print("visitTIMES")
         leftOperand = self.visit(ctx.expr(0))
         rightOperand = self.visit(ctx.expr(1))
-        node = TimesNode(leftOperand, rightOperand)
         self.temps += 1
+        node = TimesNode(leftOperand, rightOperand, "t" + str(self.temps) )
         self.intermediateCode += f't{str(self.temps)}={leftOperand}*{rightOperand}\n'
         return node
     
@@ -207,6 +209,7 @@ class IntermediateVisitor(GrammarVisitor):
             self.intermediateCode += f't{str(self.temps)}={leftOperand}+{rightOperand.temp}\n'
         else:
             self.intermediateCode += f't{str(self.temps)}={leftOperand}+{rightOperand}\n'
+        
         node = SumNode(leftOperand, rightOperand, "t"+str(+self.temps))
         return node
     # TODO: NEED REVIEW
@@ -237,8 +240,8 @@ class IntermediateVisitor(GrammarVisitor):
         #print("visitMINUS")
         leftOperand = self.visit(ctx.expr(0))
         rightOperand = self.visit(ctx.expr(1))
-        node = MinusNode(leftOperand, rightOperand)
         self.temps += 1
+        node = MinusNode(leftOperand, rightOperand, "t" + str(self.temps))
         self.intermediateCode += f't{str(self.temps)}={leftOperand}-{rightOperand}\n'
         return node
 
@@ -246,8 +249,8 @@ class IntermediateVisitor(GrammarVisitor):
         #print("visitDIVIDE")
         leftOperand = self.visit(ctx.expr(0))
         rightOperand = self.visit(ctx.expr(1))
-        node = DivNode(leftOperand, rightOperand)
         self.temps += 1
+        node = DivNode(leftOperand, rightOperand, "t" + str(self.temps))
         self.intermediateCode += f't{str(self.temps)}={leftOperand}/{rightOperand}\n'
         return node
     
@@ -255,8 +258,8 @@ class IntermediateVisitor(GrammarVisitor):
         #print("visitBIGGER")
         leftOperand = self.visit(ctx.expr(0))
         rightOperand = self.visit(ctx.expr(1))
-        node = BiggerNode(leftOperand, rightOperand)
         self.temps += 1
+        node = BiggerNode(leftOperand, rightOperand, "t" + str(self.temps))
         self.intermediateCode += f't{str(self.temps)}={leftOperand}>{rightOperand}\n'
         return node
 
@@ -317,8 +320,8 @@ class IntermediateVisitor(GrammarVisitor):
         #print("visitBIGGEREQUALS")
         leftOperand = self.visit(ctx.expr(0))
         rightOperand = self.visit(ctx.expr(1))
-        node = BiggerEqualsNode(leftOperand, rightOperand)
         self.temps += 1
+        node = BiggerEqualsNode(leftOperand, rightOperand,  "t" + str(self.temps))
         self.intermediateCode += f't{str(self.temps)}={leftOperand}>={rightOperand}\n'
         return node
     
