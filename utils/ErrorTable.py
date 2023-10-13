@@ -4,7 +4,7 @@ class ErrorTable():
     def getErrors(self):
         return self.errors
     def addScopeError(self, line, varName):
-        error = f'Error in line { line }: { varName } is not defined in the current scope.'
+        error = f'Error in line { line }: { varName } is not defined in the current scope. 1'
         self.errors.append(error)
     def addAssignationError(self, line, varName, expectedVarType, receivedVarType):
         error = f'Error in line { line }: { varName } expected { expectedVarType } but { receivedVarType } was given.'

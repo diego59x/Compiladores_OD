@@ -6,19 +6,33 @@ from utils.Tag import Tag
 from utils.Temporales import *
 
 class IntermediateVisitor(GrammarVisitor):
-    def __init__(self):
+    def __init__(self, symbols_table, offset):
         self.currentClass = None
         self.currentMethod = None
         self.intermediateCode = ''
         self.temps = 0
         self.labelTemps = 0
         self.tags = []
+        self.symbols_table = symbols_table
+        self.current_offset = offset
     
     def getIntermediateCode(self):
         return self.intermediateCode
 
     def getCurrentClass(self):
         return self.currentClass
+    
+    def getFinalSymbolsTable(self):
+        return self.symbols_table
+
+    def addTempToSymbols(self):
+        if self.currentMethod and self.currentClass:
+            if not "variables" in self.symbols_table[self.currentClass]["methods"][self.currentMethod]:
+                self.symbols_table[self.currentClass]["methods"][self.currentMethod]["variables"] = {}
+            self.symbols_table[self.currentClass]["methods"][self.currentMethod]["variables"][f"t{self.temps}"] = {"type": "Int", "offset": self.current_offset}
+        else:
+            self.symbols_table[self.currentClass]["variables"][f"t{self.temps}"] = {"type": "Int", "offset": self.current_offset}
+        self.current_offset += 4
 
     def visitR(self, ctx:GrammarParser.RContext):
         #print("visitR")
@@ -55,7 +69,6 @@ class IntermediateVisitor(GrammarVisitor):
 
     def visitDEFINITION_METHOD_PARAMS(self, ctx:GrammarParser.DEFINITION_METHOD_PARAMSContext):
         name = ctx.ID().getText()
-        # print("visitDEFINITION_METHOD_PARAMS ", name, ctx.TYPE().getText())
         params = []
         for param in range(len(ctx.formal())):
             formal = ctx.formal(param)
@@ -77,6 +90,7 @@ class IntermediateVisitor(GrammarVisitor):
         expr = self.visit(ctx.expr())
         self.intermediateCode += f'end_class_{self.currentMethod}_{self.currentClass}\n'
         node = MethodNode(name, typE, params, expr)
+        self.currentMethod = None
         return node
     
     def visitDEFINITION_PARAMS(self, ctx:GrammarParser.DEFINITION_PARAMSContext):
@@ -92,20 +106,20 @@ class IntermediateVisitor(GrammarVisitor):
         node = DefParamsNode(id, typE, expr)
         contains_operator = any(op in str(expr) for op in operations)
         if not contains_operator:
-            self.intermediateCode += f'{id}={expr}\n'
+            self.intermediateCode += f'GP[{self.symbols_table[self.currentClass]["variables"][id]["offset"]}]={expr}\n'
         else:
             exp = str(ctx.expr().getText())
             result = generate_intermediate_code(exp, id)
             self.intermediateCode += f'{result}\n'
-        print("visitDEFINITION_PARAMS ", id, typE)
         return node
     #JUST ADD OFFSET
     def visitFormal(self, ctx:GrammarParser.FormalContext):
         id = ctx.ID().getText()
         typE = ctx.TYPE().getText()
         node = FormalNode(id, typE)
-        self.intermediateCode += f'PARAM {id}\n'
-        # print("visitFormal ", id, typE)
+        parent = ctx.parentCtx.ID().getText()
+        gp = self.symbols_table[self.currentClass]["methods"][parent]["params"][id]["offset"]
+        self.intermediateCode += f'PARAM GP[{gp}]\n'
         return node
     #TODO: Verify Case
     def visitFormalAssign(self, ctx:GrammarParser.FormalAssignContext):
@@ -120,7 +134,6 @@ class IntermediateVisitor(GrammarVisitor):
         return node
     
     def visitCALL(self, ctx:GrammarParser.CALLContext):
-        # print("visitCALL")
         name = ctx.ID().getText()
         expressions = []
         intermediate_call = '' + name + '('
@@ -213,19 +226,43 @@ class IntermediateVisitor(GrammarVisitor):
         return node
 
     def visitSUM(self, ctx:GrammarParser.SUMContext):
-        #print("visitSUM")
         leftOperand = self.visit(ctx.expr(0))
         rightOperand = self.visit(ctx.expr(1))
         self.temps += 1
 
+        # Add the temp to the symbols table
+        used_offset = self.current_offset
+        self.addTempToSymbols()
+
         if (leftOperand.type == "call" and rightOperand.type == "call"):
-            self.intermediateCode += f't{str(self.temps)}={leftOperand.temp}+{rightOperand.temp}\n'
+            self.intermediateCode += f'GP[{self.current_offset}]={leftOperand.temp}+{rightOperand.temp}\n'
         elif (leftOperand.type == "call" and rightOperand.type != "call"):
-            self.intermediateCode += f't{str(self.temps)}={leftOperand.temp}+{rightOperand}\n'
+            self.intermediateCode += f'GP[{self.current_offset}]={leftOperand.temp}+{rightOperand}\n'
         elif (leftOperand.type != "call" and rightOperand.type == "call"):
-            self.intermediateCode += f't{str(self.temps)}={leftOperand}+{rightOperand.temp}\n'
+            self.intermediateCode += f'GP[{self.current_offset}]={leftOperand}+{rightOperand.temp}\n'
         else:
-            self.intermediateCode += f't{str(self.temps)}={leftOperand}+{rightOperand}\n'
+            if self.currentMethod and self.currentClass:
+                if leftOperand.type == 'id':
+                    if leftOperand.token in self.symbols_table[self.currentClass]["methods"][self.currentMethod]["params"]:
+                        final_left = f'GP[{self.symbols_table[self.currentClass]["methods"][self.currentMethod]["params"][leftOperand.token]["offset"]}]'
+                    elif leftOperand.token in self.symbols_table[self.currentClass]["variables"]:
+                        final_left = f'GP[{self.symbols_table[self.currentClass]["variables"][leftOperand.token]["offset"]}]'
+                    else:
+                        final_left = leftOperand.token
+                else:
+                    final_left = leftOperand
+                if rightOperand.type == 'id':
+                    if rightOperand.token in self.symbols_table[self.currentClass]["methods"][self.currentMethod]["params"]:
+                        final_right = f'GP[{self.symbols_table[self.currentClass]["methods"][self.currentMethod]["params"][rightOperand.token]["offset"]}]'
+                    elif rightOperand.token in self.symbols_table[self.currentClass]["variables"]:
+                        final_right = f'GP[{self.symbols_table[self.currentClass]["variables"][rightOperand.token]["offset"]}]'
+                    else:
+                        final_right = rightOperand.token
+                else:
+                    final_right = rightOperand
+                self.intermediateCode += f'GP[{used_offset}]={final_left}+{final_right}\n'
+            else:
+                self.intermediateCode += f'GP[{used_offset}]={leftOperand}+{rightOperand}\n'
         
         node = SumNode(leftOperand, rightOperand, "t"+str(+self.temps))
         return node
@@ -246,11 +283,20 @@ class IntermediateVisitor(GrammarVisitor):
         id = ctx.ID().getText()
         exp = self.visit(ctx.expr())
         node = AssignNode(id, exp)
-        # print("visitASSIGN_VAL ")
         if (hasattr(exp, "temp")):
             self.intermediateCode += f'{id}={exp.temp}\n'
         else:
-            self.intermediateCode += f'{id}={ctx.expr().getText()}\n'
+            if self.currentClass and self.currentMethod:
+                parent = ctx.parentCtx.getText()
+                if id in self.symbols_table[self.currentClass]["methods"][self.currentMethod]["params"]:
+                    gp = self.symbols_table[self.currentClass]["methods"][self.currentMethod]["params"][id]["offset"]
+                elif "variables" in self.symbols_table[self.currentClass] and id in self.symbols_table[self.currentClass]["variables"]:
+                    gp = self.symbols_table[self.currentClass]["variables"][id]["offset"]
+                else:
+                    gp = id
+                self.intermediateCode += f'GP[{gp}]={ctx.expr().getText()}\n'
+            else:
+                self.intermediateCode += f'{id}={ctx.expr().getText()}\n'
         return node
 
     def visitMINUS(self, ctx:GrammarParser.MINUSContext):

@@ -8,6 +8,8 @@ from utils.SymbolsTable import SymbolsTable
 from utils.ErrorTable import ErrorTable
 from utils.Validations import *
 
+import re
+
 TYPES = {
     'Int': int,
     'String': str,
@@ -23,11 +25,34 @@ class SemanticVisitor(GrammarVisitor):
         self.formal_params = {}
         self.bool_list = ['true', 'false']
         self.current_scope = None
+        self.current_offset = 0
     def getSymbolsTable(self):
         return self.symbols_table.getTable()
     def getErrorsTable(self):
         return self.errors_table.getErrors()
-
+    def updateOffset(self, typE, parent, id, isParamVar, funcName=''):
+        if not isParamVar:
+            if typE == 'Int':
+                self.symbols_table.addOffset(parent, id, self.current_offset)
+                self.current_offset += 4
+            elif typE == 'String':
+                self.symbols_table.addOffset(parent, id, self.current_offset)
+                self.current_offset += 4
+            elif typE == 'Bool':
+                self.symbols_table.addOffset(parent, id, self.current_offset)
+                self.current_offset += 1
+        else:
+            if typE == 'Int':
+                self.symbols_table.addOffsetMethod(parent, funcName, id, self.current_offset)
+                self.current_offset += 4
+            elif typE == 'String':
+                self.symbols_table.addOffsetMethod(parent, funcName, id, self.current_offset)
+                self.current_offset += 4
+            elif typE == 'Bool':
+                self.symbols_table.addOffsetMethod(parent, funcName, id, self.current_offset)
+                self.current_offset += 1
+    def getLastOffset(self):
+        return self.current_offset
     def visitR(self, ctx:GrammarParser.RContext):
         return self.visit(ctx.program())
 
@@ -69,6 +94,8 @@ class SemanticVisitor(GrammarVisitor):
         parent = ctx.parentCtx.TYPE(0).getText()
         self.current_scope = parent
         self.symbols_table.addMethod(parent, name, typE, self.formal_params)
+        for var in self.formal_params:
+            self.updateOffset(self.formal_params[var]['typE'], parent, var, True, name)
         self.formal_params = {}
         table = self.symbols_table.getTable()
         return node
@@ -87,6 +114,7 @@ class SemanticVisitor(GrammarVisitor):
         if expr is None:
             node = DefParamsNode(id, typE, None)
             self.symbols_table.addVariable(parent, id, typE, None)
+            self.updateOffset(typE, parent, id, False)
             return node
         expr = self.visit(ctx.expr())
         node = DefParamsNode(id, typE, expr)
@@ -106,7 +134,8 @@ class SemanticVisitor(GrammarVisitor):
                                 int(exp_value)
                                 self.errors_table.addVariableDeclarationTypeError(f'{ctx.start.line}:{ctx.start.column}', id, typE, 'Int')
                             except:
-                                self.errors_table.addVariableDeclarationTypeError(f'{ctx.start.line}:{ctx.start.column}', id, typE, 'Unknown')
+                                # self.errors_table.addVariableDeclarationTypeError(f'{ctx.start.line}:{ctx.start.column}', id, typE, 'Unknown')
+                                pass
                         else:
                             self.errors_table.addVariableDeclarationTypeError(f'{ctx.start.line}:{ctx.start.column}', id, typE, 'Bool')
             elif realType == 'int':
@@ -118,13 +147,15 @@ class SemanticVisitor(GrammarVisitor):
                     elif exp_value.startswith('"') and exp_value.endswith('"'):
                         self.errors_table.addVariableDeclarationTypeError(f'{ctx.start.line}:{ctx.start.column}', id, typE, 'String')
                     else:
-                        self.errors_table.addVariableDeclarationTypeError(f'{ctx.start.line}:{ctx.start.column}', id, typE, 'Unknown')
+                        # self.errors_table.addVariableDeclarationTypeError(f'{ctx.start.line}:{ctx.start.column}', id, typE, 'Unknown')
+                        pass
 
         # Add variable to table
         if 'variables' in self.symbols_table.getTable()[self.current_scope] and id in self.symbols_table.getTable()[self.current_scope]['variables']:
             self.errors_table.addVarAlreadyExistsError(f'{ctx.start.line}:{ctx.start.column}', id)
         else:
             self.symbols_table.addVariable(parent, id, typE, exp_value)
+            self.updateOffset(typE, parent, id, False)
         return node
     
     def visitFormal(self, ctx:GrammarParser.FormalContext):
@@ -133,7 +164,7 @@ class SemanticVisitor(GrammarVisitor):
         node = FormalNode(id, typE)
 
         # Add variable to formals
-        self.formal_params[id] = typE
+        self.formal_params[id] = {'typE': typE, 'offset': -1}
         return node
 
     def visitFormalAssign(self, ctx:GrammarParser.FormalAssignContext):
@@ -209,6 +240,7 @@ class SemanticVisitor(GrammarVisitor):
 
         leftOperantToken = leftOperand.token
         rightOperantToken = rightOperand.token
+        parent = ctx.parentCtx.getText()
         valid, message = validateSum(leftOperantToken, rightOperantToken, self.symbols_table.getTable(), self.current_scope, self.formal_params)
         if not valid:
             self.errors_table.addCustomError(f'{ctx.start.line}:{ctx.start.column}', message)
@@ -237,7 +269,8 @@ class SemanticVisitor(GrammarVisitor):
                     exp_value = exp.token if exp is not None else ''
                     valid, message = validateAssignVal(self.current_scope, self.formal_params, self.symbols_table.getTable(), id, exp_value)
                     if not valid:
-                        self.errors_table.addCustomError(f'{ctx.start.line}:{ctx.start.column}', message)
+                        if '404' not in message:
+                            self.errors_table.addCustomError(f'{ctx.start.line}:{ctx.start.column}', message)
         return node
 
     def visitMINUS(self, ctx:GrammarParser.MINUSContext):
@@ -283,13 +316,24 @@ class SemanticVisitor(GrammarVisitor):
                     self.errors_table.addCustomError(f'{ctx.start.line}:{ctx.start.column}', result)
                 else:
                     if result != 'Bool':
-                        if result == 'Int':
+                        if result == 'Variable':
+                            valid = False
+                            expr = condition.token.replace(" ", "")
+                            if any(op in expr for op in ['<', '>', '=']):
+                                valid = True
+                            if not valid:
+                                if 'methods' in self.symbols_table.getTable()[self.current_scope] and expr in self.symbols_table.getTable()[self.current_scope]['methods']:
+                                    if self.symbols_table.getTable()[self.current_scope]['methods'][expr]['returnType'] == 'Bool':
+                                        valid = True
+                                    else:
+                                        self.errors_table.addCustomError(f'{ctx.start.line}:{ctx.start.column}', f'If clause condition must be of type Bool, got { result } instead. 3')
+                        elif result == 'Int':
                             if int(condition.token) == 0 or int(condition.token) == 1:
                                 pass
                             else:
-                                self.errors_table.addCustomError(f'{ctx.start.line}:{ctx.start.column}', f'If clause condition must be of type Bool, got { result } instead.')
+                                self.errors_table.addCustomError(f'{ctx.start.line}:{ctx.start.column}', f'If clause condition must be of type Bool, got { result } instead. uwu 1')
                         else:
-                            self.errors_table.addCustomError(f'{ctx.start.line}:{ctx.start.column}', f'If clause condition must be of type Bool, got { result } instead.')
+                            self.errors_table.addCustomError(f'{ctx.start.line}:{ctx.start.column}', f'If clause condition must be of type Bool, got { result } instead. uwu 2')
         return node
     
     def visitSTRING(self, ctx:GrammarParser.STRINGContext):

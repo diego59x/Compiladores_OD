@@ -21,6 +21,7 @@ class DispatchNode(Node):
         self.method = method
         self.exprArguments = exprArguments
         self.type = "dispatch"
+        self.token = ''
 
 class DefParamsNode(Node):
     def __init__(self, token, type, expr):
@@ -50,7 +51,7 @@ class FormalNode(Node):
         self.type = "formal"
 
 class SumNode(Node):
-    def __init__(self, left, right, temp):
+    def __init__(self, left, right, temp=''):
         self.left = left
         self.right = right
         self.type = "sum"
@@ -58,7 +59,7 @@ class SumNode(Node):
         self.token = left.token + "+" + right.token
 
 class MinusNode(Node):
-    def __init__(self, left, right, temp):
+    def __init__(self, left, right, temp=''):
         self.left = left
         self.right = right
         self.type = "minus"
@@ -66,7 +67,7 @@ class MinusNode(Node):
         self.token = left.token + "-" + right.token
 
 class DivNode(Node):
-    def __init__(self, left, right, temp):
+    def __init__(self, left, right, temp=''):
         self.left = left
         self.right = right
         self.type = "divide"
@@ -75,7 +76,7 @@ class DivNode(Node):
         self.token = left.token + "/" + right.token
 
 class TimesNode(Node):
-    def __init__(self, left, right, temp):
+    def __init__(self, left, right, temp=''):
         self.left = left
         self.right = right
         self.temp = temp
@@ -90,7 +91,7 @@ class EqualsNode(Node):
         self.token = left.token + "=" + right.token
 
 class BiggerNode(Node):
-    def __init__(self, left, right, temp):
+    def __init__(self, left, right, temp=''):
         self.left = left
         self.right = right
         self.temp = temp
@@ -98,7 +99,7 @@ class BiggerNode(Node):
         self.type = "bigger"
 
 class BiggerEqualsNode(Node):
-    def __init__(self, left, right, temp):
+    def __init__(self, left, right, temp=''):
         self.left = left
         self.right = right
         self.temp = temp
@@ -126,6 +127,7 @@ class TildeNode(Node):
     def __init__(self, expr):
         self.expr = expr
         self.type = "intNegation"
+        self.token = "~"
 
 class NotNode(Node):
     def __init__(self, expr):
@@ -147,7 +149,7 @@ class MethodNode(Node):
         self.type = "method"
 
 class CallNode(Node):
-    def __init__(self, token, expr, temp):
+    def __init__(self, token, expr, temp=''):
         self.token = token
         self.expr = expr
         self.temp = temp
