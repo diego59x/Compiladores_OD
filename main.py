@@ -46,4 +46,4 @@ final_table = json.dumps(intermediate_visitor.getFinalSymbolsTable(), indent=4)
 if last_class is not None: outpupt += f'end_class_{last_class}\n'
 with open("codigo_intermedio.txt", "w") as file:
     file.write(outpupt)
-print(final_table)
+# print(final_table)

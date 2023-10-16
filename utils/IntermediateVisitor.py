@@ -205,22 +205,23 @@ class IntermediateVisitor(GrammarVisitor):
         #print("visitWHILE_CLAUSE")
         self.labelTemps+=1
         
+
         self.intermediateCode += f'label{str(self.labelTemps)}_init\n'
-
-        expr = self.visit(ctx.expr(1))
-        setattr(expr, "lastTemp", "t"+str(self.temps))
-        self.intermediateCode += f'label{str(self.labelTemps)}_finish\n'
-
         condition = self.visit(ctx.expr(0))
         if (hasattr(condition, "temp")):
-            self.intermediateCode += f'if {condition.temp}, label{str(self.labelTemps)}_init\n'
+            self.intermediateCode += f'if {condition.temp} else label{self.labelTemps}_finish\n'
         else:
-            self.intermediateCode += f'if {condition}, label{str(self.labelTemps)}_init\n'
+            self.intermediateCode += f'if {condition} else label{self.labelTemps}_finish\n'
+        expr = self.visit(ctx.expr(1))
         
         if (hasattr(condition, "left")):
-            self.intermediateCode += f'return {expr.lastTemp}\n'
+            self.intermediateCode += f'GOTO label{str(self.labelTemps)}_init\n'
         else:
-            self.intermediateCode += f'return {condition}'
+            self.intermediateCode += f'GOTO label{str(self.labelTemps)}_init\n'
+            
+
+        setattr(expr, "lastTemp", "t"+str(self.temps))
+        self.intermediateCode += f'label{str(self.labelTemps)}_finish\n'
             
         node = WhileNode(condition, expr)
         return node
@@ -268,7 +269,7 @@ class IntermediateVisitor(GrammarVisitor):
         return node
     # TODO: NEED REVIEW
     def visitLET_PASS(self, ctx:GrammarParser.LET_PASSContext):
-        #print("visitLET_PASS")
+        print("visitLET_PASS")
         formalAssign = [self.visit(ctx.formalAssign(0))]
         for i in range(1, len(ctx.formalAssign())):
             formalAssignVisited = self.visit(ctx.formalAssign(i))

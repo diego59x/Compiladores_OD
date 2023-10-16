@@ -36,6 +36,7 @@ class BlockNode(Node):
     def __init__(self, token):
         self.token = token
         self.type = "block"
+        self.lastTemp = ''
 
 class ClassNode(Node):
     def __init__(self, token, inherits, features):
