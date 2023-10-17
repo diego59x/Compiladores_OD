@@ -129,6 +129,7 @@ class IntermediateVisitor(GrammarVisitor):
             node = FormalAssignNode(id, typE, None)
             return node
         expr = self.visit(ctx.expr())
+        self.intermediateCode += f'{id}={expr}\n'
         node = FormalAssignNode(id, typE, expr)
         # print("visitFormalAssign ", id, typE)
         return node
@@ -149,10 +150,10 @@ class IntermediateVisitor(GrammarVisitor):
         node = CallNode(name, expressions, "t"+str(self.temps))
         self.intermediateCode += f't{self.temps}= CALL {intermediate_call}\n'
         return node
-    #TODO: ASK FOR THIS
+    
     def visitEXPR_PARAMS(self, ctx:GrammarParser.EXPR_PARAMSContext):
         #print("visitEXPR_PARAMS")
-        return self.visitChildren(ctx.expr())
+        return self.visit(ctx.expr())
   
     def visitTIMES(self, ctx:GrammarParser.TIMESContext):
         #print("visitTIMES")
@@ -209,15 +210,15 @@ class IntermediateVisitor(GrammarVisitor):
         self.intermediateCode += f'label{str(self.labelTemps)}_init\n'
         condition = self.visit(ctx.expr(0))
         if (hasattr(condition, "temp")):
-            self.intermediateCode += f'if {condition.temp} else label{self.labelTemps}_finish\n'
+            self.intermediateCode += f'if {condition.temp} else goto label{self.labelTemps}_finish\n'
         else:
-            self.intermediateCode += f'if {condition} else label{self.labelTemps}_finish\n'
+            self.intermediateCode += f'if {condition} else goto label{self.labelTemps}_finish\n'
         expr = self.visit(ctx.expr(1))
         
         if (hasattr(condition, "left")):
-            self.intermediateCode += f'GOTO label{str(self.labelTemps)}_init\n'
+            self.intermediateCode += f'goto label{str(self.labelTemps)}_init\n'
         else:
-            self.intermediateCode += f'GOTO label{str(self.labelTemps)}_init\n'
+            self.intermediateCode += f'goto label{str(self.labelTemps)}_init\n'
             
 
         setattr(expr, "lastTemp", "t"+str(self.temps))
@@ -267,15 +268,14 @@ class IntermediateVisitor(GrammarVisitor):
         
         node = SumNode(leftOperand, rightOperand, "t"+str(+self.temps))
         return node
-    # TODO: NEED REVIEW
+    
     def visitLET_PASS(self, ctx:GrammarParser.LET_PASSContext):
-        print("visitLET_PASS")
+        #print("visitLET_PASS")
         formalAssign = [self.visit(ctx.formalAssign(0))]
         for i in range(1, len(ctx.formalAssign())):
             formalAssignVisited = self.visit(ctx.formalAssign(i))
             formalAssign.append(formalAssignVisited)
         expr = self.visit(ctx.expr())
-        # self.intermediateCode += f'class_{name}_{self.currentClass}:\n'
 
         node = LetPassNode(formalAssign, expr)
         return node

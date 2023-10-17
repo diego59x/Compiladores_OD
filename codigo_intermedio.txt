@@ -38,14 +38,16 @@ label2_finish
 end_class_method4_A
 PARAM GP[32]
 class_method5_A[E]:
+x=1
+y=1
 label3_init
 t6=y>=num
-if t6 else label3_finish
+if t6 else goto label3_finish
 t7=x*y
 x=t7
 GP[69]=y+1
 y=t8
-GOTO label3_init
+goto label3_init
 label3_finish
 end_class_method5_A
 end_class_A
@@ -72,6 +74,7 @@ end_class_C
 class_D:
 PARAM GP[48]
 class_method7_D[Bool]:
+x=num
 t12=x>0
 t13=x>0
 if t13 goto label4
@@ -121,6 +124,7 @@ class_Main:
 GP[60]=true
 PARAM GP[61]
 class_is_even_Main[Bool]:
+x=num
 t21=x>0
 t22=x>0
 if t22 goto label12
