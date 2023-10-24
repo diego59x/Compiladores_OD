@@ -112,7 +112,7 @@ class IntermediateVisitor(GrammarVisitor):
             result = generate_intermediate_code(exp, id)
             self.intermediateCode += f'{result}\n'
         return node
-    #JUST ADD OFFSET
+    
     def visitFormal(self, ctx:GrammarParser.FormalContext):
         id = ctx.ID().getText()
         typE = ctx.TYPE().getText()
@@ -121,7 +121,7 @@ class IntermediateVisitor(GrammarVisitor):
         gp = self.symbols_table[self.currentClass]["methods"][parent]["params"][id]["offset"]
         self.intermediateCode += f'PARAM GP[{gp}]\n'
         return node
-    #TODO: Verify Case
+    
     def visitFormalAssign(self, ctx:GrammarParser.FormalAssignContext):
         typE = ctx.TYPE().getText()
         id = ctx.ID().getText()
@@ -177,7 +177,7 @@ class IntermediateVisitor(GrammarVisitor):
         expr = self.visit(ctx.expr())
         node = VoidNode(expr)
         return node
-    #TODO: ASK FOR THIS
+    
     def visitDISPATCH(self, ctx:GrammarParser.DISPATCHContext):
         #print("visitDISPATCH")
         exprInitial = self.visit(ctx.expr(0))
@@ -187,6 +187,11 @@ class IntermediateVisitor(GrammarVisitor):
         for i in range(1, len(ctx.expr())):
             arg = self.visit(ctx.expr(i))
             exprArguments.append(arg)
+
+        tokens = [obj.token for obj in exprArguments]
+        arguments = ", ".join(tokens)
+
+        self.intermediateCode += f'new {exprInitial.token} goto {method} ({arguments})  \n'
         node = DispatchNode(exprInitial, method, exprArguments)
         return node
 
