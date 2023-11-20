@@ -25,18 +25,18 @@ stream = CommonTokenStream(lexer)
 parser = GrammarParser(stream)
 tree = parser.program()
 
-# Use semantic visitor to get symbols table and errors table    
+# Use semantic visitor to get symbols table and errors tabl7e    
 semantic_visitor = SemanticVisitor()
 semantic_visitor.visit(tree)
 symbols_table = json.dumps(semantic_visitor.getSymbolsTable().getTable(), indent=4)
 raw_symbols_table = semantic_visitor.getSymbolsTable()
 errors_table = semantic_visitor.getErrorsTable()
 # print(symbols_table)
-# if len(errors_table) > 0:
-#     for error in errors_table:
-#         print(error)
-# else:
-#     print('Success: program executed without errors.')
+if len(errors_table) > 0:
+    for error in errors_table:
+        print(error)
+else:
+    print('Success: program executed without errors.')
 last_offset = semantic_visitor.getLastOffset()
 intermediate_visitor = IntermediateVisitor(raw_symbols_table, last_offset)
 intermediate_visitor.visit(tree)
@@ -46,4 +46,5 @@ final_table = json.dumps(intermediate_visitor.getFinalSymbolsTable(), indent=4)
 # if last_class is not None: outpupt += f'end_class_{last_class}\n'
 with open("mips.txt", "w") as file:
     file.write(outpupt)
-# print(final_table)
+print(outpupt)
+#print(final_table)
