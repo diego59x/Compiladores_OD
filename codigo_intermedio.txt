@@ -1,221 +1,212 @@
 class_A:
-GP[0]=0
+    GP[0]=0
 class_value_A[Int]:
 end_class_value_A
-PARAM GP[4]
+    PARAM GP[4]
 class_set_var_A[SELF_TYPE]:
-GP[0]=num
+    GP[0]=num
 end_class_set_var_A
-PARAM GP[8]
+    PARAM GP[8]
 class_method1_A[SELF_TYPE]:
 end_class_method1_A
-PARAM GP[12]
-PARAM GP[16]
+    PARAM GP[12]
+    PARAM GP[16]
 class_method2_A[B]:
-GP[65]=GP[12]+GP[16]
-x=t1
-new B goto set_var (x)  
+    GP[121]=GP[12]+GP[16]
+    x=t1
+    new B goto set_var (x)  
 end_class_method2_A
-PARAM GP[20]
+    PARAM GP[24]
 class_method3_A[C]:
-~ num
-GP[x]=~num
-new C goto set_var (x)  
+    ~ num
+    GP[28]=~num
+    new C goto set_var (x)  
 end_class_method3_A
-PARAM GP[24]
-PARAM GP[28]
+    PARAM GP[32]
+    PARAM GP[36]
 class_method4_A[D]:
-t2=num2>num1
-t3=num2>num1
-if t3 goto label1
-else goto label2 endif
-label1_init
-t4=num1-num2
-x=t4
-new D goto set_var (x)  
-label1_finish
-label2_init
-t5=num2-num1
-x=t5
-new D goto set_var (x)  
-label2_finish
+    t1=num2>num1
+    if t1 goto label1
+    else goto label2 endif
+    label1_init
+    t2=num1-num2
+    x=t2
+    new D goto set_var (x)  
+    label1_finish
+    label2_init
+    t2=num2-num1
+    x=t2
+    new D goto set_var (x)  
+    label2_finish
 end_class_method4_A
-PARAM GP[32]
+    PARAM GP[44]
 class_method5_A[E]:
-x=1
-y=1
-label3_init
-t6=y>=num
-if t6 else goto label3_finish
-t7=x*y
-x=t7
-GP[69]=y+1
-y=t8
-goto label3_init
-label3_finish
-new E goto set_var (x)  
+    x=1
+    y=1
+    label3_init
+    t2=y>=num
+    if t2 else goto label3_finish
+    t3=x*y
+    x=t3
+    GP[125]=y+1
+    y=t3
+    goto label3_init
+    label3_finish
+    new E goto set_var (x)  
 end_class_method5_A
 end_class_A
 class_B:
-PARAM GP[36]
+    PARAM GP[56]
 class_method5_B[E]:
-t9=num*num
-x=t9
-new E goto set_var (x)  
+    t1=num*num
+    x=t1
+    new E goto set_var (x)  
 end_class_method5_B
 end_class_B
 class_C:
-PARAM GP[40]
+    PARAM GP[64]
 class_method6_C[A]:
-~ num
-GP[x]=~num
-new A goto set_var (x)  
+    ~ num
+    GP[68]=~num
+    new A goto set_var (x)  
 end_class_method6_C
-PARAM GP[44]
+    PARAM GP[72]
 class_method5_C[E]:
-t10=num*num
-t11=num*num*num
-x=t11
-new E goto set_var (x)  
+    t1=num*num
+    t2=t1*num
+    x=t2
+    new E goto set_var (x)  
 end_class_method5_C
 end_class_C
 class_D:
-PARAM GP[48]
+    PARAM GP[80]
 class_method7_D[Bool]:
-x=num
-t12=x>0
-t13=x>0
-if t13 goto label4
-else goto label5 endif
-label4_init
-~ x
-t14= CALL method7(t13)
-label4_finish
-label5_init
-0=x
-t15=0=x
-if t15 goto label6
-else goto label7 endif
-label6_init
-label6_finish
-label7_init
-1=x
-t16=1=x
-if t16 goto label8
-else goto label9 endif
-label8_init
-label8_finish
-label9_init
-2=x
-t17=2=x
-if t17 goto label10
-else goto label11 endif
-label10_init
-label10_finish
-label11_init
-t18=x-3
-t19= CALL method7(t18)
-label11_finish
-label9_finish
-label7_finish
-label5_finish
+    x=num
+    t1=x>0
+    if t1 goto label4
+    else goto label5 endif
+    label4_init
+    ~ x
+    t2= CALL method7(t1)
+    label4_finish
+    label5_init
+    0=x
+    if t2 goto label6
+    else goto label7 endif
+    label6_init
+    label6_finish
+    label7_init
+    1=x
+    if t2 goto label8
+    else goto label9 endif
+    label8_init
+    label8_finish
+    label9_init
+    2=x
+    if t2 goto label10
+    else goto label11 endif
+    label10_init
+    label10_finish
+    label11_init
+    t3=x-3
+    t4= CALL method7(t3)
+    label11_finish
+    label9_finish
+    label7_finish
+    label5_finish
 end_class_method7_D
 end_class_D
 class_E:
-PARAM GP[52]
+    PARAM GP[88]
 class_method6_E[A]:
-t20=num/8
-x=t20
-new A goto set_var (x)  
+    t1=num/8
+    x=t1
+    new A goto set_var (x)  
 end_class_method6_E
 end_class_E
 class_Main:
-GP[60]=true
-PARAM GP[61]
+    GP[112]=true
+    PARAM GP[113]
 class_is_even_Main[Bool]:
-x=num
-t21=x>0
-t22=x>0
-if t22 goto label12
-else goto label13 endif
-label12_init
-~ x
-t23= CALL is_even(t22)
-label12_finish
-label13_init
-0=x
-t24=0=x
-if t24 goto label14
-else goto label15 endif
-label14_init
-label14_finish
-label15_init
-1=x
-t25=1=x
-if t25 goto label16
-else goto label17 endif
-label16_init
-label16_finish
-label17_init
-t26=x-2
-t27= CALL is_even(t26)
-label17_finish
-label15_finish
-label13_finish
+    x=num
+    t1=x>0
+    if t1 goto label12
+    else goto label13 endif
+    label12_init
+    ~ x
+    t2= CALL is_even(t1)
+    label12_finish
+    label13_init
+    0=x
+    if t2 goto label14
+    else goto label15 endif
+    label14_init
+    label14_finish
+    label15_init
+    1=x
+    if t2 goto label16
+    else goto label17 endif
+    label16_init
+    label16_finish
+    label17_init
+    t3=x-2
+    t4= CALL is_even(t3)
+    label17_finish
+    label15_finish
+    label13_finish
 end_class_is_even_Main
 class_main_Main[Object]:
-GP[-1]=(newA)
-new avar goto set_var (2)  
-new avar goto value ()  
-t28= CALL out_int(t27)
-new avar goto value ()  
-t29= CALL is_even(t28)
-t30=is_even
-if t30 goto label18
-else goto label19 endif
-label18_init
-t31= CALL out_string(t30)
-label18_finish
-label19_init
-t32= CALL out_string(t31)
-label19_finish
-new A goto set_var (3)  
-GP[-1]=(newA).set_var(3)
-new avar goto value ()  
-new a_var goto value ()  
-new B goto method2 (, )  
-GP[-1]=(newB).method2(avar.value(),a_var.value())
-new avar goto value ()  
-t33= CALL out_int(t32)
-t34= CALL out_string(t33)
-new avar goto value ()  
-new C goto method6 ()  
-GP[-1]=(newC).method6(avar.value())
-new avar goto value ()  
-t35= CALL out_int(t34)
-t36= CALL out_string(t35)
-new A goto set_var (5)  
-GP[-1]=(newA).set_var(5)
-new avar goto value ()  
-new a_var goto value ()  
-new D goto method4 (, )  
-GP[-1]=(newD).method4(avar.value(),a_var.value())
-new avar goto value ()  
-t37= CALL out_int(t36)
-t38= CALL out_string(t37)
-new avar goto set_var (5)  
-new avar goto value ()  
-new C goto method5 ()  
-GP[-1]=(newC)@A.method5(avar.value())
-new avar goto value ()  
-t39= CALL out_int(t38)
-t40= CALL out_string(t39)
-new avar goto set_var (6)  
-new avar goto value ()  
-new C goto method5 ()  
-GP[-1]=(newC)@B.method5(avar.value())
-new avar goto value ()  
-t41= CALL out_int(t40)
-t42= CALL out_string(t41)
+    GP[0]=(newA)
+    new avar goto set_var (2)  
+    new avar goto value ()  
+    t5= CALL out_int(t4)
+    new avar goto value ()  
+    t6= CALL is_even(t5)
+    if t6 goto label18
+    else goto label19 endif
+    label18_init
+    t7= CALL out_string(t6)
+    label18_finish
+    label19_init
+    t8= CALL out_string(t7)
+    label19_finish
+    new A goto set_var (3)  
+    GP[0]=(newA).set_var(3)
+    new avar goto value ()  
+    new a_var goto value ()  
+    new B goto method2 (, )  
+    GP[56]=(newB).method2(avar.value(),a_var.value())
+    new avar goto value ()  
+    t9= CALL out_int(t8)
+    t10= CALL out_string(t9)
+    new avar goto value ()  
+    new C goto method6 ()  
+    GP[64]=(newC).method6(avar.value())
+    new avar goto value ()  
+    t11= CALL out_int(t10)
+    t12= CALL out_string(t11)
+    new A goto set_var (5)  
+    GP[0]=(newA).set_var(5)
+    new avar goto value ()  
+    new a_var goto value ()  
+    new D goto method4 (, )  
+    GP[80]=(newD).method4(avar.value(),a_var.value())
+    new avar goto value ()  
+    t13= CALL out_int(t12)
+    t14= CALL out_string(t13)
+    new avar goto set_var (5)  
+    new avar goto value ()  
+    new C goto method5 ()  
+    GP[64]=(newC)@A.method5(avar.value())
+    new avar goto value ()  
+    t15= CALL out_int(t14)
+    t16= CALL out_string(t15)
+    new avar goto set_var (6)  
+    new avar goto value ()  
+    new C goto method5 ()  
+    GP[64]=(newC)@B.method5(avar.value())
+    new avar goto value ()  
+    t17= CALL out_int(t16)
+    t18= CALL out_string(t17)
 end_class_main_Main
 end_class_Main
