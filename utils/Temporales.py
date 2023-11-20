@@ -65,3 +65,63 @@ def generate_intermediate_code(exp, result_name):
 
     operations.append(f'{result_name} = {stack[0]}')
     return '\n'.join(operations)
+
+class Temporales(object):
+    def __init__(self) -> None:
+        self.temporals = {
+
+        }
+        pass
+
+    def exists(self, fun_context, temporal):
+        if fun_context in self.temporals[fun_context]:
+            if temporal in self.temporals[fun_context][temporal]:
+                return True
+        return False
+    
+    def free_temporal(self, fun_context, temporal):
+        # if (not "reusable_temps" in self.temporals[fun_context])
+        self.temporals[fun_context]["reusable_temps"].append(temporal)
+
+    def get_correct_id(self, fun_context):
+        if (not fun_context in self.temporals):
+            self.temporals[fun_context] = {
+                "last_temporal": 0,
+                "reusable_temps":[]
+            }
+
+        if ("reusable_temps" in self.temporals[fun_context]):
+            if (len(self.temporals[fun_context]["reusable_temps"]) > 0):
+                return self.temporals[fun_context]["reusable_temps"].pop()
+        
+        self.temporals[fun_context]["last_temporal"] = self.temporals[fun_context]["last_temporal"] + 1
+        return self.temporals[fun_context]["last_temporal"]
+
+    def get_last_id(self, fun_context):
+        return self.temporals[fun_context]["last_temporal"]
+    
+    def get_temporal(self, fun_context, temporal, content):
+        if (not fun_context in self.temporals):
+            self.temporals[fun_context] = {
+                "last_temporal": 0,
+                "reusable_temps":[]
+            }
+
+        for temporal in self.temporals[fun_context]:
+            if (temporal not in ["last_temporal", "reusable_temps"] and self.temporals[fun_context][temporal] in content):
+                return temporal
+            
+    def set_temporal(self, fun_context, temporal, content):
+        existing_temporal = self.get_temporal(fun_context, temporal, content)
+
+        if (existing_temporal != None):
+            content = content.replace(self.temporals[fun_context][existing_temporal], existing_temporal)
+            self.temporals[fun_context][temporal] = content
+
+            if (existing_temporal == content):
+                return ''
+            return f'    {temporal}={content}\n'
+        
+        self.temporals[fun_context][temporal] = content
+        
+        return f'    {temporal}={content}\n'

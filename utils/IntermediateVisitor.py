@@ -11,10 +11,12 @@ class IntermediateVisitor(GrammarVisitor):
         self.currentMethod = None
         self.intermediateCode = ''
         self.temps = 0
+        self.temporals = Temporales()
         self.labelTemps = 0
         self.tags = []
-        self.symbols_table = symbols_table
+        self.symbols_table = symbols_table.getTable()
         self.current_offset = offset
+        self.newClass = ''
     
     def getIntermediateCode(self):
         return self.intermediateCode
@@ -65,6 +67,7 @@ class IntermediateVisitor(GrammarVisitor):
         if len(ctx.TYPE()) > 1:
             inherits = ctx.TYPE(1).getText()
         node = ClassNode(name, inherits, features)
+
         return node
 
     def visitDEFINITION_METHOD_PARAMS(self, ctx:GrammarParser.DEFINITION_METHOD_PARAMSContext):
@@ -106,11 +109,11 @@ class IntermediateVisitor(GrammarVisitor):
         node = DefParamsNode(id, typE, expr)
         contains_operator = any(op in str(expr) for op in operations)
         if not contains_operator:
-            self.intermediateCode += f'GP[{self.symbols_table[self.currentClass]["variables"][id]["offset"]}]={expr}\n'
+            self.intermediateCode += f'    GP[{self.symbols_table[self.currentClass]["variables"][id]["offset"]}]={expr}\n'
         else:
             exp = str(ctx.expr().getText())
             result = generate_intermediate_code(exp, id)
-            self.intermediateCode += f'{result}\n'
+            self.intermediateCode += f'    {result}\n'
         return node
     
     def visitFormal(self, ctx:GrammarParser.FormalContext):
@@ -119,7 +122,7 @@ class IntermediateVisitor(GrammarVisitor):
         node = FormalNode(id, typE)
         parent = ctx.parentCtx.ID().getText()
         gp = self.symbols_table[self.currentClass]["methods"][parent]["params"][id]["offset"]
-        self.intermediateCode += f'PARAM GP[{gp}]\n'
+        self.intermediateCode += f'    PARAM GP[{gp}]\n'
         return node
     
     def visitFormalAssign(self, ctx:GrammarParser.FormalAssignContext):
@@ -129,7 +132,7 @@ class IntermediateVisitor(GrammarVisitor):
             node = FormalAssignNode(id, typE, None)
             return node
         expr = self.visit(ctx.expr())
-        self.intermediateCode += f'{id}={expr}\n'
+        self.intermediateCode += f'    {id}={expr}\n'
         node = FormalAssignNode(id, typE, expr)
         # print("visitFormalAssign ", id, typE)
         return node
@@ -146,9 +149,9 @@ class IntermediateVisitor(GrammarVisitor):
             intermediate_call += f't{self.temps}'
             expressions.append(visitedExp)
         intermediate_call += ')'
-        self.temps += 1
+        self.temps = self.temporals.get_correct_id(self.currentClass)
         node = CallNode(name, expressions, "t"+str(self.temps))
-        self.intermediateCode += f't{self.temps}= CALL {intermediate_call}\n'
+        self.intermediateCode += f'    t{self.temps}= CALL {intermediate_call}\n'
         return node
     
     def visitEXPR_PARAMS(self, ctx:GrammarParser.EXPR_PARAMSContext):
@@ -159,9 +162,12 @@ class IntermediateVisitor(GrammarVisitor):
         #print("visitTIMES")
         leftOperand = self.visit(ctx.expr(0))
         rightOperand = self.visit(ctx.expr(1))
-        self.temps += 1
+        self.temps = self.temporals.get_correct_id(self.currentClass)
         node = TimesNode(leftOperand, rightOperand, "t" + str(self.temps) )
-        self.intermediateCode += f't{str(self.temps)}={leftOperand}*{rightOperand}\n'
+
+        res = self.temporals.set_temporal(self.currentClass, f't{str(self.temps)}', f'{leftOperand}*{rightOperand}')
+        self.intermediateCode += res
+
         return node
     
     def visitEQUALS(self, ctx:GrammarParser.EQUALSContext):
@@ -169,7 +175,8 @@ class IntermediateVisitor(GrammarVisitor):
         leftOperand = self.visit(ctx.expr(0))
         rightOperand = self.visit(ctx.expr(1))
         node = EqualsNode(leftOperand, rightOperand)
-        self.intermediateCode += f'{leftOperand}={rightOperand}\n'
+        self.intermediateCode += f'    {leftOperand}={rightOperand}\n'
+
         return node
     #TODO: ASK FOR THIS
     def visitVOID_EXPR(self, ctx:GrammarParser.VOID_EXPRContext):
@@ -191,7 +198,7 @@ class IntermediateVisitor(GrammarVisitor):
         tokens = [obj.token for obj in exprArguments]
         arguments = ", ".join(tokens)
 
-        self.intermediateCode += f'new {exprInitial.token} goto {method} ({arguments})  \n'
+        self.intermediateCode += f'    new {exprInitial.token} goto {method} ({arguments})  \n'
         node = DispatchNode(exprInitial, method, exprArguments)
         return node
 
@@ -212,22 +219,22 @@ class IntermediateVisitor(GrammarVisitor):
         self.labelTemps+=1
         
 
-        self.intermediateCode += f'label{str(self.labelTemps)}_init\n'
+        self.intermediateCode += f'    label{str(self.labelTemps)}_init\n'
         condition = self.visit(ctx.expr(0))
         if (hasattr(condition, "temp")):
-            self.intermediateCode += f'if {condition.temp} else goto label{self.labelTemps}_finish\n'
+            self.intermediateCode += f'    if {condition.temp} else goto label{self.labelTemps}_finish\n'
         else:
-            self.intermediateCode += f'if {condition} else goto label{self.labelTemps}_finish\n'
+            self.intermediateCode += f'    if {condition} else goto label{self.labelTemps}_finish\n'
         expr = self.visit(ctx.expr(1))
         
         if (hasattr(condition, "left")):
-            self.intermediateCode += f'goto label{str(self.labelTemps)}_init\n'
+            self.intermediateCode += f'    goto label{str(self.labelTemps)}_init\n'
         else:
-            self.intermediateCode += f'goto label{str(self.labelTemps)}_init\n'
+            self.intermediateCode += f'    goto label{str(self.labelTemps)}_init\n'
             
 
         setattr(expr, "lastTemp", "t"+str(self.temps))
-        self.intermediateCode += f'label{str(self.labelTemps)}_finish\n'
+        self.intermediateCode += f'    label{str(self.labelTemps)}_finish\n'
             
         node = WhileNode(condition, expr)
         return node
@@ -235,7 +242,7 @@ class IntermediateVisitor(GrammarVisitor):
     def visitSUM(self, ctx:GrammarParser.SUMContext):
         leftOperand = self.visit(ctx.expr(0))
         rightOperand = self.visit(ctx.expr(1))
-        self.temps += 1
+        self.temps = self.temporals.get_correct_id(self.currentClass)
 
         # Add the temp to the symbols table
         used_offset = self.current_offset
@@ -267,15 +274,14 @@ class IntermediateVisitor(GrammarVisitor):
                         final_right = rightOperand.token
                 else:
                     final_right = rightOperand
-                self.intermediateCode += f'GP[{used_offset}]={final_left}+{final_right}\n'
+                self.intermediateCode += f'    GP[{used_offset}]={final_left}+{final_right}\n'
             else:
-                self.intermediateCode += f'GP[{used_offset}]={leftOperand}+{rightOperand}\n'
+                self.intermediateCode += f'    GP[{used_offset}]={leftOperand}+{rightOperand}\n'
         
         node = SumNode(leftOperand, rightOperand, "t"+str(+self.temps))
         return node
     
     def visitLET_PASS(self, ctx:GrammarParser.LET_PASSContext):
-        #print("visitLET_PASS")
         formalAssign = [self.visit(ctx.formalAssign(0))]
         for i in range(1, len(ctx.formalAssign())):
             formalAssignVisited = self.visit(ctx.formalAssign(i))
@@ -290,80 +296,114 @@ class IntermediateVisitor(GrammarVisitor):
         exp = self.visit(ctx.expr())
         node = AssignNode(id, exp)
         if (hasattr(exp, "temp")):
-            self.intermediateCode += f'{id}={exp.temp}\n'
+            self.intermediateCode += f'    {id}={exp.temp}\n'
+            self.temporals.free_temporal(self.currentClass, self.temps)
         else:
             if self.currentClass and self.currentMethod:
                 parent = ctx.parentCtx.getText()
                 if id in self.symbols_table[self.currentClass]["methods"][self.currentMethod]["params"]:
                     gp = self.symbols_table[self.currentClass]["methods"][self.currentMethod]["params"][id]["offset"]
                 elif "variables" in self.symbols_table[self.currentClass] and id in self.symbols_table[self.currentClass]["variables"]:
+                    # get_class = validate_new_class("new", ctx.expr().getText())
                     gp = self.symbols_table[self.currentClass]["variables"][id]["offset"]
+                    if (gp == -1 and self.newClass != ''):
+                        gp = self.symbols_table[self.newClass]["offset"]
+                        self.newClass = ''
                 else:
-                    gp = id
-                self.intermediateCode += f'GP[{gp}]={ctx.expr().getText()}\n'
+                    # REVISAMOS LET
+                    let_id = f'let-{id}'
+                    if let_id in self.symbols_table[self.currentClass]["methods"][self.currentMethod]["params"]:
+                        gp = self.symbols_table[self.currentClass]["methods"][self.currentMethod]["params"][let_id]["offset"]
+                    
+                    if (gp == None):
+                        # Revisamos metodo heredado
+                        superclass = self.symbols_table[self.currentClass]["superclass"]
+                        print(id, self.currentMethod, superclass)
+
+                        if (superclass != None):
+                            if id in self.symbols_table[superclass]["methods"][self.currentMethod]["params"]:
+                                gp = self.symbols_table[superclass]["methods"][self.currentMethod]["params"][id]["offset"]
+                            elif "variables" in self.symbols_table[superclass] and id in self.symbols_table[superclass]["variables"]:
+                                # get_class = validate_new_class("new", ctx.expr().getText())
+                                gp = self.symbols_table[superclass]["variables"][id]["offset"]
+                                if (gp == -1 and self.newClass != ''):
+                                    gp = self.symbols_table[self.newClass]["offset"]
+                                    self.newClass = ''
+
+                self.intermediateCode += f'    GP[{gp}]={ctx.expr().getText()}\n'
             else:
-                self.intermediateCode += f'{id}={ctx.expr().getText()}\n'
+
+                self.intermediateCode += f'    {id}={ctx.expr().getText()}\n'
         return node
 
     def visitMINUS(self, ctx:GrammarParser.MINUSContext):
         #print("visitMINUS")
         leftOperand = self.visit(ctx.expr(0))
         rightOperand = self.visit(ctx.expr(1))
-        self.temps += 1
+        self.temps = self.temporals.get_correct_id(self.currentClass)
         node = MinusNode(leftOperand, rightOperand, "t" + str(self.temps))
-        self.intermediateCode += f't{str(self.temps)}={leftOperand}-{rightOperand}\n'
+
+        res = self.temporals.set_temporal(self.currentClass, f't{str(self.temps)}', f'{leftOperand}-{rightOperand}')
+        self.intermediateCode += res
+
         return node
 
     def visitDIVIDE(self, ctx:GrammarParser.DIVIDEContext):
         #print("visitDIVIDE")
         leftOperand = self.visit(ctx.expr(0))
         rightOperand = self.visit(ctx.expr(1))
-        self.temps += 1
+        self.temps = self.temporals.get_correct_id(self.currentClass)
         node = DivNode(leftOperand, rightOperand, "t" + str(self.temps))
-        self.intermediateCode += f't{str(self.temps)}={leftOperand}/{rightOperand}\n'
+
+        res = self.temporals.set_temporal(self.currentClass, f't{str(self.temps)}', f'{leftOperand}/{rightOperand}')
+        self.intermediateCode += res
+
         return node
     
     def visitBIGGER(self, ctx:GrammarParser.BIGGERContext):
         #print("visitBIGGER")
         leftOperand = self.visit(ctx.expr(0))
         rightOperand = self.visit(ctx.expr(1))
-        self.temps += 1
+        self.temps = self.temporals.get_correct_id(self.currentClass)
         node = BiggerNode(leftOperand, rightOperand, "t" + str(self.temps))
-        self.intermediateCode += f't{str(self.temps)}={leftOperand}>{rightOperand}\n'
+
+        res = self.temporals.set_temporal(self.currentClass, f't{str(self.temps)}', f'{leftOperand}>{rightOperand}')
+        self.intermediateCode += res
+
         return node
 
     def visitNOT(self, ctx:GrammarParser.NOTContext):
         #print("visitNOT")
         expr = self.visit(ctx.expr())
         node = NotNode(expr)
-        self.intermediateCode += f'not {expr}\n'
+        self.intermediateCode += f'    not {expr}\n'
         return node
 
     def visitNEWOBJ(self, ctx:GrammarParser.NEWOBJContext):
-        #print("visitNEWOBJ")
+        self.newClass = ctx.TYPE().getText()
         return ObjNode(ctx.TYPE().getText())
 
     def visitIF_CLAUSE(self, ctx:GrammarParser.IF_CLAUSEContext):
         #print("visitIF_CLAUSE")
         condition = self.visit(ctx.expr(0))
-        self.temps += 1
+        # self.temps = self.temporals.get_correct_id(self.currentClass)
         self.labelTemps += 1
 
         firstlabel = "label" + str(self.labelTemps)
         self.labelTemps += 1
         secondlabel = "label" + str(self.labelTemps)
 
-        self.intermediateCode += f't{str(self.temps)}={condition}\n'
-        self.intermediateCode += f'if t{str(self.temps)} goto {firstlabel}\n'
-        self.intermediateCode += f'else goto {secondlabel} endif\n'
+        # self.intermediateCode += f'    t{str(self.temps)}={condition}\n'
+        self.intermediateCode += f'    if t{str(self.temps)} goto {firstlabel}\n'
+        self.intermediateCode += f'    else goto {secondlabel} endif\n'
 
 
-        self.intermediateCode += f'{firstlabel}_init\n'
+        self.intermediateCode += f'    {firstlabel}_init\n'
         doIf = self.visit(ctx.expr(1))
-        self.intermediateCode += f'{firstlabel}_finish\n'
-        self.intermediateCode += f'{secondlabel}_init\n'
+        self.intermediateCode += f'    {firstlabel}_finish\n'
+        self.intermediateCode += f'    {secondlabel}_init\n'
         doElse = self.visit(ctx.expr(2))
-        self.intermediateCode += f'{secondlabel}_finish\n'
+        self.intermediateCode += f'    {secondlabel}_finish\n'
         node = IfNode(condition, doIf, doElse)
         return node
     
@@ -374,7 +414,7 @@ class IntermediateVisitor(GrammarVisitor):
     def visitTILDE(self, ctx:GrammarParser.TILDEContext):
         #print("visitTILDE")
         expr = self.visit(ctx.expr())
-        self.intermediateCode += f'~ {expr}\n'
+        self.intermediateCode += f'    ~ {expr}\n'
         return TildeNode(expr)
 
     def visitFALSE(self, ctx:GrammarParser.FALSEContext):
@@ -389,9 +429,9 @@ class IntermediateVisitor(GrammarVisitor):
         #print("visitBIGGEREQUALS")
         leftOperand = self.visit(ctx.expr(0))
         rightOperand = self.visit(ctx.expr(1))
-        self.temps += 1
+        self.temps = self.temporals.get_correct_id(self.currentClass)
         node = BiggerEqualsNode(leftOperand, rightOperand,  "t" + str(self.temps))
-        self.intermediateCode += f't{str(self.temps)}={leftOperand}>={rightOperand}\n'
+        self.intermediateCode += f'    t{str(self.temps)}={leftOperand}>={rightOperand}\n'
         return node
     
     def visitINTEGER(self, ctx:GrammarParser.INTEGERContext):
