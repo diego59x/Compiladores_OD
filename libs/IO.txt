@@ -1,0 +1,4 @@
+out_string:
+    li $v0, 4         # System call for print_str
+    syscall
+    jr $ra

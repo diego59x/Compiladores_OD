@@ -1,0 +1,13 @@
+.data
+   string0: .asciiz "Hello, World.\n"
+.text
+   .globl class_main_Main
+class_main_Main:
+   la $a0, string0
+   jal out_string
+   li $v0, 10 
+   syscall 
+out_string:
+    li $v0, 4         # System call for print_str
+    syscall
+    jr $ra

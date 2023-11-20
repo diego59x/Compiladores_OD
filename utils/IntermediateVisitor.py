@@ -4,6 +4,7 @@ from generated.GrammarParser import GrammarParser
 from utils.Node import *
 from utils.Tag import Tag
 from utils.Temporales import *
+from utils.MIPS import *
 
 class IntermediateVisitor(GrammarVisitor):
     def __init__(self, symbols_table, offset):
@@ -17,10 +18,14 @@ class IntermediateVisitor(GrammarVisitor):
         self.symbols_table = symbols_table.getTable()
         self.current_offset = offset
         self.newClass = ''
+        self.strings = []
     
     def getIntermediateCode(self):
+        self.intermediateCode = insertStrings(self.strings, self.intermediateCode)
+        
+        self.intermediateCode = inheritClasses([self.symbols_table["Main"]["superclass"]], self.intermediateCode)
         return self.intermediateCode
-
+    
     def getCurrentClass(self):
         return self.currentClass
     
@@ -49,16 +54,18 @@ class IntermediateVisitor(GrammarVisitor):
         node = ProgramNode(classS)
         return node
     
+
     def visitCLASS_DEFINITION(self, ctx:GrammarParser.CLASS_DEFINITIONContext):
         name = ctx.TYPE(0).getText()
-        # print("visitCLASS_DEFINITION")
-        if self.currentClass is not None:
-            self.intermediateCode += f'end_class_{self.currentClass}\n'
-            self.currentClass = name
-            self.intermediateCode += f'class_{name}:\n'
-        else:
-            self.currentClass = name
-            self.intermediateCode += f'class_{name}:\n' 
+        # print("visitCLASS_DEFINITION", name)
+        self.currentClass = name
+        # if self.currentClass is not None:
+        #     self.intermediateCode += f'end_class_{self.currentClass}\n'
+        #     self.currentClass = name
+        #     self.intermediateCode += f'class_{name}:\n'
+        # else:
+        #     self.currentClass = name
+        #     self.intermediateCode += f'class_{name}:\n' 
         inherits = None
         features = []
         for f in ctx.feature():
@@ -67,7 +74,6 @@ class IntermediateVisitor(GrammarVisitor):
         if len(ctx.TYPE()) > 1:
             inherits = ctx.TYPE(1).getText()
         node = ClassNode(name, inherits, features)
-
         return node
 
     def visitDEFINITION_METHOD_PARAMS(self, ctx:GrammarParser.DEFINITION_METHOD_PARAMSContext):
@@ -78,20 +84,17 @@ class IntermediateVisitor(GrammarVisitor):
             visitedFormal = self.visit(formal)
             params.append(visitedFormal)
         typE = ctx.TYPE().getText()
-        if self.currentMethod is not None:
-            self.currentMethod = name
-            if typE:
-                self.intermediateCode += f'class_{name}_{self.currentClass}[{typE}]:\n'
-            else:
-                self.intermediateCode += f'class_{name}_{self.currentClass}:\n'
-        else:
-            self.currentMethod = name
-            if typE:
-                self.intermediateCode += f'class_{name}_{self.currentClass}[{typE}]:\n'
-            else:
-                self.intermediateCode += f'class_{name}_{self.currentClass}:\n'
+
+        self.currentMethod = name
+        self.intermediateCode += f'class_{name}_{self.currentClass}:\n'
+    
         expr = self.visit(ctx.expr())
-        self.intermediateCode += f'end_class_{self.currentMethod}_{self.currentClass}\n'
+        # self.intermediateCode += f'end_class_{self.currentMethod}_{self.currentClass}\n'
+
+        if (f'{self.currentMethod}_{self.currentClass}'== "main_Main"):
+            # End system call
+            self.intermediateCode += f'   li $v0, 10 \n   syscall \n'
+
         node = MethodNode(name, typE, params, expr)
         self.currentMethod = None
         return node
@@ -140,18 +143,25 @@ class IntermediateVisitor(GrammarVisitor):
     def visitCALL(self, ctx:GrammarParser.CALLContext):
         name = ctx.ID().getText()
         expressions = []
-        intermediate_call = '' + name + '('
+        intermediate_call = ''
+
         for param in range(len(ctx.expr())):
             expr = ctx.expr(param)
-            if param < len(ctx.expr()) - 1:
-                intermediate_call += ','
             visitedExp = self.visit(expr)
-            intermediate_call += f't{self.temps}'
+
+            if (isinstance(visitedExp, str) and "string" in visitedExp):
+                # Load string
+                intermediate_call += f'   la $a{param}, {visitedExp}\n'
+            else:        
+                # Load temporal
+                intermediate_call += f'   move $t{self.temps}, $a{param}\n'
             expressions.append(visitedExp)
-        intermediate_call += ')'
-        self.temps = self.temporals.get_correct_id(self.currentClass)
+
+        # self.temps += 1
         node = CallNode(name, expressions, "t"+str(self.temps))
-        self.intermediateCode += f'    t{self.temps}= CALL {intermediate_call}\n'
+        self.intermediateCode += f'{intermediate_call}'
+        self.intermediateCode += f'   jal {name}\n'
+        
         return node
     
     def visitEXPR_PARAMS(self, ctx:GrammarParser.EXPR_PARAMSContext):
@@ -408,8 +418,8 @@ class IntermediateVisitor(GrammarVisitor):
         return node
     
     def visitSTRING(self, ctx:GrammarParser.STRINGContext):
-        #print("visitSTRING")
-        return StringNode(ctx.STRING().getText())
+        self.strings.append(ctx.STRING().getText())
+        return f'string{len(self.strings) - 1}'
 
     def visitTILDE(self, ctx:GrammarParser.TILDEContext):
         #print("visitTILDE")
