@@ -126,6 +126,3 @@ def validateAssignVal(scope, formals, symbols_table, var_name, value_to_assign, 
         return False, f'{ new_initial_var } expected type { new_initial_expect } but got type { current_type }.'
     else:
         return True, 'Success'
-
-
-

@@ -27,7 +27,7 @@ class SemanticVisitor(GrammarVisitor):
         self.current_scope = None
         self.current_offset = 0
     def getSymbolsTable(self):
-        return self.symbols_table.getTable()
+        return self.symbols_table
     def getErrorsTable(self):
         return self.errors_table.getErrors()
     def updateOffset(self, typE, parent, id, isParamVar, funcName=''):
@@ -37,7 +37,7 @@ class SemanticVisitor(GrammarVisitor):
                 self.current_offset += 4
             elif typE == 'String':
                 self.symbols_table.addOffset(parent, id, self.current_offset)
-                self.current_offset += 4
+                self.current_offset += 16
             elif typE == 'Bool':
                 self.symbols_table.addOffset(parent, id, self.current_offset)
                 self.current_offset += 1
@@ -47,7 +47,7 @@ class SemanticVisitor(GrammarVisitor):
                 self.current_offset += 4
             elif typE == 'String':
                 self.symbols_table.addOffsetMethod(parent, funcName, id, self.current_offset)
-                self.current_offset += 4
+                self.current_offset += 16
             elif typE == 'Bool':
                 self.symbols_table.addOffsetMethod(parent, funcName, id, self.current_offset)
                 self.current_offset += 1
@@ -86,6 +86,7 @@ class SemanticVisitor(GrammarVisitor):
             formal = ctx.formal(param)
             visitedFormal = self.visit(formal)
             params.append(visitedFormal)
+
         expr = self.visit(ctx.expr())
         typE = ctx.TYPE().getText()
         node = MethodNode(name, typE, params, expr)
@@ -93,9 +94,11 @@ class SemanticVisitor(GrammarVisitor):
         # Add method to table
         parent = ctx.parentCtx.TYPE(0).getText()
         self.current_scope = parent
+
         self.symbols_table.addMethod(parent, name, typE, self.formal_params)
         for var in self.formal_params:
             self.updateOffset(self.formal_params[var]['typE'], parent, var, True, name)
+        
         self.formal_params = {}
         table = self.symbols_table.getTable()
         return node
@@ -170,11 +173,15 @@ class SemanticVisitor(GrammarVisitor):
     def visitFormalAssign(self, ctx:GrammarParser.FormalAssignContext):
         typE = ctx.TYPE().getText()
         id = ctx.ID().getText()
+        # Let tense
+        self.formal_params[f'let-{id}'] = {'typE': typE, 'offset': -1}
+
         if ctx.expr() is None:
             node = FormalAssignNode(id, typE, None)
             return node
         expr = self.visit(ctx.expr())
         node = FormalAssignNode(id, typE, expr)
+
         return node
     
     def visitCALL(self, ctx:GrammarParser.CALLContext):

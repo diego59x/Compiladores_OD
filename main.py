@@ -28,8 +28,8 @@ tree = parser.program()
 # Use semantic visitor to get symbols table and errors table    
 semantic_visitor = SemanticVisitor()
 semantic_visitor.visit(tree)
-symbols_table = json.dumps(semantic_visitor.getSymbolsTable(), indent=4)
-raw_symbols_table = semantic_visitor.getSymbolsTable()
+symbols_table = json.dumps(semantic_visitor.getSymbolsTable().getTable(), indent=4)
+
 errors_table = semantic_visitor.getErrorsTable()
 # print(symbols_table)
 # if len(errors_table) > 0:
@@ -38,7 +38,7 @@ errors_table = semantic_visitor.getErrorsTable()
 # else:
 #     print('Success: program executed without errors.')
 last_offset = semantic_visitor.getLastOffset()
-intermediate_visitor = IntermediateVisitor(raw_symbols_table, last_offset)
+intermediate_visitor = IntermediateVisitor(semantic_visitor.getSymbolsTable(), last_offset)
 intermediate_visitor.visit(tree)
 outpupt = intermediate_visitor.getIntermediateCode()
 last_class = intermediate_visitor.getCurrentClass()
