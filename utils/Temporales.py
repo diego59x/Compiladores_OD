@@ -73,6 +73,11 @@ class Temporales(object):
         }
         pass
 
+    def check_all_temps_used(self, fun_context):
+        if (self.temporals[fun_context]["last_temporal"] == 9):
+            for i in range(0, 8):
+               self.temporals[fun_context]["reusable_temps"].append(i)
+
     def exists(self, fun_context, temporal):
         if fun_context in self.temporals[fun_context]:
             if temporal in self.temporals[fun_context][temporal]:
@@ -94,6 +99,7 @@ class Temporales(object):
             if (len(self.temporals[fun_context]["reusable_temps"]) > 0):
                 return self.temporals[fun_context]["reusable_temps"].pop()
         
+        self.check_all_temps_used(fun_context)
         self.temporals[fun_context]["last_temporal"] = self.temporals[fun_context]["last_temporal"] + 1
         return self.temporals[fun_context]["last_temporal"]
 
@@ -111,6 +117,25 @@ class Temporales(object):
             if (temporal not in ["last_temporal", "reusable_temps"] and self.temporals[fun_context][temporal] in content):
                 return temporal
             
+    def set_double_temporal(self, fun_context, temporal, left, right):
+        existing_temporal1 = self.get_temporal(fun_context, temporal, left)
+        existing_temporal2 = self.get_temporal(fun_context, temporal, right)
+
+        if (existing_temporal1 != None or existing_temporal2 != None):
+            left = left.replace(self.temporals[fun_context][existing_temporal1], existing_temporal1)
+            self.temporals[fun_context][temporal] = left
+
+            right = right.replace(self.temporals[fun_context][existing_temporal2], existing_temporal2)
+            self.temporals[fun_context][temporal] = right
+
+            if (existing_temporal2 == right or existing_temporal1 == left):
+                return ''
+            return f' {temporal} {left + ", " + right}\n'
+        
+        self.temporals[fun_context][temporal] = left + right
+        
+        return f' {temporal} {left + ", " + right}\n'
+            
     def set_temporal(self, fun_context, temporal, content):
         existing_temporal = self.get_temporal(fun_context, temporal, content)
 
@@ -119,9 +144,9 @@ class Temporales(object):
             self.temporals[fun_context][temporal] = content
 
             if (existing_temporal == content):
-                return ''
-            return f'    {temporal}={content}\n'
+                return existing_temporal
+            return f'{temporal}, {content}\n'
         
         self.temporals[fun_context][temporal] = content
         
-        return f'    {temporal}={content}\n'
+        return f'{temporal}, {content}\n'

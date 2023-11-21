@@ -19,9 +19,10 @@ class IntermediateVisitor(GrammarVisitor):
         self.current_offset = offset
         self.newClass = ''
         self.strings = []
+        self.ints = []
     
     def getIntermediateCode(self):
-        self.intermediateCode = insertStrings(self.strings, self.intermediateCode)
+        self.intermediateCode = insertStrings(self.strings, self.ints, self.intermediateCode)
         
         self.intermediateCode = inheritClasses([self.symbols_table["Main"]["superclass"]], self.intermediateCode)
         return self.intermediateCode
@@ -107,12 +108,14 @@ class IntermediateVisitor(GrammarVisitor):
             node = DefParamsNode(id, typE, None)
             return node
         expr = self.visit(ctx.expr())
-        if expr.type == "block":
-            exit()
         node = DefParamsNode(id, typE, expr)
+        self.ints.append([id, expr.token])
         contains_operator = any(op in str(expr) for op in operations)
         if not contains_operator:
-            self.intermediateCode += f'    GP[{self.symbols_table[self.currentClass]["variables"][id]["offset"]}]={expr}\n'
+            self.temps = self.temporals.get_correct_id(self.currentClass)
+            res = self.temporals.set_temporal(self.currentClass, f't{str(self.temps)}', f'{id}')
+            self.intermediateCode += f'    lw ${res}'
+            # self.intermediateCode += f'    GP[{self.symbols_table[self.currentClass]["variables"][id]["offset"]}]={expr}\n'
         else:
             exp = str(ctx.expr().getText())
             result = generate_intermediate_code(exp, id)
@@ -175,8 +178,8 @@ class IntermediateVisitor(GrammarVisitor):
         self.temps = self.temporals.get_correct_id(self.currentClass)
         node = TimesNode(leftOperand, rightOperand, "t" + str(self.temps) )
 
-        res = self.temporals.set_temporal(self.currentClass, f't{str(self.temps)}', f'{leftOperand}*{rightOperand}')
-        self.intermediateCode += res
+        res = self.temporals.set_double_temporal(self.currentClass, f'$t{str(self.temps)}', f'${leftOperand}', f'${rightOperand}')
+        self.intermediateCode += "    mul" + res
 
         return node
     
@@ -306,7 +309,8 @@ class IntermediateVisitor(GrammarVisitor):
         exp = self.visit(ctx.expr())
         node = AssignNode(id, exp)
         if (hasattr(exp, "temp")):
-            self.intermediateCode += f'    {id}={exp.temp}\n'
+            res = self.temporals.set_temporal(self.currentClass, f't{str(self.temps)}', f'{id}')
+            self.intermediateCode += f'    sw ${res}, {id}\n'
             self.temporals.free_temporal(self.currentClass, self.temps)
         else:
             if self.currentClass and self.currentMethod:
@@ -353,8 +357,8 @@ class IntermediateVisitor(GrammarVisitor):
         self.temps = self.temporals.get_correct_id(self.currentClass)
         node = MinusNode(leftOperand, rightOperand, "t" + str(self.temps))
 
-        res = self.temporals.set_temporal(self.currentClass, f't{str(self.temps)}', f'{leftOperand}-{rightOperand}')
-        self.intermediateCode += res
+        res = self.temporals.set_double_temporal(self.currentClass, f'$t{str(self.temps)}', f'${leftOperand}', f'${rightOperand}')
+        self.intermediateCode += "    sub" + res
 
         return node
 
@@ -365,8 +369,8 @@ class IntermediateVisitor(GrammarVisitor):
         self.temps = self.temporals.get_correct_id(self.currentClass)
         node = DivNode(leftOperand, rightOperand, "t" + str(self.temps))
 
-        res = self.temporals.set_temporal(self.currentClass, f't{str(self.temps)}', f'{leftOperand}/{rightOperand}')
-        self.intermediateCode += res
+        res = self.temporals.set_double_temporal(self.currentClass, f'$t{str(self.temps)}', f'${leftOperand}', f'${rightOperand}')
+        self.intermediateCode += "    div" + res
 
         return node
     

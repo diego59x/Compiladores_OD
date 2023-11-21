@@ -269,7 +269,7 @@ class SemanticVisitor(GrammarVisitor):
         exp = self.visit(ctx.expr())
         node = AssignNode(id, exp)
         if hasattr(exp, 'type'):
-            if exp.type in ['sum', 'minus', 'times']:
+            if exp.type in ['sum', 'minus', 'times', 'divide']:
                 pass
             else:
                 if hasattr(exp, 'token'):

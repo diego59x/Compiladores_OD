@@ -1,10 +1,21 @@
 .data
-   string0: .asciiz "Hello, World.\n"
+   var3: .word 0
+   var2: .word 2
+   var1: .word 2
 .text
    .globl class_main_Main
+    lw $t1, var1
+    lw $t2, var2
+    lw $t3, var3
 class_main_Main:
-   la $a0, string0
-   jal out_string
+    GP[12]=GP[0]+GP[4]
+    sw $t3, var3
+    sub $t4 $t1, $t2
+    sw $t3, var3
+    mul $t4 $t1, $t2
+    sw $t3, var3
+    div $t4 $t1, $t2
+    sw $t3, var3
    li $v0, 10 
    syscall 
 out_string:

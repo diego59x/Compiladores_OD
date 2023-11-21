@@ -11,7 +11,7 @@ from utils.SemanticVisitor import SemanticVisitor
 from utils.IntermediateVisitor import IntermediateVisitor
 import json
 
-file_name = 'hello_world.cl'
+file_name = 'lab3.cl'
 file_path = f'./tests/{ file_name }'
 # file_path = 'tests/arith.cl'
 
@@ -46,5 +46,5 @@ final_table = json.dumps(intermediate_visitor.getFinalSymbolsTable(), indent=4)
 # if last_class is not None: outpupt += f'end_class_{last_class}\n'
 with open("mips.txt", "w") as file:
     file.write(outpupt)
-print(outpupt)
+# print(outpupt)
 #print(final_table)
