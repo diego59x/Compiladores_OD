@@ -73,6 +73,12 @@ class Temporales(object):
         }
         pass
 
+    def check_all_temps_used(self, fun_context):
+        if (self.temporals[fun_context]["last_temporal"] == 9):
+            for i in range(0, 8):
+               self.temporals[fun_context]["reusable_temps"].append(i)
+
+
     def exists(self, fun_context, temporal):
         if fun_context in self.temporals[fun_context]:
             if temporal in self.temporals[fun_context][temporal]:
@@ -94,6 +100,7 @@ class Temporales(object):
             if (len(self.temporals[fun_context]["reusable_temps"]) > 0):
                 return self.temporals[fun_context]["reusable_temps"].pop()
         
+        self.check_all_temps_used(fun_context)
         self.temporals[fun_context]["last_temporal"] = self.temporals[fun_context]["last_temporal"] + 1
         return self.temporals[fun_context]["last_temporal"]
 
