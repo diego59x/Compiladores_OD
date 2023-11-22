@@ -8,14 +8,14 @@
     lw $t2, var2
     lw $t3, var3
 class_main_Main:
-    GP[12]=GP[0]+GP[4]
-    sw $t3, var3
+    add $t4 $t1, $t2
+    sw $t4, var3
     sub $t4 $t1, $t2
-    sw $t3, var3
+    sw $t4, var3
     mul $t4 $t1, $t2
-    sw $t3, var3
+    sw $t4, var3
     div $t4 $t1, $t2
-    sw $t3, var3
+    sw $t4, var3
    li $v0, 10 
    syscall 
 out_string:

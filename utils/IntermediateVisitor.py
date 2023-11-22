@@ -287,7 +287,11 @@ class IntermediateVisitor(GrammarVisitor):
                         final_right = rightOperand.token
                 else:
                     final_right = rightOperand
-                self.intermediateCode += f'    GP[{used_offset}]={final_left}+{final_right}\n'
+
+                res = self.temporals.set_double_temporal(self.currentClass, f'$t{str(self.temps)}', f'${leftOperand.token}', f'${rightOperand.token}')
+                self.intermediateCode += "    add" + res
+
+                # self.intermediateCode += f'    GP[{used_offset}]={final_left}+{final_right}\n'
             else:
                 self.intermediateCode += f'    GP[{used_offset}]={leftOperand}+{rightOperand}\n'
         
@@ -309,8 +313,7 @@ class IntermediateVisitor(GrammarVisitor):
         exp = self.visit(ctx.expr())
         node = AssignNode(id, exp)
         if (hasattr(exp, "temp")):
-            res = self.temporals.set_temporal(self.currentClass, f't{str(self.temps)}', f'{id}')
-            self.intermediateCode += f'    sw ${res}, {id}\n'
+            self.intermediateCode += f'    sw $t{str(self.temps)}, {id}\n'
             self.temporals.free_temporal(self.currentClass, self.temps)
         else:
             if self.currentClass and self.currentMethod:
