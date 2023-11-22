@@ -16,6 +16,12 @@ TYPES = {
     'Bool': bool,
 }
 
+SIZES = {
+    'Int': 4,
+    'String': 16,
+    'Bool': 1,
+}
+
 class SemanticVisitor(GrammarVisitor):
     def __init__(self):
         self.grammar = GrammarVisitor()
@@ -26,31 +32,42 @@ class SemanticVisitor(GrammarVisitor):
         self.bool_list = ['true', 'false']
         self.current_scope = None
         self.current_offset = 0
+        self.sp_offset = {}
+        self.gb_offset = {
+            "global": 0
+        }
+
     def getSymbolsTable(self):
         return self.symbols_table
+    
+    def getSPOffsets(self):
+        return self.sp_offset
+
     def getErrorsTable(self):
         return self.errors_table.getErrors()
     def updateOffset(self, typE, parent, id, isParamVar, funcName=''):
-        if not isParamVar:
-            if typE == 'Int':
-                self.symbols_table.addOffset(parent, id, self.current_offset)
-                self.current_offset += 4
-            elif typE == 'String':
-                self.symbols_table.addOffset(parent, id, self.current_offset)
-                self.current_offset += 16
-            elif typE == 'Bool':
-                self.symbols_table.addOffset(parent, id, self.current_offset)
-                self.current_offset += 1
+        if (not f'{parent}-{funcName}' in self.sp_offset):
+            self.sp_offset[f'{parent}-{funcName}'] = 0
+        if (not f'{parent}-{funcName}' in self.gb_offset):
+            self.gb_offset[f'{parent}-{funcName}'] = 0
+
+        if typE in SIZES:
+            size = SIZES[typE]
         else:
-            if typE == 'Int':
-                self.symbols_table.addOffsetMethod(parent, funcName, id, self.current_offset)
-                self.current_offset += 4
-            elif typE == 'String':
-                self.symbols_table.addOffsetMethod(parent, funcName, id, self.current_offset)
-                self.current_offset += 16
-            elif typE == 'Bool':
-                self.symbols_table.addOffsetMethod(parent, funcName, id, self.current_offset)
-                self.current_offset += 1
+            size = self.symbols_table.getTable()[typE]["offset"]
+            
+        if not isParamVar:
+            self.gb_offset["global"] += size
+            self.gb_offset[f'{parent}-{funcName}'] += size
+            self.symbols_table.addOffset(parent, id, self.gb_offset["global"])
+        else:
+            # Reutilizando el espacio del SP
+            self.sp_offset[f'{parent}-{funcName}'] += size
+            self.symbols_table.addOffsetMethod(parent, funcName, id, self.sp_offset[f'{parent}-{funcName}'])
+            # SP global entre funciones (no reutilizan memoria)
+            # self.symbols_table.addOffsetMethod(parent, funcName, id, self.current_offset)
+        self.current_offset += size
+
     def getLastOffset(self):
         return self.current_offset
     def visitR(self, ctx:GrammarParser.RContext):
@@ -113,10 +130,9 @@ class SemanticVisitor(GrammarVisitor):
         id = ctx.ID().getText()
         expr = ctx.expr()
 
-
         if expr is None:
             node = DefParamsNode(id, typE, None)
-            self.symbols_table.addVariable(parent, id, typE, None)
+            self.symbols_table.addVariable(parent, id, typE, None, True)
             self.updateOffset(typE, parent, id, False)
             return node
         expr = self.visit(ctx.expr())
@@ -157,7 +173,7 @@ class SemanticVisitor(GrammarVisitor):
         if 'variables' in self.symbols_table.getTable()[self.current_scope] and id in self.symbols_table.getTable()[self.current_scope]['variables']:
             self.errors_table.addVarAlreadyExistsError(f'{ctx.start.line}:{ctx.start.column}', id)
         else:
-            self.symbols_table.addVariable(parent, id, typE, exp_value)
+            self.symbols_table.addVariable(parent, id, typE, exp_value, True)
             self.updateOffset(typE, parent, id, False)
         return node
     
@@ -167,14 +183,14 @@ class SemanticVisitor(GrammarVisitor):
         node = FormalNode(id, typE)
 
         # Add variable to formals
-        self.formal_params[id] = {'typE': typE, 'offset': -1}
+        self.formal_params[id] = {'typE': typE, 'offset': -1, "is_global": False}
         return node
 
     def visitFormalAssign(self, ctx:GrammarParser.FormalAssignContext):
         typE = ctx.TYPE().getText()
         id = ctx.ID().getText()
         # Let tense
-        self.formal_params[f'let-{id}'] = {'typE': typE, 'offset': -1}
+        self.formal_params[f'let-{id}'] = {'typE': typE, 'offset': -1, "is_global": False}
 
         if ctx.expr() is None:
             node = FormalAssignNode(id, typE, None)

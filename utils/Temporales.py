@@ -107,7 +107,7 @@ class Temporales(object):
     def get_last_id(self, fun_context):
         return self.temporals[fun_context]["last_temporal"]
     
-    def get_temporal(self, fun_context, temporal, content):
+    def get_temporal(self, fun_context, temporal, originalContent):
         if (not fun_context in self.temporals):
             self.temporals[fun_context] = {
                 "last_temporal": 0,
@@ -115,20 +115,26 @@ class Temporales(object):
             }
 
         for temporal in self.temporals[fun_context]:
-            if (temporal not in ["last_temporal", "reusable_temps"] and self.temporals[fun_context][temporal] in content):
+            if (temporal not in ["last_temporal", "reusable_temps"] and self.temporals[fun_context][temporal]["originalContent"] in originalContent):
                 return temporal
             
-    def set_temporal(self, fun_context, temporal, content):
-        existing_temporal = self.get_temporal(fun_context, temporal, content)
+    def set_temporal(self, fun_context, temporal, content, originalContent):
+        existing_temporal = self.get_temporal(fun_context, temporal, originalContent)
 
         if (existing_temporal != None):
-            content = content.replace(self.temporals[fun_context][existing_temporal], existing_temporal)
-            self.temporals[fun_context][temporal] = content
+            content = content.replace(self.temporals[fun_context][existing_temporal]["originalContent"], existing_temporal)
+            self.temporals[fun_context][temporal] = {
+                "content": content,
+                "originalContent": originalContent
+            }
 
             if (existing_temporal == content):
                 return ''
             return f'    {temporal}={content}\n'
         
-        self.temporals[fun_context][temporal] = content
+        self.temporals[fun_context][temporal] = {
+                "content": content,
+                "originalContent": originalContent
+            }
         
         return f'    {temporal}={content}\n'
